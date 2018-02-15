@@ -97,16 +97,16 @@ if ($2 == "clean" || ! -d $JEDI_BUILD) then
    #Prepare the build directory
    echo "Building to: " $JEDI_BUILD
    echo $FV3JEDI_SRC
-   #rm -rf ${JEDI_BUILD}
-   #mkdir -p ${JEDI_BUILD}
+   rm -rf ${JEDI_BUILD}
+   mkdir -p ${JEDI_BUILD}
    
    #Create netcdf lib/include that has expected structure
-   #cd ${JEDI_BUILD}
-   #rm -rf netcdf
-   #mkdir netcdf
-   #cd netcdf
-   #ln -s $BASEDIR/lib ./
-   #ln -s $BASEDIR/include/netcdf ./include
+   cd ${JEDI_BUILD}
+   rm -rf netcdf
+   mkdir netcdf
+   cd netcdf
+   ln -s $BASEDIR/lib ./
+   ln -s $BASEDIR/include/netcdf ./include
    
    #ECBuild
    cd ${JEDI_BUILD}
