@@ -25,11 +25,11 @@ ecbuild_bundle( PROJECT fckit    GIT "https://github.com/UCAR/fckit.git"     BRA
 ecbuild_bundle( PROJECT oops     GIT "https://github.com/UCAR/oops.git"      BRANCH feature/nicas-intel  UPDATE )
 
 ecbuild_bundle( PROJECT crtm     GIT "https://github.com/UCAR/crtm.git"      BRANCH master               UPDATE )
-ecbuild_bundle( PROJECT ioda     GIT "https://github.com/UCAR/ioda.git"      BRANCH feature/intel        UPDATE )
-ecbuild_bundle( PROJECT ufo      GIT "https://github.com/UCAR/ufo.git"       BRANCH feature/intel        UPDATE )
+ecbuild_bundle( PROJECT ioda     GIT "https://github.com/UCAR/ioda.git"      BRANCH develop              UPDATE )
+ecbuild_bundle( PROJECT ufo      GIT "https://github.com/UCAR/ufo.git"       BRANCH develop              UPDATE )
 
-ecbuild_bundle( PROJECT fms      GIT "https://github.com/JCSDA/fms.git"      BRANCH master               UPDATE )
-ecbuild_bundle( PROJECT fv3      GIT "https://github.com/JCSDA/fv3.git"      BRANCH master               UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi GIT "https://github.com/JCSDA/fv3-jedi.git" BRANCH master               UPDATE )
+ecbuild_bundle( PROJECT fms      GIT "https://github.com/JCSDA/fms.git"      BRANCH develop              UPDATE )
+ecbuild_bundle( PROJECT fv3      GIT "https://github.com/JCSDA/fv3.git"      BRANCH develop              UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi GIT "https://github.com/JCSDA/fv3-jedi.git" BRANCH develop              UPDATE )
 
 ecbuild_bundle_finalize()
