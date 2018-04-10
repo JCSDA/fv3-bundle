@@ -129,7 +129,7 @@ endif
 
 #CMake
 cd ${JEDI_BUILD}
-make VERBOSE=YES -j4
+make -j4
 
 #Uncomment to run tests
 #cd ${JEDI_BUILD}
