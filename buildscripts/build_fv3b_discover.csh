@@ -2,8 +2,9 @@
 
 #Script for compiling JEDI on the NASA Center for Climate Similation (NCCS) Discover cluster
 
-#Argument 1 specified the compiler choice
-#Argument 2 is optional, set to clean to build from scratch
+#Argument 1: specified the compiler choice
+#Argument 2: release or debug
+#Argument 3: is optional, set to clean to build from scratch
 
 if ($1 == "") then
   echo "Specifify either intel or gcc compiler, e.g. ./build_jedi_discover.csh intel clean"
@@ -36,6 +37,11 @@ module purge
 module load other/cmake-3.8.2
 module use -a /discover/nobackup/drholdaw/Jedi/Jedi_Shared/modulefiles
 
+if ($2 != "release" && $2 != "debug") then
+  echo "Build mode not recognised"
+  exit()
+endif
+
 if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel") then
 
    module load other/comp/gcc-6.2
@@ -52,7 +58,7 @@ if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel") then
    module load boost/1.66.0_int
    module load eigen/3.3.4_int
 
-   setenv JEDI_BUILD $FV3JEDI_ROOT/build_int
+   setenv JEDI_BUILD $FV3JEDI_ROOT/build_int_$2
 
    #Boost/Eigen include dirs
    setenv BOOST_ROOT /discover/nobackup/drholdaw/Jedi/Jedi_Shared/boost/1.66.0_int/include/
@@ -73,7 +79,7 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
    module load boost/1.66.0_gcc
    module load eigen/3.3.4_gcc
 
-   setenv JEDI_BUILD $FV3JEDI_ROOT/build_gcc
+   setenv JEDI_BUILD $FV3JEDI_ROOT/build_gcc_$2
 
    #Boost/Eigen include dirs
    setenv BOOST_ROOT /discover/nobackup/drholdaw/Jedi/Jedi_Shared/boost/1.66.0_gcc/include/
@@ -92,7 +98,7 @@ setenv COMPDEFS "-DsysLinux;-DESMA64;-DHAS_NETCDF4;-DHAS_NETCDF3;-DH5_HAVE_PARAL
 #Add Basebin to path, configs for libraries
 set path = (${path} ${BASEDIR}/bin)
 
-if ($2 == "clean" || ! -d $JEDI_BUILD) then
+if ($3 == "clean" || ! -d $JEDI_BUILD) then
 
    #Prepare the build directory
    echo "Building to: " $JEDI_BUILD
@@ -111,7 +117,7 @@ if ($2 == "clean" || ! -d $JEDI_BUILD) then
    #ECBuild
    cd ${JEDI_BUILD}
    ecbuild \
-       --build=debug \
+       --build=$2 \
        -DCMAKE_CXX_COMPILER=$CPCcomp \
        -DCMAKE_C_COMPILER=$CCcomp \
        -DCMAKE_Fortran_COMPILER=$F90comp \
