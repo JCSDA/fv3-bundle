@@ -48,6 +48,7 @@ if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel") then
    module load comp/intel-18.0.1.163
    module load mpi/impi-18.0.1.163
    module load lib/mkl-18.0.1.163
+   module load other/git-lfs
    setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-5.0.9/x86_64-unknown-linux-gnu/ifort_18.0.1.163-intelmpi_18.0.1.163/Linux/ 
 
    setenv MPIEXEC `which mpirun`
@@ -69,6 +70,7 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
    module load other/comp/gcc-7.2
    module load other/mpi/openmpi/3.0.0-gcc-7.2
    module load lib/mkl-18.0.1.163
+   module load other/git-lfs
    setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-4.0.10/x86_64-unknown-linux-gnu/gfortran_7.2.0-openmpi_3.0.0/Linux
 
    setenv MPIEXEC `which mpirun`
