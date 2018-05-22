@@ -25,7 +25,7 @@ setenv FV3JEDI_SRC `pwd`
 setenv FV3JEDI_ROOT ${FV3JEDI_SRC}/..
 
 #Where is ecbuild?
-setenv ecbuild_path $FV3JEDI_ROOT/ecbuild
+setenv ecbuild_path /discover/nobackup/drholdaw/Jedi/ecbuild/
 set path = (${path} ${ecbuild_path}/bin)
 if (! -f $ecbuild_path/bin/ecbuild) then
   echo "Did not find ecbuild, exiting"
