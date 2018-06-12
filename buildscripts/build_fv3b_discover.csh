@@ -89,6 +89,8 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
 
 endif
 
+git lfs install
+
 #NetCDF lib search path
 setenv NETCDF $JEDI_BUILD/netcdf
 setenv NETCDF_INCLUDE_DIRS $JEDI_BUILD/netcdf/include #Need in order not to auto redefine NETCDF_LIBRARIES
@@ -140,5 +142,5 @@ cd ${JEDI_BUILD}
 make -j4
 
 #Uncomment to run tests
-#cd ${JEDI_BUILD}
-#ctest
+cd ${JEDI_BUILD}
+ctest
