@@ -104,6 +104,9 @@ set path = (${path} ${BASEDIR}/bin)
 
 if ($3 == "clean" || ! -d $JEDI_BUILD) then
 
+   #Save username for a bit
+   git config --global credential.helper 'cache --timeout=3600'
+
    #Prepare the build directory
    echo "Building to: " $JEDI_BUILD
    echo $FV3JEDI_SRC
