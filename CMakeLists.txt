@@ -26,7 +26,7 @@ ecbuild_bundle( PROJECT fckit    GIT "https://github.com/ECMWF/fckit.git"       
 ecbuild_bundle( PROJECT gsw      GIT "https://github.com/JCSDA/GSW-Fortran.git"  BRANCH jedi-marine    UPDATE )
 ecbuild_bundle( PROJECT crtm     GIT "https://github.com/JCSDA/crtm.git"         BRANCH develop        UPDATE )
 
-ecbuild_bundle( PROJECT oops     GIT "https://github.com/JCSDA/oops.git"         BRANCH feature/bump   UPDATE )
+ecbuild_bundle( PROJECT oops     GIT "https://github.com/JCSDA/oops.git"         BRANCH develop-bump   UPDATE )
 ecbuild_bundle( PROJECT ioda     GIT "https://github.com/JCSDA/ioda.git"         BRANCH develop        UPDATE )
 ecbuild_bundle( PROJECT ufo      GIT "https://github.com/JCSDA/ufo.git"          BRANCH develop        UPDATE )
 
