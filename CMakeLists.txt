@@ -20,17 +20,17 @@ ecbuild_bundle_initialize()
 
 ecbuild_requires_macro_version( 2.9 )
 
-ecbuild_bundle( PROJECT eckit    GIT "https://github.com/ECMWF/eckit.git"        TAG 0.23.0 )
-ecbuild_bundle( PROJECT fckit    GIT "https://github.com/ECMWF/fckit.git"        TAG 0.5.3  )
+ecbuild_bundle( PROJECT eckit    GIT "https://github.com/ECMWF/eckit.git"                  TAG 0.23.0 )
+ecbuild_bundle( PROJECT fckit    GIT "https://github.com/ECMWF/fckit.git"                  TAG 0.5.3  )
 
-ecbuild_bundle( PROJECT crtm     GIT "https://github.com/JCSDA/crtm.git"         BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT crtm     GIT "https://github.com/JCSDA/crtm.git"                   BRANCH develop        UPDATE )
 
-ecbuild_bundle( PROJECT oops     GIT "https://github.com/JCSDA/oops.git"         BRANCH develop        UPDATE )
-ecbuild_bundle( PROJECT ioda     GIT "https://github.com/JCSDA/ioda.git"         BRANCH develop        UPDATE )
-ecbuild_bundle( PROJECT ufo      GIT "https://github.com/JCSDA/ufo.git"          BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT oops     GIT "https://github.com/JCSDA/oops.git"                   BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT ioda     GIT "https://github.com/JCSDA/ioda.git"                   BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT ufo      GIT "https://github.com/JCSDA/ufo.git"                    BRANCH develop        UPDATE )
 
-ecbuild_bundle( PROJECT fms      GIT "https://github.com/JCSDA/fms.git"          BRANCH develop        UPDATE )
-ecbuild_bundle( PROJECT fv3      GIT "https://github.com/JCSDA/fv3.git"          BRANCH develop        UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi GIT "https://github.com/JCSDA/fv3-jedi.git"     BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT fms      GIT "https://github.com/JCSDA/fms.git"                    BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT fv3      GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git"   BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi GIT "https://github.com/JCSDA/fv3-jedi.git"               BRANCH develop        UPDATE )
 
 ecbuild_bundle_finalize()
