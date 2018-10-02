@@ -37,19 +37,28 @@ module purge
 module load other/cmake-3.8.2
 module use -a /discover/nobackup/drholdaw/Jedi/Jedi_Shared/modulefiles
 
+module load other/git-lfs
+
 if ($2 != "release" && $2 != "debug") then
   echo "Build mode not recognised"
   exit()
 endif
 
-if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel") then
+if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel" || $1 == "int") then
 
+   #Intel 18
+   #module load other/comp/gcc-6.2
+   #module load comp/intel-18.0.1.163
+   #module load mpi/impi-18.0.1.163
+   #module load lib/mkl-18.0.1.163
+   #setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-5.0.9/x86_64-unknown-linux-gnu/ifort_18.0.1.163-intelmpi_18.0.1.163/Linux/ 
+
+   #Intel 17
    module load other/comp/gcc-6.2
-   module load comp/intel-18.0.1.163
-   module load mpi/impi-18.0.1.163
-   module load lib/mkl-18.0.1.163
-   module load other/git-lfs
-   setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-5.0.9/x86_64-unknown-linux-gnu/ifort_18.0.1.163-intelmpi_18.0.1.163/Linux/ 
+   module load comp/intel-17.0.7.259
+   module load mpi/impi-17.0.7.259
+   module load lib/mkl-17.0.7.259
+   setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-5.1.1/x86_64-unknown-linux-gnu/ifort_17.0.7.259-intelmpi_17.0.7.259/Linux
 
    setenv MPIEXEC `which mpirun`
    setenv CPCcomp mpiicpc
@@ -70,7 +79,6 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
    module load other/comp/gcc-7.2
    module load other/mpi/openmpi/3.0.0-gcc-7.2
    module load lib/mkl-18.0.1.163
-   module load other/git-lfs
    setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-4.0.10/x86_64-unknown-linux-gnu/gfortran_7.2.0-openmpi_3.0.0/Linux
 
    setenv MPIEXEC `which mpirun`
