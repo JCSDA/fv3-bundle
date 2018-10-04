@@ -144,7 +144,7 @@ if ($3 == "clean" || ! -d $JEDI_BUILD) then
        -DMPIEXEC=$MPIEXEC \
        -DCOMPDEFS=$COMPDEFS \
        -DFMS_PATH=$JEDI_BUILD/fms/ \
-       -DFV3_PATH=$JEDI_BUILD/fv3/ \
+       -DFV3JEDILM_PATH=$JEDI_BUILD/fv3-jedi-lm/ \
        ${FV3JEDI_SRC}
 
 endif
