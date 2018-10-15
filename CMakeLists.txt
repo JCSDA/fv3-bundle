@@ -33,4 +33,11 @@ ecbuild_bundle( PROJECT fms           GIT "https://github.com/JCSDA/fms.git"    
 ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git"   BRANCH develop        UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi      GIT "https://github.com/JCSDA/fv3-jedi.git"               BRANCH develop        UPDATE )
 
+# Build Doxygen documentation
+option(BUILD_FV3_BUNDLE_DOC "Build documentation" ON)
+if(BUILD_FV3_BUNDLE_DOC)
+   add_subdirectory( Documentation )
+endif(BUILD_FV3_BUNDLE_DOC)
+
 ecbuild_bundle_finalize()
+
