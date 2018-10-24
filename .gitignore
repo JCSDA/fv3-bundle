@@ -11,6 +11,8 @@
 *~
 
 #Ignore the contents of these directories
+build_*
+
 eckit/
 fckit/
 oops/
@@ -20,5 +22,6 @@ ufo/
 fms/
 fv3-jedi-lm/
 fv3-jedi/
-gsw/
 
+gsw/
+ropp-ufo/
