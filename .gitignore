@@ -1,4 +1,5 @@
 # Ignore these files anywhere in the tree
+*DS_Store*
 *.o
 *.a
 *.so

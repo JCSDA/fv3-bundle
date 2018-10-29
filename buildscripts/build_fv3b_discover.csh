@@ -58,7 +58,7 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
 
    #These two next lines should match
    source /discover/nobackup/drholdaw/JediShared/Modules/jedi_modules_gcc
-   setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-4.0.10/x86_64-unknown-linux-gnu/gfortran_7.2.0-openmpi_3.0.0/Linux
+   setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-5.1.4/x86_64-unknown-linux-gnu/gfortran_8.2.0-openmpi_3.1.1/Linux
 
    setenv MPIEXEC `which mpirun`
    setenv CPCcomp mpicxx
