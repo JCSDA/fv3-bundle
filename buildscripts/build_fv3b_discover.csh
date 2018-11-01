@@ -40,8 +40,7 @@ endif
 if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel" || $1 == "int") then
 
    #These two next lines should match
-   source /discover/nobackup/drholdaw/JediShared/Modules/jedi_modules_int
-   setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-5.1.1/x86_64-unknown-linux-gnu/ifort_17.0.7.259-intelmpi_17.0.7.259/Linux
+   source /discover/nobackup/drholdaw/JediShared/Modules/jedi_modules_int17.0.7.259
 
    setenv MPIEXEC `which mpirun`
    setenv CPCcomp mpiicpc
@@ -57,8 +56,7 @@ if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel" || $1 == "int"
 else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
 
    #These two next lines should match
-   source /discover/nobackup/drholdaw/JediShared/Modules/jedi_modules_gcc
-   setenv BASEDIR /discover/swdev/mathomp4/Baselibs/ESMA-Baselibs-5.1.2/x86_64-unknown-linux-gnu/gfortran_7.3.0-openmpi_3.0.0/Linux
+   source /discover/nobackup/drholdaw/JediShared/Modules/jedi_modules_gcc7.3
 
    setenv MPIEXEC `which mpirun`
    setenv CPCcomp mpicxx
@@ -78,13 +76,13 @@ git lfs install
 #NetCDF lib search path
 setenv NETCDF $JEDI_BUILD/netcdf
 setenv NETCDF_INCLUDE_DIRS $JEDI_BUILD/netcdf/include #Need in order not to auto redefine NETCDF_LIBRARIES
-setenv NETCDF_LIBRARIES "$JEDI_BUILD/netcdf/lib/libnetcdf.a;$JEDI_BUILD/netcdf/lib/libnetcdff.a;${BASEDIR}/lib/libhdf5_hl.a;${BASEDIR}/lib/libhdf5.a;${BASEDIR}/lib/libcurl.a;/usr/lib64/libcrypto.so;/usr/lib64/libssl.so;${BASEDIR}/lib/libmfhdf.a;${BASEDIR}/lib/libdf.a;${BASEDIR}/lib/libjpeg.a"
+setenv NETCDF_LIBRARIES "$JEDI_BUILD/netcdf/lib/libnetcdf.a;$JEDI_BUILD/netcdf/lib/libnetcdff.a;${BASELIBDIR}/lib/libhdf5_hl.a;${BASELIBDIR}/lib/libhdf5.a;${BASELIBDIR}/lib/libcurl.a;/usr/lib64/libcrypto.so;/usr/lib64/libssl.so;${BASELIBDIR}/lib/libmfhdf.a;${BASELIBDIR}/lib/libdf.a;${BASELIBDIR}/lib/libjpeg.a"
 
 #FMS/FV3 COMPDEFS
 setenv COMPDEFS "-DsysLinux;-DESMA64;-DHAS_NETCDF4;-DHAS_NETCDF3;-DH5_HAVE_PARALLEL;-DNETCDF_NEED_NF_MPIIO;-DEIGHT_BYTE;-DSPMD;-DTIMING;-Duse_libMPI;-Duse_netCDF;-DHAVE_SHMEM;-DMAPL_MODE;-DOLDMPP"
 
 #Add Basebin to path, configs for libraries
-set path = (${path} ${BASEDIR}/bin)
+set path = (${path} ${BASELIBDIR}/bin)
 
 if ($3 == "clean" || ! -d $JEDI_BUILD) then
 
@@ -102,8 +100,8 @@ if ($3 == "clean" || ! -d $JEDI_BUILD) then
    rm -rf netcdf
    mkdir netcdf
    cd netcdf
-   ln -s $BASEDIR/lib ./
-   ln -s $BASEDIR/include/netcdf ./include
+   ln -s $BASELIBDIR/lib ./
+   ln -s $BASELIBDIR/include/netcdf ./include
    
    #ECBuild
    cd ${JEDI_BUILD}
