@@ -23,17 +23,17 @@ ecbuild_requires_macro_version( 2.9 )
 ecbuild_bundle( PROJECT eckit         GIT "https://github.com/ECMWF/eckit.git"                  TAG 0.23.0 )
 ecbuild_bundle( PROJECT fckit         GIT "https://github.com/JCSDA/fckit.git"                  BRANCH develop        UPDATE )
 
-ecbuild_bundle( PROJECT gsw           GIT "https://github.com/JCSDA/GSW-Fortran.git"            BRANCH develop        UPDATE )
-ecbuild_bundle( PROJECT ropp-ufo      GIT "https://github.com/JCSDA/ropp-test.git"              BRANCH develop        UPDATE )
+#ecbuild_bundle( PROJECT gsw           GIT "https://github.com/JCSDA/GSW-Fortran.git"            BRANCH develop        UPDATE )
+#ecbuild_bundle( PROJECT ropp-ufo      GIT "https://github.com/JCSDA/ropp-test.git"              BRANCH develop        UPDATE )
 ecbuild_bundle( PROJECT crtm          GIT "https://github.com/JCSDA/crtm.git"                   BRANCH develop        UPDATE )
 
-ecbuild_bundle( PROJECT oops          GIT "https://github.com/JCSDA/oops.git"                   BRANCH feature/4D_obs        UPDATE )
-ecbuild_bundle( PROJECT ioda          GIT "https://github.com/JCSDA/ioda.git"                   BRANCH feature/4D_obs        UPDATE )
-ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"                    BRANCH feature/observer_fixes        UPDATE )
+ecbuild_bundle( PROJECT oops          GIT "https://github.com/JCSDA/oops.git"                   BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT ioda          GIT "https://github.com/JCSDA/ioda.git"                   BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"                    BRANCH develop        UPDATE )
 
 ecbuild_bundle( PROJECT fms           GIT "https://github.com/JCSDA/FMS.git"                    BRANCH develop        UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git"   BRANCH feature/nlm_rename        UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi      GIT "https://github.com/JCSDA/fv3-jedi.git"               BRANCH feature/4D_obs        UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git"   BRANCH develop        UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi      GIT "https://github.com/JCSDA/fv3-jedi.git"               BRANCH develop        UPDATE )
 
 # Build Doxygen documentation
 option(BUILD_FV3_BUNDLE_DOC "Build documentation" ON)
