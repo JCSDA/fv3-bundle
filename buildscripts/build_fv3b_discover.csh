@@ -25,7 +25,7 @@ setenv FV3JEDI_SRC `pwd`
 setenv FV3JEDI_ROOT ${FV3JEDI_SRC}
 
 #Where is ecbuild?
-setenv ecbuild_path /discover/nobackup/drholdaw/JediShared/ecbuild/
+setenv ecbuild_path /gpfsm/dnb04/projects/p72/drholdaw/JediShared/JediLibs/ecbuild/
 set path = (${path} ${ecbuild_path}/bin)
 if (! -f $ecbuild_path/bin/ecbuild) then
   echo "Did not find ecbuild, exiting"
@@ -40,7 +40,8 @@ endif
 if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel" || $1 == "int") then
 
    #These two next lines should match
-   source /discover/nobackup/drholdaw/JediShared/Modules/jedi_modules_int17.0.7.259
+   setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int17.0.7.259
+   #setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int18.0.3.222
 
    setenv MPIEXEC `which mpirun`
    setenv CPCcomp mpiicpc
@@ -49,14 +50,10 @@ if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel" || $1 == "int"
 
    setenv JEDI_BUILD $FV3JEDI_ROOT/build_int_$2
 
-   #Boost/Eigen include dirs
-   setenv BOOST_ROOT /discover/nobackup/drholdaw/JediShared/boost/1.66.0_int/include/
-   setenv EIGEN3_PATH /discover/nobackup/drholdaw/JediShared/eigen/3.3.4_int/include/
-
 else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
 
    #These two next lines should match
-   source /discover/nobackup/drholdaw/JediShared/Modules/jedi_modules_gcc7.3
+   setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_gcc7.3
 
    setenv MPIEXEC `which mpirun`
    setenv CPCcomp mpicxx
@@ -65,11 +62,9 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
 
    setenv JEDI_BUILD $FV3JEDI_ROOT/build_gcc_$2
 
-   #Boost/Eigen include dirs
-   setenv BOOST_ROOT /discover/nobackup/drholdaw/JediShared/boost/1.66.0_gcc/include/
-   setenv EIGEN3_PATH /discover/nobackup/drholdaw/JediShared/eigen/3.3.4_gcc/include/
-
 endif
+
+source $JEDI_MODULES
 
 git lfs install
 
@@ -94,9 +89,14 @@ if ($3 == "clean" || ! -d $JEDI_BUILD) then
    echo $FV3JEDI_SRC
    rm -rf ${JEDI_BUILD}
    mkdir -p ${JEDI_BUILD}
+
+   #Move to build directory
+   cd ${JEDI_BUILD}
+
+   #Soft link to modules used for this build
+   ln -s $JEDI_MODULES ./jedi_modules
    
    #Create netcdf lib/include that has expected structure
-   cd ${JEDI_BUILD}
    rm -rf netcdf
    mkdir netcdf
    cd netcdf
