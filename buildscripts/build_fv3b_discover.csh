@@ -42,6 +42,7 @@ if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel" || $1 == "int"
    #These two next lines should match
    setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int17.0.7.259
    #setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int18.0.3.222
+   source $JEDI_MODULES
 
    setenv MPIEXEC `which mpirun`
    setenv CPCcomp mpiicpc
@@ -54,6 +55,7 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
 
    #These two next lines should match
    setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_gcc7.3
+   source $JEDI_MODULES
 
    setenv MPIEXEC `which mpirun`
    setenv CPCcomp mpicxx
@@ -63,8 +65,6 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
    setenv JEDI_BUILD $FV3JEDI_ROOT/build_gcc_$2
 
 endif
-
-source $JEDI_MODULES
 
 git lfs install
 
