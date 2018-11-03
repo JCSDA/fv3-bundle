@@ -125,7 +125,7 @@ endif
 
 #CMake
 cd ${JEDI_BUILD}
-make -j4
+make -j12
 
 #Uncomment to run tests
 cd ${JEDI_BUILD}
