@@ -25,7 +25,7 @@ setenv FV3JEDI_SRC `pwd`
 setenv FV3JEDI_ROOT ${FV3JEDI_SRC}
 
 #Where is ecbuild?
-setenv ecbuild_path /gpfsm/dnb04/projects/p72/drholdaw/JediShared/JediLibs/ecbuild_2.9.2/
+setenv ecbuild_path /gpfsm/dnb04/projects/p72/drholdaw/JediShared/JediLibs/ecbuild/ecbuild_2.9.2/
 set path = (${path} ${ecbuild_path}/bin)
 if (! -f $ecbuild_path/bin/ecbuild) then
   echo "Did not find ecbuild, exiting"
