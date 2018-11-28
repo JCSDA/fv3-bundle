@@ -77,6 +77,7 @@ setenv NETCDF_LIBRARIES "$JEDI_BUILD/netcdf/lib/libnetcdf.a;$JEDI_BUILD/netcdf/l
 setenv COMPDEFS "-DsysLinux;-DESMA64;-DHAS_NETCDF4;-DHAS_NETCDF3;-DH5_HAVE_PARALLEL;-DNETCDF_NEED_NF_MPIIO;-DEIGHT_BYTE;-DSPMD;-DTIMING;-Duse_libMPI;-Duse_netCDF;-DHAVE_SHMEM;-DMAPL_MODE;-DOLDMPP"
 
 set FV3BASEDMODEL_PATH = /gpfsm/dnb41/dao_ops/GEOSadas-5_22/GEOSadas/Linux/
+set ESMF_PATH = ${BASELIBDIR}
 
 #Add Basebin to path, configs for libraries
 set path = (${path} ${BASELIBDIR}/bin)
@@ -120,6 +121,7 @@ if ($3 == "clean" || ! -d $JEDI_BUILD) then
        -DMPIEXEC=$MPIEXEC \
        -DCOMPDEFS=$COMPDEFS \
        -DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH \
+       -DESMF_PATH=$ESMF_PATH
        ${FV3JEDI_SRC}
 
 endif
