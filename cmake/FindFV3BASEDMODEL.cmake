@@ -16,6 +16,10 @@
 #  FMS_LIBRARIES - The libraries needed to use FMS
 #  FMS_DEFINITIONS - Compiler switches required for using FMS
 
+#  Only one of the following:
+#  GFS_FOUND  - System has GFS
+#  GEOS_FOUND - System has GEOS
+
 if( DEFINED FMS_PATH )
     find_path(FMS_INCLUDE_DIR fms_platform.h PATHS ${FMS_PATH} PATH_SUFFIXES fms NO_DEFAULT_PATH)
 	find_library(FMS_LIBRARY  fms            PATHS ${FMS_PATH} PATH_SUFFIXES fms NO_DEFAULT_PATH)
@@ -40,3 +44,6 @@ else()
     set( FMS_LIBRARIES    "" )
     set( FMS_INCLUDE_DIRS "" )
 endif()
+
+set (GFS_FOUND 0)
+set (GEOS_FOUND 0)
