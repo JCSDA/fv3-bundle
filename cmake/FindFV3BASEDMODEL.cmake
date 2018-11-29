@@ -70,7 +70,7 @@ if (GEOS_FOUND)
   #ESMF
   message("ESMF_PATH: ${ESMF_PATH}")
   if( NOT DEFINED ESMF_PATH )
-    message(FATAL_ERROR "Fatal error, model found but path to ESMF not provided.")
+    message(FATAL_ERROR "Fatal error, GEOS model found but path to ESMF not provided.")
   endif()
 
   find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib/)
@@ -112,8 +112,3 @@ else()
     set( FMS_LIBRARIES    "" )
     set( FMS_INCLUDE_DIRS "" )
 endif()
-
-message("FV3BASEDMODEL_LIBRARIES ${FV3BASEDMODEL_LIBRARIES}")
-message("FV3BASEDMODEL_INCLUDE_DIRS ${FV3BASEDMODEL_INCLUDE_DIRS}")
-message("FMS_LIBRARIES ${FMS_LIBRARIES}")
-message("FMS_INCLUDE_DIRS ${FMS_INCLUDE_DIRS}")
