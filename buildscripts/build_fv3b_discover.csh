@@ -21,11 +21,11 @@ set path = (${path} /usr/bin)
 source /usr/share/modules/init/csh
 
 #Source/build environemnt
-setenv FV3JEDI_SRC `pwd`
-setenv FV3JEDI_ROOT ${FV3JEDI_SRC}
+set FV3JEDI_SRC = `pwd`
+set FV3JEDI_ROOT = ${FV3JEDI_SRC}
 
 #Where is ecbuild?
-setenv ecbuild_path /gpfsm/dnb04/projects/p72/drholdaw/JediShared/JediLibs/ecbuild/ecbuild_2.9.2/
+set ecbuild_path = /gpfsm/dnb04/projects/p72/drholdaw/JediShared/JediLibs/ecbuild/ecbuild_2.9.2/
 set path = (${path} ${ecbuild_path}/bin)
 if (! -f $ecbuild_path/bin/ecbuild) then
   echo "Did not find ecbuild, exiting"
@@ -40,41 +40,41 @@ endif
 if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel" || $1 == "int") then
 
    #These two next lines should match
-   setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int17.0.7.259
-   #setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int18.0.3.222
+   set JEDI_MODULES = /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int17.0.7.259
+   #set JEDI_MODULES = /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int18.0.3.222
    source $JEDI_MODULES
 
-   setenv MPIEXEC `which mpirun`
-   setenv CPCcomp mpiicpc
-   setenv CCcomp mpiicc
-   setenv F90comp mpiifort
+   set MPIEXEC = `which mpirun`
+   set CPCcomp = mpiicpc
+   set CCcomp = mpiicc
+   set F90comp = mpiifort
 
-   setenv JEDI_BUILD $FV3JEDI_ROOT/build_int_$2
+   set JEDI_BUILD = $FV3JEDI_ROOT/build_int_$2
 
 else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
 
    #These two next lines should match
-   setenv JEDI_MODULES /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_gcc7.3
+   set JEDI_MODULES = /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_gcc7.3
    source $JEDI_MODULES
 
-   setenv MPIEXEC `which mpirun`
-   setenv CPCcomp mpicxx
-   setenv CCcomp mpicc
-   setenv F90comp mpifort
+   set = MPIEXEC `which mpirun`
+   set = CPCcomp mpicxx
+   set = CCcomp mpicc
+   set = F90comp mpifort
 
-   setenv JEDI_BUILD $FV3JEDI_ROOT/build_gcc_$2
+   set JEDI_BUILD = $FV3JEDI_ROOT/build_gcc_$2
 
 endif
 
 git lfs install
 
 #NetCDF lib search path
-setenv NETCDF $JEDI_BUILD/netcdf
-setenv NETCDF_INCLUDE_DIRS $JEDI_BUILD/netcdf/include #Need in order not to auto redefine NETCDF_LIBRARIES
-setenv NETCDF_LIBRARIES "$JEDI_BUILD/netcdf/lib/libnetcdf.a;$JEDI_BUILD/netcdf/lib/libnetcdff.a;${BASELIBDIR}/lib/libhdf5_hl.a;${BASELIBDIR}/lib/libhdf5.a;${BASELIBDIR}/lib/libcurl.a;/usr/lib64/libcrypto.so;/usr/lib64/libssl.so;${BASELIBDIR}/lib/libmfhdf.a;${BASELIBDIR}/lib/libdf.a;${BASELIBDIR}/lib/libjpeg.a"
+set NETCDF = $JEDI_BUILD/netcdf
+set NETCDF_INCLUDE_DIRS = $JEDI_BUILD/netcdf/include #Need in order not to auto redefine NETCDF_LIBRARIES
+set NETCDF_LIBRARIES = "$JEDI_BUILD/netcdf/lib/libnetcdf.a;$JEDI_BUILD/netcdf/lib/libnetcdff.a;${BASELIBDIR}/lib/libhdf5_hl.a;${BASELIBDIR}/lib/libhdf5.a;${BASELIBDIR}/lib/libcurl.a;/usr/lib64/libcrypto.so;/usr/lib64/libssl.so;${BASELIBDIR}/lib/libmfhdf.a;${BASELIBDIR}/lib/libdf.a;${BASELIBDIR}/lib/libjpeg.a"
 
 #FMS/FV3 COMPDEFS
-setenv COMPDEFS "-DsysLinux;-DESMA64;-DHAS_NETCDF4;-DHAS_NETCDF3;-DH5_HAVE_PARALLEL;-DNETCDF_NEED_NF_MPIIO;-DEIGHT_BYTE;-DSPMD;-DTIMING;-Duse_libMPI;-Duse_netCDF;-DHAVE_SHMEM;-DMAPL_MODE;-DOLDMPP"
+set COMPDEFS = "-DsysLinux;-DESMA64;-DHAS_NETCDF4;-DHAS_NETCDF3;-DH5_HAVE_PARALLEL;-DNETCDF_NEED_NF_MPIIO;-DEIGHT_BYTE;-DSPMD;-DTIMING;-Duse_libMPI;-Duse_netCDF;-DHAVE_SHMEM;-DMAPL_MODE;-DOLDMPP"
 
 set FV3BASEDMODEL_PATH = /gpfsm/dnb04/projects/p72/drholdaw/GEOSgcm/Linux/
 set ESMF_PATH = ${BASELIBDIR}
