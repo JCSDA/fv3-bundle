@@ -16,26 +16,35 @@
 #  FMS_LIBRARIES - The libraries needed to use FMS
 #  FMS_DEFINITIONS - Compiler switches required for using FMS
 
+#  ESMF_FOUND - System has ESMF
+#  ESMF_INCLUDE_DIRS - The ESMF include directories
+#  ESMF_LIBRARIES - The libraries needed to use ESMF
+#  ESMF_DEFINITIONS - Compiler switches required for using ESMF
+
 #  Only one of the following:
 #  GFS_FOUND  - System has GFS
 #  GEOS_FOUND - System has GEOS
 
-message("TRYING TO FIND A MODEL")
 
-set (GFS_FOUND 0)
-set (GEOS_FOUND 0)
-set (FV3BASEDMODEL_FOUND 0)
+# Determine which model (if any)
+# ------------------------------
 if( DEFINED FV3BASEDMODEL_PATH )
   if(EXISTS ${FV3BASEDMODEL_PATH}/lib/libMAPL_Base.a)
     set (GEOS_FOUND 1)
   elseif(EXISTS ${FV3BASEDMODEL_PATH}/lib/libNEMS_Base.a) #Or something like that
     set (GFS_FOUND 1)
+  else()
+    message( WARNING "FV3BASEDMODEL not found" )
   endif()
 endif()
 
 
+# Model specific part
+# -------------------
 if (GEOS_FOUND)
  
+  message("Found GEOS model, building library and include lists")
+
   #List of GEOS dependencies, could GLOB but r4-r8 duplicates
   list( APPEND GEOS_DEPS Chem_Base
                          Chem_Shared
@@ -55,30 +64,56 @@ if (GEOS_FOUND)
   foreach(GEOS_DEP ${GEOS_DEPS})
     find_library(LIBTMP ${GEOS_DEP} PATHS ${FV3BASEDMODEL_PATH}/lib/)
     list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
-    list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${FV3BASEDMODEL_PATH}/include/${GEOS_DIR})
+    list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${FV3BASEDMODEL_PATH}/include/${GEOS_DEP})
   endforeach()
 
-  find_library(LIBTMP ${GEOS_DEP} PATHS ${FV3BASEDMODEL_PATH}/lib/)
+  #ESMF
+  message("ESMF_PATH: ${ESMF_PATH}")
+  if( NOT DEFINED ESMF_PATH )
+    message(FATAL_ERROR "Fatal error, model found but path to ESMF not provided.")
+  endif()
+
+  find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib/)
+  list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include/esmf)
+
+  #FMS (seperate package for fv3-jedi-lm)
+  find_library(FMS_LIBRARY GFDL_fms_r8 PATHS ${FV3BASEDMODEL_PATH}/lib/)
+  set (FMS_INCLUDE_DIR ${FV3BASEDMODEL_PATH}/include/GFDL_fms_r8)
 
 elseif (GFS_FOUND)
 
-message("GFS_FOUND")
+  message("Found GFS model, building library and include lists")
 
 endif()
 
+
+# General flags
+# -------------
+
 include(FindPackageHandleStandardArgs)
 
+#FV3BASEDMODEL
 find_package_handle_standard_args(FV3BASEDMODEL DEFAULT_MSG FV3BASEDMODEL_LIBRARY FV3BASEDMODEL_INCLUDE_DIR)
 mark_as_advanced(FV3BASEDMODEL_INCLUDE_DIR FV3BASEDMODEL_LIBRARY )
+
+#FMS
+find_package_handle_standard_args(FMS DEFAULT_MSG FMS_LIBRARY FMS_INCLUDE_DIR)
+mark_as_advanced(FMS_INCLUDE_DIR FMS_LIBRARY )
 
 if( FV3BASEDMODEL_FOUND )
     set( FV3BASEDMODEL_LIBRARIES    ${FV3BASEDMODEL_LIBRARY} )
     set( FV3BASEDMODEL_INCLUDE_DIRS ${FV3BASEDMODEL_INCLUDE_DIR} )
+    set( FMS_LIBRARIES    ${FMS_LIBRARY} )
+    set( FMS_INCLUDE_DIRS ${FMS_INCLUDE_DIR} )
 else()
     set( FV3BASEDMODEL_LIBRARIES    "" )
     set( FV3BASEDMODEL_INCLUDE_DIRS "" )
+    set( FMS_LIBRARIES    "" )
+    set( FMS_INCLUDE_DIRS "" )
 endif()
 
 message("FV3BASEDMODEL_LIBRARIES ${FV3BASEDMODEL_LIBRARIES}")
 message("FV3BASEDMODEL_INCLUDE_DIRS ${FV3BASEDMODEL_INCLUDE_DIRS}")
-
+message("FMS_LIBRARIES ${FMS_LIBRARIES}")
+message("FMS_INCLUDE_DIRS ${FMS_INCLUDE_DIRS}")
