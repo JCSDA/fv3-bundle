@@ -127,9 +127,9 @@ if ($3 == "clean" || ! -d $JEDI_BUILD) then
 endif
 
 #CMake
-#cd ${JEDI_BUILD}
-#make -j12
+cd ${JEDI_BUILD}
+make -j12
 
 #Uncomment to run tests
-#cd ${JEDI_BUILD}
-#ctest
+cd ${JEDI_BUILD}
+ctest
