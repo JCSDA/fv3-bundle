@@ -31,7 +31,7 @@
 if( DEFINED FV3BASEDMODEL_PATH )
   if(EXISTS ${FV3BASEDMODEL_PATH}/lib/libMAPL_Base.a)
     set (GEOS_FOUND 1)
-  elseif(EXISTS ${FV3BASEDMODEL_PATH}/lib/libNEMS_Base.a) #Or something like that
+  elseif(EXISTS ${FV3BASEDMODEL_PATH}/libfv3cap.a) #Or something like that
     set (GFS_FOUND 1)
   else()
     message( WARNING "FV3BASEDMODEL not found" )
@@ -84,6 +84,36 @@ if (GEOS_FOUND)
 elseif (GFS_FOUND)
 
   message("Found GFS model, building library and include lists")
+
+  list( APPEND GFS_DEPS fv3cap
+                        fv3core
+                        fv3cpl
+                        fv3io
+                        gfsphys
+                        ipd
+                        stochastic_physics)
+
+  foreach(GFS_DEP ${GFS_DEPS})
+    find_library(LIBTMP ${GFS_DEP} PATHS ${FV3BASEDMODEL_PATH}/)
+    list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
+  endforeach()
+
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${FV3BASEDMODEL_PATH}/)
+
+  list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/nemsio/v2.2.3/libnemsio_v2.2.3.a)
+  list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/bacio/v2.0.1/libbacio_v2.0.1_4.a)
+  list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/sp/v2.0.2/libsp_v2.0.2_d.a)
+  list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/w3emc/v2.0.5/libw3emc_v2.0.5_d.a)
+  list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/w3nco/v2.0.6/libw3nco_v2.0.6_d.a)
+
+  #ESMF
+  find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib/libO/Linux.intel.64.intelmpi.default/)
+  list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include/esmf)
+
+  #FMS (seperate package for fv3-jedi-lm)
+  find_library(FMS_LIBRARY fms PATHS /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/build/lib)
+  set (FMS_INCLUDE_DIR /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/build/modules)
 
 endif()
 
