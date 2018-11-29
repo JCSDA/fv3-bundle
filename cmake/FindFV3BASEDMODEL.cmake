@@ -98,7 +98,7 @@ elseif (GFS_FOUND)
     list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
   endforeach()
 
-  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${FV3BASEDMODEL_PATH}/)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${FV3BASEDMODEL_PATH})
 
   list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/nemsio/v2.2.3/libnemsio_v2.2.3.a)
   list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/bacio/v2.0.1/libbacio_v2.0.1_4.a)
@@ -109,11 +109,11 @@ elseif (GFS_FOUND)
   #ESMF
   find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib/libO/Linux.intel.64.intelmpi.default/)
   list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
-  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include/esmf)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include)
 
   #FMS (seperate package for fv3-jedi-lm)
-  find_library(FMS_LIBRARY fms PATHS /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/build/lib)
-  set (FMS_INCLUDE_DIR /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/build/modules)
+  find_library(FMS_LIBRARY fms PATHS /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/fms/build/lib)
+  set (FMS_INCLUDE_DIR /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/fms/build/module)
 
 endif()
 
