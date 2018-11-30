@@ -110,6 +110,7 @@ elseif (GFS_FOUND)
   find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib/libO/Linux.intel.64.intelmpi.default/)
   list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
   list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/mod/modO/Linux.intel.64.intelmpi.default)
 
   #FMS (seperate package for fv3-jedi-lm)
   find_library(FMS_LIBRARY fms PATHS /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/fms/build/lib)
