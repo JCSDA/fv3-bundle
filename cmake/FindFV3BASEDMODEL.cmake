@@ -107,10 +107,10 @@ elseif (GFS_FOUND)
   list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/w3nco/v2.0.6/libw3nco_v2.0.6_d.a)
 
   #ESMF
-  find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib/libO/Linux.intel.64.intelmpi.default/)
+  find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib)
   list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
   list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include)
-  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/mod/modO/Linux.intel.64.intelmpi.default)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/mod)
 
   #FMS (seperate package for fv3-jedi-lm)
   find_library(FMS_LIBRARY fms PATHS /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/fms/build/lib)
@@ -142,10 +142,4 @@ else()
     set( FV3BASEDMODEL_INCLUDE_DIRS "" )
     set( FMS_LIBRARIES    "" )
     set( FMS_INCLUDE_DIRS "" )
-endif()
-
-#Hack for when the inlcude path tries to match the library location
-if (GFS_FOUND)
-  list( APPEND FV3BASEDMODEL_INCLUDE_DIRS ${ESMF_PATH}/include)
-  list( APPEND FV3BASEDMODEL_INCLUDE_DIRS ${ESMF_PATH}/mod/modO/Linux.intel.64.intelmpi.default)
 endif()
