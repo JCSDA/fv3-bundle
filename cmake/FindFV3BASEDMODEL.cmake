@@ -143,3 +143,9 @@ else()
     set( FMS_LIBRARIES    "" )
     set( FMS_INCLUDE_DIRS "" )
 endif()
+
+#Hack for when the inlcude path tries to match the library location
+if (GFS_FOUND)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIRS ${ESMF_PATH}/include)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIRS ${ESMF_PATH}/mod/modO/Linux.intel.64.intelmpi.default)
+endif()
