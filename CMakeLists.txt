@@ -31,12 +31,17 @@ ecbuild_bundle( PROJECT oops          GIT "https://github.com/JCSDA/oops.git"   
 ecbuild_bundle( PROJECT ioda          GIT "https://github.com/JCSDA/ioda.git"                   BRANCH develop        UPDATE )
 ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"                    BRANCH develop        UPDATE )
 
-ecbuild_bundle( PROJECT fms           GIT "https://github.com/JCSDA/FMS.git"                    BRANCH develop        UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git"   BRANCH develop        UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi      GIT "https://github.com/JCSDA/fv3-jedi.git"               BRANCH develop        UPDATE )
+#Find GEOS or GFS and thus the version of FMS for fv3-jedi-lm
+find_package( FV3BASEDMODEL )
+if (NOT FV3BASEDMODEL_FOUND)
+    ecbuild_bundle( PROJECT fms       GIT "https://github.com/JCSDA/FMS.git"                    BRANCH develop        UPDATE )
+endif()
+
+ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git"   BRANCH feature/fv3basedmodel        UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi      GIT "https://github.com/JCSDA/fv3-jedi.git"               BRANCH feature/fv3basedmodel        UPDATE )
 
 # Build Doxygen documentation
-option(BUILD_FV3_BUNDLE_DOC "Build documentation" ON)
+option(BUILD_FV3_BUNDLE_DOC "Build documentation" OFF)
 if(BUILD_FV3_BUNDLE_DOC)
    add_subdirectory( Documentation )
 endif(BUILD_FV3_BUNDLE_DOC)
