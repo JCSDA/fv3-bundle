@@ -106,8 +106,9 @@ elseif (GFS_FOUND)
   list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/w3nco/v2.0.6/libw3nco_v2.0.6_d.a)
 
   #ESMF
-  find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib)
-  list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
+  #find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib)
+  #list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
+  list( APPEND FV3BASEDMODEL_LIBRARY ${ESMF_PATH}/lib/libesmf.a)
   list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include)
   list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/mod)
 
