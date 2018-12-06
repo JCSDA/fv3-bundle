@@ -73,8 +73,7 @@ if (GEOS_FOUND)
     message(FATAL_ERROR "Fatal error, GEOS model found but path to ESMF not provided.")
   endif()
 
-  find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib/)
-  list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
+  list( APPEND FV3BASEDMODEL_LIBRARY ${ESMF_PATH}/lib/libesmf.a)
   list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include/esmf)
 
   #FMS (seperate package for fv3-jedi-lm)
