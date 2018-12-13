@@ -31,7 +31,7 @@
 if( DEFINED FV3BASEDMODEL_PATH )
   if(EXISTS ${FV3BASEDMODEL_PATH}/lib/libMAPL_Base.a)
     set (GEOS_FOUND 1)
-  elseif(EXISTS ${FV3BASEDMODEL_PATH}/libfv3cap.a) #Or something like that
+  elseif(EXISTS ${FV3BASEDMODEL_PATH}/FV3_INSTALL/libfv3cap.a) #Or something like that
     set (GFS_FOUND 1)
   else()
     message( WARNING "FV3BASEDMODEL_PATH found" )
