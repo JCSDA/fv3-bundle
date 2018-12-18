@@ -12,7 +12,7 @@
 *~
 
 #Ignore the contents of these directories
-build*
+build_*
 FV3/
 
 eckit/

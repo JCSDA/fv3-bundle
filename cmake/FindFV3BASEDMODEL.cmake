@@ -31,11 +31,13 @@
 if( DEFINED FV3BASEDMODEL_PATH )
   if(EXISTS ${FV3BASEDMODEL_PATH}/lib/libMAPL_Base.a)
     set (GEOS_FOUND 1)
-  elseif(EXISTS ${FV3BASEDMODEL_PATH}/libfv3cap.a) #Or something like that
+  elseif(EXISTS ${FV3BASEDMODEL_PATH}/FV3_INSTALL/libfv3cap.a) #Or something like that
     set (GFS_FOUND 1)
   else()
-    message( WARNING "FV3BASEDMODEL not found" )
+    message( WARNING "FV3BASEDMODEL_PATH found" )
   endif()
+else()
+  message( WARNING "FV3BASEDMODEL_PATH not found" )
 endif()
 
 
@@ -45,38 +47,118 @@ if (GEOS_FOUND)
  
   message("Found GEOS model, building library and include lists")
 
-  #List of GEOS dependencies, could GLOB but r4-r8 duplicates
-  list( APPEND GEOS_DEPS Chem_Base
-                         Chem_Shared
-                         GEOS_Shared
-                         GMAO_eu
-                         GMAO_gfio
-                         GMAO_hermes
-                         GMAO_mpeu
-                         GMAO_pFIO
+  if( NOT DEFINED BASELIBDIR )
+    message(FATAL_ERROR "Fatal error: GEOS model found but not BASELIBDIR.")
+  endif()
+
+  # BASELIBS
+  # --------
+
+  #ESMF
+  list( APPEND FV3BASEDMODEL_LIBRARY ${BASELIBDIR}/lib/libesmf.a)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${BASELIBDIR}/include/esmf)
+
+  #gFTL
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${BASELIBDIR}/gFTL/include)
+
+  #FLAP
+  list( APPEND FV3BASEDMODEL_LIBRARY ${BASELIBDIR}/lib/libflap.a)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${BASELIBDIR}/include/FLAP)
+
+  #pFUnit
+  list( APPEND FV3BASEDMODEL_LIBRARY ${BASELIBDIR}/pFUnit/pFUnit-mpi/lib/libpfunit.a)
+  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${BASELIBDIR}/pFUnit/pFUnit-mpi/include)
+
+
+  #GEOS libraries
+  #--------------
+
+  #List of GEOS libraries (order important)
+  #cd GEOSagcm/Linux/src
+  #ls -lt
+  list( APPEND GEOS_DEPS GEOSgcs_GridComp
+                         GEOSgcm_GridComp
+                         GEOSagcm_GridComp
+                         GEOSmkiau_GridComp
+                         GEOSphysics_GridComp
+                         GEOSradiation_GridComp
+                         GEOSsolar_GridComp
+                         GEOSirrad_GridComp
+                         RRTMG
+                         GEOSgwd_GridComp
+                         RRTMG_mods
+                         RRTMG_SW
+                         RRTMG_SW_mods
+                         GEOSsatsim_GridComp
+                         GEOS_RadiationShared
+                         GEOSmoist_GridComp
+                         GEOSturbulence_GridComp
+                         GEOSsurface_GridComp
+                         GEOSlake_GridComp
+                         GEOSlandice_GridComp
+                         GEOSsaltwater_GridComp
+                         GEOSland_GridComp
+                         GEOScatch_GridComp
+                         GEOScatchCN_GridComp
+                         GEOSvegdyn_GridComp
+                         GEOS_LandShared
+                         GEOS_SurfaceShared
+                         GEOSchem_GridComp
+                         StratChem_GridComp
+                         GEOSpchem_GridComp
+                         GEOSachem_GridComp
+                         GMIchem_GridComp
+                         GAAS_GridComp
+                         GOCART_GridComp
+                         CFC_GridComp
+                         CARMAchem_GridComp
+                         Rn_GridComp
+                         BC_GridComp
+                         BRC_GridComp
+                         CO2_GridComp
+                         CO_GridComp
+                         DU_GridComp
+                         O3_GridComp
+                         OC_GridComp
+                         SS_GridComp
+                         SU_GridComp
+                         CH4_GridComp
+                         NI_GridComp
+                         MAMchem_GridComp
+                         TR_GridComp
+                         MATRIXchem_GridComp
+                         DNA_GridComp
+                         HEMCO_GridComp
+                         GEOSsuperdyn_GridComp
+                         FVdycore_GridComp
+                         FVdycoreCubed_GridComp
+                         ARIESg3_GridComp
+                         GEOSdatmodyn_GridComp
+                         fvdycore
                          GMAO_pilgrim
+                         GEOSogcm_GridComp
+                         GuestOcean_GridComp
+                         GEOSdatasea_GridComp
+                         GEOSdataseaice_GridComp
+                         GEOSorad_GridComp
                          LANL_cice
+                         NCEP_sp_r4i4
+                         Chem_Shared
+                         Chem_Base
+                         GEOS_Shared
                          MAPL_Base
-                         MAPL_cfio
-                         NSIDC-OSTIA_SST-ICE_blend
-                         post )
+                         GMAO_pFIO
+                         MAPL_cfio_r4
+                         GMAO_gfio_r4
+                         GMAO_hermes
+                         GMAO_mpeu )
   
   foreach(GEOS_DEP ${GEOS_DEPS})
-    find_library(LIBTMP ${GEOS_DEP} PATHS ${FV3BASEDMODEL_PATH}/lib/)
-    list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
+    list( APPEND FV3BASEDMODEL_LIBRARY ${FV3BASEDMODEL_PATH}/lib/lib${GEOS_DEP}.a)
     list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${FV3BASEDMODEL_PATH}/include/${GEOS_DEP})
   endforeach()
 
-  #ESMF
-  message("ESMF_PATH: ${ESMF_PATH}")
-  if( NOT DEFINED ESMF_PATH )
-    message(FATAL_ERROR "Fatal error, GEOS model found but path to ESMF not provided.")
-  endif()
-
-  list( APPEND FV3BASEDMODEL_LIBRARY ${ESMF_PATH}/lib/libesmf.a)
-  list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include/esmf)
-
-  #FMS (seperate package for fv3-jedi-lm)
+  #FMS
   find_library(FMS_LIBRARY GFDL_fms_r8 PATHS ${FV3BASEDMODEL_PATH}/lib/)
   set (FMS_INCLUDE_DIR ${FV3BASEDMODEL_PATH}/include/GFDL_fms_r8)
 
@@ -84,21 +166,36 @@ elseif (GFS_FOUND)
 
   message("Found GFS model, building library and include lists")
 
+  #NEMSfv3gfs libraries (order from fv3.mk)
   list( APPEND GFS_DEPS fv3cap
                         fv3core
-                        fv3cpl
                         fv3io
-                        gfsphys
                         ipd
-                        stochastic_physics)
-
+                        gfsphys
+                        fv3cpl
+                        stochastic_physics )
   foreach(GFS_DEP ${GFS_DEPS})
-    find_library(LIBTMP ${GFS_DEP} PATHS ${FV3BASEDMODEL_PATH}/)
-    list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
+    list( APPEND FV3BASEDMODEL_LIBRARY ${FV3BASEDMODEL_PATH}/FV3_INSTALL/lib${GFS_DEP}.a)
   endforeach()
 
+  #NEMSfv3gfs includes
   list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${FV3BASEDMODEL_PATH})
+  list( APPEND GFS_INCS FV3_INSTALL
+                        atmos_cubed_sphere
+                        io
+                        fms
+                        gfsphysics
+                        cpl
+                        ipd )
+  foreach(GFS_INC ${GFS_INCS})
+    list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${FV3BASEDMODEL_PATH}/${GFS_INC})
+  endforeach()
 
+  #FMS (seperate package for fv3-jedi-lm)
+  find_library(FMS_LIBRARY fms PATHS /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/fms/build/lib)
+  set (FMS_INCLUDE_DIR /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/fms/build/module)
+
+  #Supporting libraries
   list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/nemsio/v2.2.3/libnemsio_v2.2.3.a)
   list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/bacio/v2.0.1/libbacio_v2.0.1_4.a)
   list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/sp/v2.0.2/libsp_v2.0.2_d.a)
@@ -106,15 +203,9 @@ elseif (GFS_FOUND)
   list( APPEND FV3BASEDMODEL_LIBRARY /scratch3/NCEPDEV/nwprod/lib/w3nco/v2.0.6/libw3nco_v2.0.6_d.a)
 
   #ESMF
-  #find_library(LIBTMP esmf PATHS ${ESMF_PATH}/lib)
-  #list( APPEND FV3BASEDMODEL_LIBRARY ${LIBTMP})
   list( APPEND FV3BASEDMODEL_LIBRARY ${ESMF_PATH}/lib/libesmf.a)
   list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/include)
   list( APPEND FV3BASEDMODEL_INCLUDE_DIR ${ESMF_PATH}/mod)
-
-  #FMS (seperate package for fv3-jedi-lm)
-  find_library(FMS_LIBRARY fms PATHS /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/fms/build/lib)
-  set (FMS_INCLUDE_DIR /scratch4/NCEPDEV/nems/save/Jun.Wang/jedi/20181109/fv3-bundle/fms/build/module)
 
 endif()
 
