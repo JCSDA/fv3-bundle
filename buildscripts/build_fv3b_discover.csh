@@ -41,7 +41,7 @@ if ($1 == "INT" || $1 == "Int" || $1 == "Intel"  || $1 == "intel" || $1 == "int"
 
    #These two next lines should match
    set JEDI_MODULES = /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int17.0.7.259
-   #set JEDI_MODULES = /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int18.0.3.222
+   #set JEDI_MODULES = /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_int18.0.5.274
    source $JEDI_MODULES
 
    set MPIEXEC = `which mpirun`
@@ -130,6 +130,7 @@ if ($3 == "clean" || ! -d $JEDI_BUILD) then
        -DNETCDF_PATH=$NETCDF \
        -DMPIEXEC=$MPIEXEC \
        -DCOMPDEFS_FV3JEDI=$COMPDEFS_FV3JEDI \
+       -DEXTRA_COMPFLAGS_FV3JEDILM="$EXTRA_COMPFLAGS_FV3JEDI" \
        -DEXTRA_COMPFLAGS_FV3JEDI="$EXTRA_COMPFLAGS_FV3JEDI" \
 #       -DFV3BASEDMODEL_PATH=/gpfsm/dnb31/drholdaw/GEOSagcm-Jason-GH/Linux/ \
        -DBASELIBDIR=${BASELIBDIR} \
