@@ -78,86 +78,79 @@ if (GEOS_FOUND)
   #ls -lt
   list( APPEND GEOS_DEPS GEOSgcs_GridComp
                          GEOSgcm_GridComp
-                         GEOSmkiau_GridComp
                          GEOSagcm_GridComp
+                         GEOSmkiau_GridComp
                          GEOSphysics_GridComp
-                         GEOSsurface_GridComp
-                         GEOSland_GridComp
-                         GEOScatch_GridComp
-                         GEOScatch_GridComp_openmp
-                         GEOScatchCN_GridComp
-                         GEOSmoist_GridComp
-                         GEOScatchCN_GridComp_openmp
                          GEOSradiation_GridComp
                          GEOSsolar_GridComp
                          GEOSirrad_GridComp
-                         GEOSchem_GridComp
-                         TR_GridComp
                          RRTMG
-                         RRTMG_SW
-                         GEOSsatsim_GridComp
-                         GMIchem_GridComp
-                         GOCART_GridComp
-                         MAMchem_GridComp
-                         HEMCO_GridComp
-                         CARMAchem_GridComp
-                         BRC_GridComp
-                         NI_GridComp
-                         CH4_GridComp
-                         SU_GridComp
-                         Rn_GridComp
-                         OC_GridComp
-                         GEOSsaltwater_GridComp
-                         GEOSachem_GridComp
-                         BC_GridComp
-                         SS_GridComp
-                         GEOSlandice_GridComp
-                         DNA_GridComp
-                         GAAS_GridComp
-                         DU_GridComp
-                         StratChem_GridComp
-                         GEOSroute_GridComp
-                         GEOSvegdyn_GridComp
-                         GEOSturbulence_GridComp
-                         GEOS_LandShared
-                         CFC_GridComp
-                         MATRIXchem_GridComp
-                         CO_GridComp
-                         CO2_GridComp
-                         RRTMG_mods
-                         GEOSlake_GridComp
-                         RRTMG_SW_mods
-                         O3_GridComp
                          GEOSgwd_GridComp
-                         GEOSpchem_GridComp
-                         GEOS_SurfaceShared
+                         RRTMG_mods
+                         RRTMG_SW
+                         RRTMG_SW_mods
+                         GEOSsatsim_GridComp
                          GEOS_RadiationShared
+                         GEOSmoist_GridComp
+                         GEOSturbulence_GridComp
+                         GEOSsurface_GridComp
+                         GEOSlake_GridComp
+                         GEOSlandice_GridComp
+                         GEOSsaltwater_GridComp
+                         GEOSland_GridComp
+                         GEOScatch_GridComp
+                         GEOScatchCN_GridComp
+                         GEOSvegdyn_GridComp
+                         GEOS_LandShared
+                         GEOS_SurfaceShared
+                         GEOSchem_GridComp
+                         StratChem_GridComp
+                         GEOSpchem_GridComp
+                         GEOSachem_GridComp
+                         GMIchem_GridComp
+                         GAAS_GridComp
+                         GOCART_GridComp
+                         CFC_GridComp
+                         CARMAchem_GridComp
+                         Rn_GridComp
+                         BC_GridComp
+                         BRC_GridComp
+                         CO2_GridComp
+                         CO_GridComp
+                         DU_GridComp
+                         O3_GridComp
+                         OC_GridComp
+                         SS_GridComp
+                         SU_GridComp
+                         CH4_GridComp
+                         NI_GridComp
+                         MAMchem_GridComp
+                         TR_GridComp
+                         MATRIXchem_GridComp
+                         DNA_GridComp
+                         HEMCO_GridComp
                          GEOSsuperdyn_GridComp
+                         FVdycore_GridComp
                          FVdycoreCubed_GridComp
                          ARIESg3_GridComp
+                         GEOSdatmodyn_GridComp
                          fvdycore
-                         FVdycore_GridComp
+                         GMAO_pilgrim
                          GEOSogcm_GridComp
                          GuestOcean_GridComp
-                         NSIDC-OSTIA_SST-ICE_blend
-                         GEOSdatmodyn_GridComp
+                         GEOSdatasea_GridComp
                          GEOSdataseaice_GridComp
                          GEOSorad_GridComp
-                         GEOSdatasea_GridComp
-                         GMAO_hermes
                          LANL_cice
+                         NCEP_sp_r4i4
                          Chem_Shared
                          Chem_Base
                          GEOS_Shared
                          MAPL_Base
-                         GMAO_pilgrim
-                         NCEP_sp_r8i8
-                         NCEP_sp_r8i4
-                         NCEP_sp_r4i4
                          GMAO_pFIO
-                         MAPL_cfio
-                         GMAO_gfio
-                         GMAO_eu
+                         MAPL_cfio_r4
+                         GMAO_gfio_r4
+                         GMAO_hermes
                          GMAO_mpeu )
   
   foreach(GEOS_DEP ${GEOS_DEPS})

@@ -57,10 +57,10 @@ else if ($1 == "GCC" || $1 == "gcc" || $1 == "GNU" || $1 == "gnu") then
    set JEDI_MODULES = /gpfsm/dnb04/projects/p72/drholdaw/JediShared/modules/jedi_modules_gcc7.3
    source $JEDI_MODULES
 
-   set = MPIEXEC `which mpirun`
-   set = CPCcomp mpicxx
-   set = CCcomp mpicc
-   set = F90comp mpifort
+   set MPIEXEC = `which mpirun`
+   set CPCcomp = mpicxx
+   set CCcomp = mpicc
+   set F90comp = mpifort
 
    set JEDI_BUILD = $FV3JEDI_ROOT/build_gcc_$2
 
@@ -73,14 +73,24 @@ set NETCDF = $JEDI_BUILD/netcdf
 set NETCDF_INCLUDE_DIRS = $JEDI_BUILD/netcdf/include #Need in order not to auto redefine NETCDF_LIBRARIES
 set NETCDF_LIBRARIES = "$JEDI_BUILD/netcdf/lib/libnetcdf.a;$JEDI_BUILD/netcdf/lib/libnetcdff.a;${BASELIBDIR}/lib/libhdf5_hl.a;${BASELIBDIR}/lib/libhdf5.a;${BASELIBDIR}/lib/libcurl.a;/usr/lib64/libcrypto.so;/usr/lib64/libssl.so;${BASELIBDIR}/lib/libmfhdf.a;${BASELIBDIR}/lib/libdf.a;${BASELIBDIR}/lib/libjpeg.a"
 
-#FMS/FV3 COMPDEFS
-set COMPDEFS = "-DsysLinux;-DESMA64;-DHAS_NETCDF4;-DHAS_NETCDF3;-DH5_HAVE_PARALLEL;-DNETCDF_NEED_NF_MPIIO;-DEIGHT_BYTE;-DSPMD;-DTIMING;-Duse_libMPI;-Duse_netCDF;-DHAVE_SHMEM;-DMAPL_MODE;-DOLDMPP"
 
-set FV3BASEDMODEL_PATH = /gpfsm/dnb04/projects/p72/drholdaw/GEOSgcm/Linux/
-set ESMF_PATH = ${BASELIBDIR}
+#Compiler definitions matching those from GEOS
+set COMPDEFS_FV3JEDI = "-DsysLinux;-DESMA64;-DHAS_NETCDF4;-DHAS_NETCDF3;-DH5_HAVE_PARALLEL;-DNETCDF_NEED_NF_MPIIO;-DMAPL;-DDO_COMMAS;-DTWO_SIDED_COMM;-D__ifort_18;-D__ifort_18;-DHAVE_SHMEM;-DUSE_CUBEDSPHERE"
+
+
+#Compiler flags matching those from GEOS
+if ($2 == "debug") then
+  set EXTRA_COMPFLAGS_FV3JEDI = "-O0 -g -ftz -align all -fno-alias -traceback -debug -nolib-inline -fno-inline-functions -assume protect_parens,minus0 -prec-div -prec-sqrt -check bounds -check uninit -fp-stack-check -warn unused  -init=snan,arrays -traceback -assume realloc_lhs -fPIC -fpe0 -fp-model source -heap-arrays 32 -assume noold_maxminloc -align dcommons"
+else if ($2 == "release") then
+  set EXTRA_COMPFLAGS_FV3JEDI = "-O3 -qopt-report0 -ftz -align all -fno-alias -traceback -assume realloc_lhs -fPIC -fpe0 -fp-model source -heap-arrays 32 -assume noold_maxminloc -fimf-arch-consistency=true -align dcommons"
+endif
+
 
 #Add Basebin to path, configs for libraries
 set path = (${path} ${BASELIBDIR}/bin)
+
+
+setenv FV3BASEDMODEL_PATH /gpfsm/dnb31/drholdaw/GEOSagcm-Jason-GH/Linux/
 
 if ($3 == "clean" || ! -d $JEDI_BUILD) then
 
@@ -119,9 +129,10 @@ if ($3 == "clean" || ! -d $JEDI_BUILD) then
        -DNETCDF_INCLUDE_DIRS=$NETCDF_INCLUDE_DIRS \
        -DNETCDF_PATH=$NETCDF \
        -DMPIEXEC=$MPIEXEC \
-       -DCOMPDEFS=$COMPDEFS \
-       -DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH \
-       -DESMF_PATH=$ESMF_PATH \
+       -DCOMPDEFS_FV3JEDI=$COMPDEFS_FV3JEDI \
+       -DEXTRA_COMPFLAGS_FV3JEDI="$EXTRA_COMPFLAGS_FV3JEDI" \
+#       -DFV3BASEDMODEL_PATH=/gpfsm/dnb31/drholdaw/GEOSagcm-Jason-GH/Linux/ \
+       -DBASELIBDIR=${BASELIBDIR} \
        ${FV3JEDI_SRC}
 
 endif
