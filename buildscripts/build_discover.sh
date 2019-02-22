@@ -3,39 +3,57 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c gcc-7.3|intel-17.0.7.259] [-b debug|release] [-m fv3jedi|geos|gfs] [-n <1-12>] [-x]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c gcc-7.3|intel-17.0.7.259|intel-18.0.5.274] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
-# Set defaults for input arguments.
+# Set input argument defaults.
 compiler="gcc-7.3"
 build="debug"
 clean="NO"
-model="fv3jedi"
+model="default"
 nthreads=12
+run_ctest="ON"
+verbose="OFF"
+
+# Set defaults for model paths.
 geos_path="/gpfsm/dnb31/drholdaw/GEOSagcm-Jason-GH/Linux"
+gfs_path="/dev/null"
 
 
 # Parse input arguments.
-while getopts 'xhc:b:m:n:' OPTION; do
+while getopts 'vtxhc:b:m:n:' OPTION; do
   case "$OPTION" in
-    x)
-        clean="YES"
-        ;;
     b)
         build="$OPTARG"
-        [[ "$build" == "debug" || "$build" == "release" ]] || usage
+        [[ "$build" == "debug" || \
+           "$build" == "release" ]] || usage
         ;;
     c)
         compiler="$OPTARG"
-        [[ "$compiler" == "gcc-7.3" || "$compiler" == "intel-17.0.7.259" ]] || usage
+        [[ "$compiler" == "gcc-7.3" || \
+           "$compiler" == "intel-17.0.7.259" || \
+           "$compiler" == "intel-18.0.5.274" ]] || usage
         ;;
     m)
         model="$OPTARG"
-        [[ "$model" == "fv3jedi" || "$model" == "geos" || "$model" == "gfs" ]] || usage
+        [[ "$model" == "default" || \
+           "$model" == "geos" || \
+           "$model" == "gfs" ]] || usage
         ;;
     n)
         n="$OPTARG"
         [[ $n -lt 1 || $n -gt 12 ]] && usage
         nthreads=$n
+        ;;
+    t)
+        run_ctest="$OPTARG"
+        [[ "$run_ctest" == "ON" || \
+           "$run_ctest" == "OFF" ]] || usage
+        ;;
+    x)
+        clean="YES"
+        ;;
+    v)
+        VERBOSE="ON"
         ;;
     h|?)
         usage
@@ -44,27 +62,43 @@ while getopts 'xhc:b:m:n:' OPTION; do
 done
 shift "$(($OPTIND -1))"
 
-echo "compiler = $compiler"
+echo "Summary of input arguments:"
 echo "   build = $build"
+echo "compiler = $compiler"
 echo "   model = $model"
 echo " threads = $nthreads"
+echo "   ctest = $run_ctest"
 echo "   clean = $clean"
+echo " verbose = $verbose"
+echo
 
-if [[ $model == "geos" ]]; then
-    read -p "Enter the path for GEOS model [default: $geos_path] " choice
-    [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$geos_path || FV3BASEDMODEL_PATH=$choice
-fi
-
-# Set up JEDI specific modules.
+# Load JEDI modules.
 source $MODULESHOME/init/sh
 module purge
 module use -a /discover/nobackup/projects/gmao/obsdev/rmahajan/opt/modulefiles
 module load apps/jedi/$compiler
 module list
 
+# Set up model specific paths for ecbuild.
+case "$model" in
+    "default" )
+        MODEL=""
+        ;;
+    "geos" )
+        read -p "Enter the path for GEOS model [default: $geos_path] " choice
+        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$geos_path || FV3BASEDMODEL_PATH=$choice
+        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH -DBASELIBDIR=$BASELIBDIR"
+        ;;
+    "gfs" )
+        read -p "Enter the path for GFS model [default: $gfs_path] " choice
+        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$gfs_path || FV3BASEDMODEL_PATH=$choice
+        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH"
+        ;;
+esac
+
 # Set up FV3JEDI specific paths.
 FV3JEDI_SRC=$(pwd)
-FV3JEDI_BUILD=${FV3JEDI_SRC}/build-$compiler-$build
+FV3JEDI_BUILD=${FV3JEDI_SRC}/build-$compiler-$build-$model
 
 case "$clean" in
     Y|YES ) rm -rf $FV3JEDI_BUILD ;;
@@ -73,9 +107,9 @@ esac
 
 mkdir -p $FV3JEDI_BUILD && cd $FV3JEDI_BUILD
 
-ecbuild --build=$build -DMPIEXEC=$MPIEXEC $FV3JEDI_SRC
+ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $FV3JEDI_SRC
 make -j$nthreads
 
-ctest
+[[ $run_ctest == "ON" ]] && ctest
 
 exit 0
