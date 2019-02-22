@@ -11,8 +11,9 @@
 *.sublime-workspace
 *~
 
-#Ignore the contents of these directories
-build_*
+# Ignore the contents of these directories
+build_*/
+build-*/
 FV3/
 
 eckit/
