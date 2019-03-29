@@ -34,7 +34,7 @@ ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"    
 #Find GEOS or GFS and thus the version of FMS for fv3-jedi-lm
 #find_package( FV3BASEDMODEL )
 #if (NOT FV3BASEDMODEL_FOUND)
-#    ecbuild_bundle( PROJECT fms       GIT "https://github.com/JCSDA/FMS.git"                    BRANCH develop        UPDATE )
+    ecbuild_bundle( PROJECT fms       GIT "https://github.com/JCSDA/FMS.git"                    BRANCH develop        UPDATE )
 #endif()
 
 ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git"   BRANCH develop        UPDATE )
