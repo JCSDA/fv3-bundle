@@ -20,7 +20,7 @@ gfs_path="/dev/null"
 
 
 # Parse input arguments.
-while getopts 'vtxhc:b:m:n:' OPTION; do
+while getopts 'v:t:xhc:b:m:n:' OPTION; do
   case "$OPTION" in
     b)
         build="$OPTARG"
