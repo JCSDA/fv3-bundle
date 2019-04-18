@@ -14,6 +14,9 @@ cmake_minimum_required( VERSION 3.3.2 FATAL_ERROR )
 set( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake;${CMAKE_CURRENT_SOURCE_DIR}/ecbuild/cmake;${CMAKE_MODULE_PATH}")
 include( ecbuild_bundle )
 
+#Default release mode
+set( ECBUILD_DEFAULT_BUILD_TYPE Release )
+
 set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 
 ecbuild_bundle_initialize()
@@ -34,7 +37,7 @@ ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"    
 #Find GEOS or GFS and thus the version of FMS for fv3-jedi-lm
 #find_package( FV3BASEDMODEL )
 #if (NOT FV3BASEDMODEL_FOUND)
-    ecbuild_bundle( PROJECT fms       GIT "https://github.com/JCSDA/FMS.git"                    BRANCH develop        UPDATE )
+    ecbuild_bundle( PROJECT fms       GIT "https://github.com/JCSDA/FMS.git"                    BRANCH dev/master-ecbuild        UPDATE )
 #endif()
 
 ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git"   BRANCH develop        UPDATE )
