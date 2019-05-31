@@ -98,11 +98,9 @@ case "$model" in
 esac
 
 # Set up FV3JEDI specific paths.
-cwd=$(pwd)
+FV3JEDI_BUILD="$PWD/build-$compiler-$build-$model"
 cd $(dirname $0)/..
 FV3JEDI_SRC=$(pwd)
-cd $cwd
-FV3JEDI_BUILD="$PWD/build-$compiler-$build-$model"
 
 case "$clean" in
     Y|YES ) rm -rf $FV3JEDI_BUILD ;;
