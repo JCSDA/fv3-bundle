@@ -35,15 +35,15 @@ ecbuild_bundle( PROJECT fckit         GIT "https://github.com/JCSDA/fckit.git"  
 # ------------------------------
 #ecbuild_bundle( PROJECT gsw           GIT "https://github.com/JCSDA/GSW-Fortran.git"          BRANCH develop             UPDATE )
 #ecbuild_bundle( PROJECT ropp-ufo      GIT "https://github.com/JCSDA/ropp-test.git"            BRANCH develop             UPDATE )
-#ecbuild_bundle( PROJECT geos-aero     GIT "https://github.com/JCSDA/geos-aero.git"            BRANCH develop             UPDATE )
+ecbuild_bundle( PROJECT geos-aero     GIT "https://github.com/JCSDA/geos-aero.git"            BRANCH develop             UPDATE )
 ecbuild_bundle( PROJECT crtm          GIT "https://github.com/JCSDA/crtm.git"                 BRANCH develop             UPDATE )
 
 # Core JEDI repositories
 # ----------------------
-ecbuild_bundle( PROJECT saber         GIT "https://github.com/JCSDA/saber.git"                BRANCH develop             UPDATE )
+#ecbuild_bundle( PROJECT saber         GIT "https://github.com/JCSDA/saber.git"                BRANCH develop             UPDATE )
 ecbuild_bundle( PROJECT oops          GIT "https://github.com/JCSDA/oops.git"                 BRANCH develop             UPDATE )
-ecbuild_bundle( PROJECT ioda          GIT "https://github.com/JCSDA/ioda.git"                 BRANCH develop             UPDATE )
-ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"                  BRANCH develop             UPDATE )
+ecbuild_bundle( PROJECT ioda          GIT "https://github.com/JCSDA/ioda.git"                 BRANCH feature/geos-aero             UPDATE )
+ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"                  BRANCH feature/geos-aero             UPDATE )
 
 # FV3 based model and/or FMS
 # --------------------------
