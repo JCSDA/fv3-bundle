@@ -35,6 +35,7 @@ ecbuild_bundle( PROJECT fckit         GIT "https://github.com/JCSDA/fckit.git"  
 # ------------------------------
 #ecbuild_bundle( PROJECT gsw           GIT "https://github.com/JCSDA/GSW-Fortran.git"          BRANCH develop             UPDATE )
 #ecbuild_bundle( PROJECT ropp-ufo      GIT "https://github.com/JCSDA/ropp-test.git"            BRANCH develop             UPDATE )
+#ecbuild_bundle( PROJECT geos-aero     GIT "https://github.com/JCSDA/geos-aero.git"            BRANCH develop             UPDATE )
 ecbuild_bundle( PROJECT crtm          GIT "https://github.com/JCSDA/crtm.git"                 BRANCH develop             UPDATE )
 
 # Core JEDI repositories
