@@ -16,15 +16,16 @@ build_*/
 build-*/
 FV3/
 
+crtm/
 eckit/
 fckit/
-oops/
-crtm/
-ioda/
-ufo/
 fms/
-fv3-jedi-lm/
 fv3-jedi/
+fv3-jedi-lm/
+geos-aero/
+ioda/
+oops/
+ufo/
 saber/
 
 gsw/
