@@ -25,7 +25,7 @@ ecbuild_requires_macro_version( 2.9 )
 
 # Eckit (usually not compiled inline)
 # -----------------------------------
-#ecbuild_bundle( PROJECT eckit         GIT "https://github.com/ECMWF/eckit.git"                TAG 1.1.0 )
+ecbuild_bundle( PROJECT eckit         GIT "https://github.com/ECMWF/eckit.git"                TAG 1.1.0 )
 
 # FCKIT
 # -----
