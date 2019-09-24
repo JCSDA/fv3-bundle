@@ -54,6 +54,7 @@ ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"    
 
 # FV3-JEDI and the linearized model
 # ---------------------------------
+ecbuild_bundle( PROJECT femps         GIT "https://github.com/JCSDA/femps.git"                BRANCH develop             UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git" BRANCH develop             UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi      GIT "https://github.com/JCSDA/fv3-jedi.git"             BRANCH develop             UPDATE )
 
