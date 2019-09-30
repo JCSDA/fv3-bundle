@@ -52,11 +52,15 @@ ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"    
     ecbuild_bundle( PROJECT fms       GIT "https://github.com/JCSDA/FMS.git"                  BRANCH dev/master-ecbuild  UPDATE )
 #endif()
 
+# GFS model
+# ---------
+ecbuild_bundle( PROJECT gfs           GIT "https://github.com/danholdaway/gfs.git"            BRANCH develop  UPDATE )
+
 # FV3-JEDI and the linearized model
 # ---------------------------------
 ecbuild_bundle( PROJECT femps         GIT "https://github.com/JCSDA/femps.git"                BRANCH develop             UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi-lm   GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git" BRANCH develop             UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi      GIT "https://github.com/JCSDA/fv3-jedi.git"             BRANCH develop             UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi      GIT "https://github.com/JCSDA/fv3-jedi.git"             BRANCH feature/gfs             UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------
