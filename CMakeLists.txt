@@ -55,4 +55,9 @@ ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/JCSDA/fv3-jedi.git" 
 
 # Build Doxygen documentation
 # ---------------------------
-option(BUILD_FV3_BUNDLE_DOC "Build documenta
+option(BUILD_FV3_BUNDLE_DOC "Build documentation" OFF)
+if(BUILD_FV3_BUNDLE_DOC)
+   add_subdirectory( Documentation )
+endif(BUILD_FV3_BUNDLE_DOC)
+
+ecbuild_bundle_finalize()
