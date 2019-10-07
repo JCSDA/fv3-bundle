@@ -52,16 +52,14 @@ endif()
 # GEOS model
 # ----------
 if (${BUILD_GEOS} MATCHES YES)
-  find_package( GEOS )
+  find_package( GEOS ) # GEOS+FMS
 endif()
 
 # GFS model
 # ---------
-message("BUILD_GFSBUILD_GFSBUILD_GFS ${BUILD_GFS}")
-
 if (${BUILD_GFS} MATCHES YES)
-  ecbuild_bundle( PROJECT nceplibs      GIT "https://github.com/danholdaway/nceplibs.git" BRANCH develop UPDATE )
-  ecbuild_bundle( PROJECT gfs           GIT "https://github.com/danholdaway/gfs.git"      BRANCH develop UPDATE )
+  ecbuild_bundle( PROJECT nceplibs GIT "https://github.com/danholdaway/nceplibs.git" BRANCH develop UPDATE )
+  ecbuild_bundle( PROJECT gfs      GIT "https://github.com/danholdaway/gfs.git"      BRANCH develop UPDATE )
 endif()
 
 # fv3-jedi and associated repositories
