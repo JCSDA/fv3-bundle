@@ -16,23 +16,33 @@ build_*/
 build-*/
 FV3/
 
-# Repos for GFS
+# ecmwf libraries
+atlas/
+eckit/
+fckit/
+
+# Jedi core repos
+saber/
+ioda/
+oops/
+ufo/
+
+# FMS
+fms/
+
+# GFS
 nceplibs/
 gfs/
 
-eckit/
-fckit/
-oops/
-crtm/
-ioda/
-ufo/
-fms/
+# fv3-jedi and related repos
 femps/
 fv3-jedi-lm/
 fv3-jedi/
-saber/
 
+# Opservation operators
+crtm/
 gsw/
+geos-aero/
 ropp-ufo/
 
 Testing/
