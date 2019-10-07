@@ -31,10 +31,10 @@ ecbuild_bundle( PROJECT fckit GIT "https://github.com/JCSDA/fckit.git" BRANCH de
 
 # External observation operators
 # ------------------------------
-#ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/JCSDA/geos-aero.git"    BRANCH develop UPDATE )
-#ecbuild_bundle( PROJECT gsw       GIT "https://github.com/JCSDA/GSW-Fortran.git"  BRANCH develop UPDATE )
-#ecbuild_bundle( PROJECT ropp-ufo  GIT "https://github.com/JCSDA/ropp-test.git"    BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT crtm      GIT "https://github.com/JCSDA/crtm.git"          BRANCH develop UPDATE )
+#ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/JCSDA/geos-aero.git"   BRANCH develop UPDATE )
+#ecbuild_bundle( PROJECT gsw       GIT "https://github.com/JCSDA/GSW-Fortran.git" BRANCH develop UPDATE )
+#ecbuild_bundle( PROJECT ropp-ufo  GIT "https://github.com/JCSDA/ropp-test.git"   BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT crtm      GIT "https://github.com/JCSDA/crtm.git"        BRANCH develop UPDATE )
 
 # Core JEDI repositories
 # ----------------------
@@ -45,18 +45,30 @@ ecbuild_bundle( PROJECT ufo   GIT "https://github.com/JCSDA/ufo.git"   BRANCH de
 
 # FMS library
 # -----------
-ecbuild_bundle( PROJECT fms GIT "https://github.com/JCSDA/FMS.git" BRANCH dev/master-ecbuild UPDATE )
+if (${BUILD_GEOS} MATCHES NO)
+  ecbuild_bundle( PROJECT fms GIT "https://github.com/JCSDA/FMS.git" BRANCH dev/master-ecbuild UPDATE )
+endif()
+
+# GEOS model
+# ----------
+if (${BUILD_GEOS} MATCHES YES)
+  find_package( GEOS )
+endif()
 
 # GFS model
 # ---------
-ecbuild_bundle( PROJECT nceplibs      GIT "https://github.com/danholdaway/nceplibs.git"       BRANCH develop             UPDATE )
-ecbuild_bundle( PROJECT gfs           GIT "https://github.com/danholdaway/gfs.git"            BRANCH develop             UPDATE )
+message("BUILD_GFSBUILD_GFSBUILD_GFS ${BUILD_GFS}")
+
+if (${BUILD_GFS} MATCHES YES)
+  ecbuild_bundle( PROJECT nceplibs      GIT "https://github.com/danholdaway/nceplibs.git" BRANCH develop UPDATE )
+  ecbuild_bundle( PROJECT gfs           GIT "https://github.com/danholdaway/gfs.git"      BRANCH develop UPDATE )
+endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------
 ecbuild_bundle( PROJECT femps       GIT "https://github.com/JCSDA/femps.git"                BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/JCSDA/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/JCSDA/fv3-jedi.git"             BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/JCSDA/fv3-jedi.git"             BRANCH feature/gfs UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------

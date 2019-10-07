@@ -78,24 +78,25 @@ source $MODULESHOME/init/sh
 module purge
 module use -a /discover/nobackup/projects/gmao/obsdev/rmahajan/opt/modulefiles
 module load apps/jedi/$compiler
-module list
 
 # Set up model specific paths for ecbuild.
 case "$model" in
     "default" )
-        MODEL=""
+        MODEL="-DBUILD_GFS=NO -DBUILD_GEOS=NO"
         ;;
     "geos" )
         read -p "Enter the path for GEOS model [default: $geos_path] " choice
-        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$geos_path || FV3BASEDMODEL_PATH=$choice
-        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH -DBASELIBDIR=$BASELIBDIR"
+        [[ $choice == "" ]] && GEOS_PATH=$geos_path || GEOS_PATH=$choice
+        MODEL="-DBUILD_GFS=NO -DBUILD_GEOS=YES -DGEOS_PATH=$GEOS_PATH -DBASELIBDIR=$BASELIBDIR"
         ;;
     "gfs" )
-        read -p "Enter the path for GFS model [default: $gfs_path] " choice
-        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$gfs_path || FV3BASEDMODEL_PATH=$choice
-        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH"
+        module use -a /discover/nobackup/projects/gmao/obsdev/drholdaw/opt/modulefiles
+        module load apps/gfs/$compiler
+        MODEL="-DBUILD_GFS=YES -DBUILD_GEOS=NO"
         ;;
 esac
+
+module list
 
 # Set up FV3JEDI specific paths.
 FV3JEDI_BUILD="$PWD/build-$compiler-$build-$model"
