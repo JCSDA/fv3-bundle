@@ -44,17 +44,14 @@ ecbuild_bundle( PROJECT oops          GIT "https://github.com/JCSDA/oops.git"   
 ecbuild_bundle( PROJECT ioda          GIT "https://github.com/JCSDA/ioda.git"                 BRANCH develop             UPDATE )
 ecbuild_bundle( PROJECT ufo           GIT "https://github.com/JCSDA/ufo.git"                  BRANCH develop             UPDATE )
 
-# FV3 based model and/or FMS
-# --------------------------
-#Find GEOS or GFS and thus the version of FMS for fv3-jedi-lm
-#find_package( FV3BASEDMODEL )
-#if (NOT FV3BASEDMODEL_FOUND)
-    ecbuild_bundle( PROJECT fms       GIT "https://github.com/JCSDA/FMS.git"                  BRANCH dev/master-ecbuild  UPDATE )
-#endif()
+# FMS Library
+# -----------
+ecbuild_bundle( PROJECT fms           GIT "https://github.com/JCSDA/FMS.git"                  BRANCH dev/master-ecbuild  UPDATE )
 
 # GFS model
 # ---------
-ecbuild_bundle( PROJECT gfs           GIT "https://github.com/danholdaway/gfs.git"            BRANCH develop  UPDATE )
+ecbuild_bundle( PROJECT nceplibs      GIT "https://github.com/danholdaway/nceplibs.git"       BRANCH develop             UPDATE )
+ecbuild_bundle( PROJECT gfs           GIT "https://github.com/danholdaway/gfs.git"            BRANCH develop             UPDATE )
 
 # FV3-JEDI and the linearized model
 # ---------------------------------
@@ -70,8 +67,3 @@ if(BUILD_FV3_BUNDLE_DOC)
 endif(BUILD_FV3_BUNDLE_DOC)
 
 ecbuild_bundle_finalize()
-
-
-
-
-

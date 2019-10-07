@@ -16,6 +16,10 @@ build_*/
 build-*/
 FV3/
 
+# Repos for GFS
+nceplibs/
+gfs/
+
 eckit/
 fckit/
 oops/
@@ -26,7 +30,6 @@ fms/
 femps/
 fv3-jedi-lm/
 fv3-jedi/
-gfs/
 saber/
 
 gsw/
