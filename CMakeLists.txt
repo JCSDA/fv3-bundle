@@ -43,21 +43,26 @@ ecbuild_bundle( PROJECT oops  GIT "https://github.com/JCSDA/oops.git"  BRANCH de
 ecbuild_bundle( PROJECT ioda  GIT "https://github.com/JCSDA/ioda.git"  BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT ufo   GIT "https://github.com/JCSDA/ufo.git"   BRANCH develop UPDATE )
 
+# Options for building with GEOS or GFS models
+# --------------------------------------------
+option(BUILD_WITH_GEOS "Build with GEOS model" OFF)
+option(BUILD_WITH_GFS  "Build with GFS model"  OFF)
+
 # FMS library
 # -----------
-if (${BUILD_GEOS} MATCHES NO)
+if (NOT ${BUILD_WITH_GEOS})
   ecbuild_bundle( PROJECT fms GIT "https://github.com/JCSDA/FMS.git" BRANCH dev/master-ecbuild UPDATE )
 endif()
 
 # GEOS model
 # ----------
-if (${BUILD_GEOS} MATCHES YES)
-  find_package( GEOS ) # GEOS+FMS
+if (${BUILD_WITH_GEOS})
+  find_package(GEOS) # GEOS+FMS
 endif()
 
 # GFS model
 # ---------
-if (${BUILD_GFS} MATCHES YES)
+if (${BUILD_WITH_GFS})
   ecbuild_bundle( PROJECT nceplibs GIT "https://github.com/danholdaway/nceplibs.git" BRANCH develop UPDATE )
   ecbuild_bundle( PROJECT gfs      GIT "https://github.com/danholdaway/gfs.git"      BRANCH develop UPDATE )
 endif()

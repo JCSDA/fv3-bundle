@@ -82,17 +82,17 @@ module load apps/jedi/$compiler
 # Set up model specific paths for ecbuild.
 case "$model" in
     "default" )
-        MODEL="-DBUILD_GFS=NO -DBUILD_GEOS=NO"
+        MODEL=""
         ;;
     "geos" )
         read -p "Enter the path for GEOS model [default: $geos_path] " choice
         [[ $choice == "" ]] && GEOS_PATH=$geos_path || GEOS_PATH=$choice
-        MODEL="-DBUILD_GFS=NO -DBUILD_GEOS=YES -DGEOS_PATH=$GEOS_PATH -DBASELIBDIR=$BASELIBDIR"
+        MODEL="-DBUILD_WITH_GEOS=ON -DGEOS_PATH=$GEOS_PATH -DBASELIBDIR=$BASELIBDIR"
         ;;
     "gfs" )
         module use -a /discover/nobackup/projects/gmao/obsdev/drholdaw/opt/modulefiles
         module load apps/gfs/$compiler
-        MODEL="-DBUILD_GFS=YES -DBUILD_GEOS=NO"
+        MODEL="-DBUILD_WITH_GFS=ON"
         ;;
 esac
 
