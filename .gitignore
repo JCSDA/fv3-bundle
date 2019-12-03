@@ -23,6 +23,7 @@ fckit/
 ioda/
 oops/
 ufo/
+shallow-water/
 
 # fv3-jedi and related repos
 fms/
