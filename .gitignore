@@ -16,19 +16,26 @@ build_*/
 build-*/
 FV3/
 
-crtm/
+# Jedi Core repos
+atlas/
 eckit/
 fckit/
-fms/
-fv3-jedi/
-fv3-jedi-lm/
-geos-aero/
 ioda/
 oops/
 ufo/
+shallow-water/
+
+# fv3-jedi and related repos
+fms/
+femps/
+fv3-jedi-lm/
+fv3-jedi/
 saber/
 
+# Opservation operators
+crtm/
 gsw/
+geos-aero/
 ropp-ufo/
 
 Testing/

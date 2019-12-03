@@ -3,7 +3,7 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-7.3_openmpi-3.0.0|gcc-7.3_mpich-3.3|intel-18.0.5.274] [-b debug|release] [-m default|geos|gfs|geos-aero] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-7.3_openmpi-3.0.0|gcc-7.3_mpich-3.3|intel-18.0.5.274] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-17.0.7.259"
@@ -15,7 +15,7 @@ run_ctest="ON"
 verbose="OFF"
 
 # Set defaults for model paths.
-geos_path="/gpfsm/dnb31/drholdaw/Models/GEOS/GEOSagcm-Jason-GH/Linux/"
+geos_path="/gpfsm/dnb31/drholdaw/GEOSagcm-Jason-GH/Linux"
 gfs_path="/dev/null"
 
 
@@ -38,7 +38,6 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
         model="$OPTARG"
         [[ "$model" == "default" || \
            "$model" == "geos" || \
-           "$model" == "geos-aero" || \
            "$model" == "gfs" ]] || usage
         ;;
     n)
@@ -90,11 +89,6 @@ case "$model" in
         read -p "Enter the path for GEOS model [default: $geos_path] " choice
         [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$geos_path || FV3BASEDMODEL_PATH=$choice
         MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH -DBASELIBDIR=$BASELIBDIR"
-        ;;
-    "geos-aero" )
-        read -p "Enter the path for GEOS model where ChemBase is defined [default: $geos_path] " choice
-        [[ $choice == "" ]] && GEOSAEROCHEMBASE_PATH=$geos_path || GEOSAEROCHEMBASE_PATH=$choice
-        MODEL="-DGEOSAEROCHEMBASE_PATH=$GEOSAEROCHEMBASE_PATH -DBASELIBDIR=$BASELIBDIR"
         ;;
     "gfs" )
         read -p "Enter the path for GFS model [default: $gfs_path] " choice
