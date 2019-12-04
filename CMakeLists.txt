@@ -43,6 +43,10 @@ ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  BRANCH de
 ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH develop UPDATE )
 
+# Shallow water model
+# -------------------
+#ecbuild_bundle( PROJECT shallow-water GIT "https://github.com/jcsda/shallow-water.git" BRANCH develop UPDATE )
+
 # Options for building with GEOS or GFS models
 # --------------------------------------------
 option(BUILD_WITH_GEOS "Build with GEOS model" OFF)
