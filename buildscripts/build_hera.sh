@@ -11,7 +11,7 @@ build="release"
 clean="NO"
 model="default"
 nthreads=12
-run_ctest="ON"
+run_ctest="OFF"
 verbose="OFF"
 
 # Set defaults for model paths.
