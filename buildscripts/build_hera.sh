@@ -33,6 +33,7 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
     m)
         model="$OPTARG"
         [[ "$model" == "default" || \
+           "$model" == "geos" || \
            "$model" == "gfs" ]] || usage
         ;;
     n)
@@ -73,19 +74,25 @@ source $MODULESHOME/init/sh
 module purge
 module use -a /scratch1/NCEPDEV/da/Daniel.Holdaway/opt/modulefiles
 module load apps/jedi/$compiler
-module list
 
 # Set up model specific paths for ecbuild.
 case "$model" in
     "default" )
         MODEL=""
         ;;
+    "geos" )
+        read -p "Enter the path for GEOS model [default: $geos_path] " choice
+        [[ $choice == "" ]] && GEOS_PATH=$geos_path || GEOS_PATH=$choice
+        MODEL="-DBUILD_WITH_GEOS=ON -DGEOS_PATH=$GEOS_PATH -DBASELIBDIR=$BASELIBDIR"
+        ;;
     "gfs" )
-        read -p "Enter the path for GFS model [default: $gfs_path] " choice
-        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$gfs_path || FV3BASEDMODEL_PATH=$choice
-        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH"
+        module use -a /discover/nobackup/projects/gmao/obsdev/drholdaw/opt/modulefiles
+        module load apps/gfs/$compiler
+        MODEL="-DBUILD_WITH_GFS=ON"
         ;;
 esac
+
+module list
 
 # Set up FV3JEDI specific paths.
 FV3JEDI_BUILD="$PWD/build-$compiler-$build-$model"
