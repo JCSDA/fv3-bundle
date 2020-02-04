@@ -3,7 +3,7 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-7.3_openmpi-3.0.0|gcc-7.3_mpich-3.3|intel-18.0.5.274] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-7.3_openmpi-3.0.0] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-17.0.7.259"
@@ -76,7 +76,7 @@ echo
 # Load JEDI modules.
 source $MODULESHOME/init/sh
 module purge
-module use -a /discover/nobackup/projects/gmao/obsdev/rmahajan/opt/modulefiles
+module use -a /discover/nobackup/mmiesch/modules/modulefiles
 module load apps/jedi/$compiler
 module list
 
