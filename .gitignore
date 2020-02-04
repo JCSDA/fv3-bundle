@@ -20,6 +20,9 @@ FV3/
 atlas/
 eckit/
 fckit/
+odc/
+odyssey/
+ioda-converters/
 ioda/
 oops/
 ufo/
