@@ -1,66 +1,37 @@
-(C) Copyright 2017 UCAR
+### License:
 
-This software is licensed under the terms of the Apache Licence Version 2.0
-which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
+(C) Copyright 2017-2020 UCAR
 
---- Building the FV3 bundle ---
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-    cd /somewhere/to/store/source/code
-    git clone https://github.com/UCAR/fv3-bundle.git
+### Description:
 
-    cd /somewhere/to/build
-    ecbuild /somewhere/to/store/source/code/fv3-bundle
-    make -j4
+Bundle containing all the repositories that are needed to compile fv3-jedi, the interface between JEDI and FV3 based models (https://github.com/JCSDA/fv3-jedi)
 
-The ecbuild command above will clone all the source code for the projects defined in the
-CMakeLists.txt in the bundle and the make command will build them all.
+### Installation:
 
-To work with a different branch than the default for a given project, the branch must be
-modified in the CMakeLists.txt for the bundle.
+For details about JEDI, including installation instructions see: https://jointcenterforsatellitedataassimilation-jedi-docs.readthedocs-hosted.com/
 
-Note: ecbuild accepts all cmake flags, for example, compilers can be selected with:
-    ecbuild -DCMAKE_CXX_COMPILER=/path/to/gcc-7.2/bin/g++ ${SRC}
+If building on NASA's Discover, NOAA's Hera or MSU's Orion machines the provided build scripts are a convenient way of building:
 
-For testing (from build directory):
+    git clone https://github.com/jcsda/fv3-bundle
+    cd fv3-bundle
 
-    ctest
+Then to see the compiler options available on that machine do:
 
---- Working with the code ---
+    ./buildscripts/build_<machine>.sh -h
 
-The CMakeLists.txt file in this directory contains the list of the repositories included
-in the bundle and the branch to be used. The branch specified in the CMakeLists.txt is
-the one that will be compiled. When working with you own branch, the should be changed in
-the CMakeLists.txt file but it is not necessary to re-run ecbuild, make is enough.
+The first option listed is the default that would be chosen if no arguments are provided. Typically, the only options needed are `-c` for the compiler choice and `-b` for release or debug build mode.
 
-After the fisrt build, changes in the code can be tested by re-running only
-(from build directory):
+Example on Orion:
 
-    make -j4
-    ctest
+    ./buildscripts/build_orion.sh -b release
 
-By default, make will not update your local repository from the remote. To update all repositories
-in the bundle, run:
+Will build in release mode with the default compiler and then run all the tests for fv3-jedi.
 
-    make update
+Once the system is built with a particular compiler and build mode the build script should not be used again. If changes are made that need to be recompiled it is quickest to use make commands within the part of the build directory associated with the source code changes. First source the modules used for the build; to see what was sourced take a look inside the build script. This is machine dependent and it's worth having some shortcuts for future use.  Once the modules are sourced simply do:
 
-The update will fail for repositories that contain uncommited code. This is a safety mechanism to
-avoid losing your work.
+    cd build-<compiler-version>/fv3-jedi
+    make -j<x>
 
---- Note about using git ---
-
-It is recommended that you create a .gitconfig file in your home directory (inside the container
-if working from a container) with the following content:
-
-$ cat .gitconfig 
-[user]
-    name = Your Name
-    email = yourname@somewhere.something
-
-[credential]
-    helper = cache --timeout=3600
-
-
-Since the bundle acceses many repositories, it can be tedious to enter your username and
-password for every operation. With the last line the system will remember your password for
-a given time (defined in seconds by the timeout parameter).
-
+where `<x>` is the number of processors, e.g. 6.
