@@ -3,7 +3,7 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-7.3_openmpi-3.0.0] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-9.1_openmpi-4.0.1] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-17.0.7.259"
@@ -29,10 +29,8 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
         ;;
     c)
         compiler="$OPTARG"
-        [[ "$compiler" == "gcc-7.3_openmpi-3.0.0" || \
-           "$compiler" == "gcc-7.3_mpich-3.3" || \
-           "$compiler" == "intel-17.0.7.259" || \
-           "$compiler" == "intel-18.0.5.274" ]] || usage
+        [[ "$compiler" == "gcc-9.1_openmpi-4.0.1" || \
+           "$compiler" == "intel-17.0.7.259" ]] || usage
         ;;
     m)
         model="$OPTARG"
