@@ -23,10 +23,12 @@ set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 # Initialize
 ecbuild_bundle_initialize()
 ecbuild_requires_macro_version( 2.9 )
-
 # Eckit/fckit
 # -----------
-ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" BRANCH develop UPDATE )
+find_package(eckit)
+if(NOT eckit_FOUND)
+    ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" BRANCH develop UPDATE )
+endif()
 ecbuild_bundle( PROJECT fckit GIT "https://github.com/JCSDA/fckit.git" BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT atlas GIT "https://github.com/JCSDA/atlas.git" BRANCH develop UPDATE )
 
