@@ -3,10 +3,10 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/19.1.0.166|gnu-impi/9.2.0] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-9.1_openmpi-4.0.1] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
-compiler="intel-impi/19.1.0.166"
+compiler="intel-17.0.7.259"
 build="debug"
 clean="NO"
 model="default"
@@ -29,8 +29,8 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
         ;;
     c)
         compiler="$OPTARG"
-        [[ "$compiler" == "gnu-impi/9.2.0" || \
-           "$compiler" == "intel-impi/19.1.0.166" ]] || usage
+        [[ "$compiler" == "gcc-9.1_openmpi-4.0.1" || \
+           "$compiler" == "intel-17.0.7.259" ]] || usage
         ;;
     m)
         model="$OPTARG"
@@ -74,9 +74,7 @@ echo
 # Load JEDI modules.
 source $MODULESHOME/init/sh
 module purge
-export OPT=/discover/swdev/jcsda/modules
-module use $OPT/modulefiles
-
+module use -a /discover/nobackup/mmiesch/modules/modulefiles
 module load apps/jedi/$compiler
 module list
 
@@ -98,8 +96,7 @@ case "$model" in
 esac
 
 # Set up FV3JEDI specific paths.
-compiler_build=`echo $compiler | tr / -`
-FV3JEDI_BUILD="$PWD/build-$compiler_build-$build-$model"
+FV3JEDI_BUILD="$PWD/build-$compiler-$build-$model"
 cd $(dirname $0)/..
 FV3JEDI_SRC=$(pwd)
 

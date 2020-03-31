@@ -3,16 +3,18 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-9.1_openmpi-4.0.1] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/19.1.0.166|gnu-impi/9.2.0] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
-compiler="intel-17.0.7.259"
+compiler="intel-impi/19.1.0.166"
 build="debug"
 clean="NO"
 model="default"
 nthreads=12
 run_ctest="ON"
 verbose="OFF"
+account="g0613"
+queue="debug"
 
 # Set defaults for model paths.
 geos_path="/gpfsm/dnb31/drholdaw/GEOSagcm-Jason-GH/Linux"
@@ -29,8 +31,8 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
         ;;
     c)
         compiler="$OPTARG"
-        [[ "$compiler" == "gcc-9.1_openmpi-4.0.1" || \
-           "$compiler" == "intel-17.0.7.259" ]] || usage
+        [[ "$compiler" == "gnu-impi/9.2.0" || \
+           "$compiler" == "intel-impi/19.1.0.166" ]] || usage
         ;;
     m)
         model="$OPTARG"
@@ -54,6 +56,12 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
     v)
         VERBOSE="ON"
         ;;
+    a)
+        account="g0613"
+        ;;
+    q)
+        queue="debug"
+        ;;
     h|?)
         usage
         ;;
@@ -69,13 +77,19 @@ echo " threads = $nthreads"
 echo "   ctest = $run_ctest"
 echo "   clean = $clean"
 echo " verbose = $verbose"
+echo " account = $account"
+echo "   queue = $queue"
 echo
 
 # Load JEDI modules.
+OPTPATH=/discover/swdev/jcsda/modules
+MODLOAD=apps/jedi/$compiler
+
 source $MODULESHOME/init/sh
 module purge
-module use -a /discover/nobackup/mmiesch/modules/modulefiles
-module load apps/jedi/$compiler
+export OPT=$OPTPATH
+module use $OPT/modulefiles
+module load $MODLOAD
 module list
 
 # Set up model specific paths for ecbuild.
@@ -96,7 +110,8 @@ case "$model" in
 esac
 
 # Set up FV3JEDI specific paths.
-FV3JEDI_BUILD="$PWD/build-$compiler-$build-$model"
+compiler_build=`echo $compiler | tr / -`
+FV3JEDI_BUILD="$PWD/build-$compiler_build-$build-$model"
 cd $(dirname $0)/..
 FV3JEDI_SRC=$(pwd)
 
@@ -107,11 +122,32 @@ esac
 
 mkdir -p $FV3JEDI_BUILD && cd $FV3JEDI_BUILD
 
+# Create module file for future sourcing
+# --------------------------------------
+file=modules.sh
+cp ../buildscripts/$file ./
+sed -i "s,OPTPATH,$OPTPATH,g" $file
+sed -i "s,MODLOAD,$MODLOAD,g" $file
+
+# Slurm job for running tests
+# ---------------------------
+file=ctest_slurm.sh
+cp ../buildscripts/$file ./
+sed -i "s,OPTPATH,$OPTPATH,g" $file
+sed -i "s,MODLOAD,$MODLOAD,g" $file
+sed -i "s,ACCOUNT,$account,g" $file
+sed -i "s,QUEUE,$queue,g" $file
+sed -i "s,BUILDDIR,$FV3JEDI_BUILD,g" $file
+
+# Build
+# -----
 ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $FV3JEDI_SRC
 make update
 cd fv3-jedi
 make -j$nthreads
+ctest -R fv3_get_ioda_test_data
+cd ../
 
-[[ $run_ctest == "ON" ]] && ctest
+[[ $run_ctest == "ON" ]] && sbatch ctest_slurm.sh
 
 exit 0
