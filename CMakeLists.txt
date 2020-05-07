@@ -23,25 +23,28 @@ set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 # Initialize
 ecbuild_bundle_initialize()
 ecbuild_requires_macro_version( 2.9 )
-
 # Eckit/fckit
 # -----------
-ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda/eckit.git" BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda/fckit.git" BRANCH develop UPDATE )
+find_package(eckit)
+if(NOT eckit_FOUND)
+    ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" BRANCH develop UPDATE )
+endif()
+ecbuild_bundle( PROJECT fckit GIT "https://github.com/JCSDA/fckit.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT atlas GIT "https://github.com/JCSDA/atlas.git" BRANCH develop UPDATE )
 
 # External observation operators
 # ------------------------------
-#ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/jcsda/geos-aero.git"   BRANCH develop UPDATE )
-#ecbuild_bundle( PROJECT gsw       GIT "https://github.com/jcsda/GSW-Fortran.git" BRANCH develop UPDATE )
-#ecbuild_bundle( PROJECT ropp-ufo  GIT "https://github.com/jcsda/ropp-test.git"   BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT crtm      GIT "https://github.com/jcsda/crtm.git"        BRANCH develop UPDATE )
+#ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/JCSDA/geos-aero.git"    BRANCH develop UPDATE )
+#ecbuild_bundle( PROJECT gsw       GIT "https://github.com/JCSDA/GSW-Fortran.git"  BRANCH develop UPDATE )
+#ecbuild_bundle( PROJECT ropp-ufo  GIT "https://github.com/JCSDA/ropp-test.git"    BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT crtm      GIT "https://github.com/JCSDA/crtm.git"         BRANCH develop UPDATE )
 
 # Core JEDI repositories
 # ----------------------
-ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT oops  GIT "https://github.com/JCSDA/oops.git"  BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT saber GIT "https://github.com/JCSDA/saber.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT ioda  GIT "https://github.com/JCSDA/ioda.git"  BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT ufo   GIT "https://github.com/JCSDA/ufo.git"   BRANCH develop UPDATE )
 
 # Shallow water model
 # -------------------

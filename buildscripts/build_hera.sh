@@ -107,6 +107,8 @@ esac
 mkdir -p $FV3JEDI_BUILD && cd $FV3JEDI_BUILD
 
 ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $FV3JEDI_SRC
+make update
+cd fv3-jedi/
 make -j$nthreads
 
 [[ $run_ctest == "ON" ]] && ctest

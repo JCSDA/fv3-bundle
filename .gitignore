@@ -23,6 +23,9 @@ fckit/
 
 # Jedi core repos
 saber/
+odc/
+odyssey/
+ioda-converters/
 ioda/
 oops/
 ufo/
