@@ -3,10 +3,10 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/19.1.0.166|gnu-impi/9.2.0] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
-compiler="intel-impi/19.1.0.166"
+compiler="intel-impi/20.0.0.166"
 build="debug"
 clean="NO"
 model="default"
@@ -32,7 +32,8 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
     c)
         compiler="$OPTARG"
         [[ "$compiler" == "gnu-impi/9.2.0" || \
-           "$compiler" == "intel-impi/19.1.0.166" ]] || usage
+           "$compiler" == "intel-impi/19.1.0.166" || \
+           "$compiler" == "intel-impi/20.0.0.166" ]] || usage
         ;;
     m)
         model="$OPTARG"
