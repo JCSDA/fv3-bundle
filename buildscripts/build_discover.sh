@@ -3,7 +3,7 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-impi/20.0.0.166"
@@ -17,7 +17,7 @@ account="g0613"
 queue="debug"
 
 # Set defaults for model paths.
-geos_path="/gpfsm/dnb31/drholdaw/GEOSagcm-Jason-GH/Linux"
+geos_path="null"
 gfs_path="/dev/null"
 
 
@@ -33,6 +33,7 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
         compiler="$OPTARG"
         [[ "$compiler" == "gnu-impi/9.2.0" || \
            "$compiler" == "intel-impi/19.1.0.166" || \
+           "$compiler" == "baselibs/intel-impi/19.1.0.166" || \
            "$compiler" == "intel-impi/20.0.0.166" ]] || usage
         ;;
     m)
@@ -90,7 +91,11 @@ source $MODULESHOME/init/sh
 module purge
 export OPT=$OPTPATH
 module use $OPT/modulefiles
-module load $MODLOAD
+
+module use -a /discover/nobackup/drholdaw/opt/modulefiles/
+module load apps/jedi/baselibs/intel-impi/19.1.0.166_dh
+
+module load
 module list
 
 # Set up model specific paths for ecbuild.
@@ -99,14 +104,11 @@ case "$model" in
         MODEL=""
         ;;
     "geos" )
-        read -p "Enter the path for GEOS model [default: $geos_path] " choice
-        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$geos_path || FV3BASEDMODEL_PATH=$choice
-        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH -DBASELIBDIR=$BASELIBDIR"
+        read -p "Enter the path for GEOS model [e.g: /discover/nobackup/GEOSgcm/install/] " GEOS_PATH
+        MODEL="-DBUILD_WITH_GEOS=ON -DGEOS_PATH=$GEOS_PATH"
         ;;
     "gfs" )
-        read -p "Enter the path for GFS model [default: $gfs_path] " choice
-        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$gfs_path || FV3BASEDMODEL_PATH=$choice
-        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH"
+        MODEL="-DBUILD_WITH_GFS=ON"
         ;;
 esac
 
