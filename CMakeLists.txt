@@ -68,23 +68,11 @@ if (${BUILD_WITH_GFS})
   #ToDo
 endif()
 
-# GEOS model
-# ----------
-if (${BUILD_WITH_GEOS})
-  find_package(GFTL REQUIRED)
-  find_package(GFTL_SHARED REQUIRED)
-  find_package(FARGPARSE QUIET)
-  find_package(YAFYAML REQUIRED)
-  find_package(FLAP REQUIRED)
-  find_package(PFLOGGER REQUIRED)
-  find_package(GEOSgcm REQUIRED PATHS ${GEOS_PATH}/lib/cmake/GEOSgcm )
-endif()
-
 # fv3-jedi and associated repositories
 # ------------------------------------
 ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/geos UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH feature/geos1 UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH feature/geos UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------

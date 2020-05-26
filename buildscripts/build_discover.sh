@@ -16,10 +16,6 @@ verbose="OFF"
 account="g0613"
 queue="debug"
 
-# Set defaults for model paths.
-geos_path="null"
-gfs_path="/dev/null"
-
 
 # Parse input arguments.
 while getopts 'v:t:xhc:b:m:n:' OPTION; do
@@ -91,11 +87,7 @@ source $MODULESHOME/init/sh
 module purge
 export OPT=$OPTPATH
 module use $OPT/modulefiles
-
-module use -a /discover/nobackup/drholdaw/opt/modulefiles/
-module load apps/jedi/baselibs/intel-impi/19.1.0.166_dh
-
-module load
+module load $MODLOAD
 module list
 
 # Set up model specific paths for ecbuild.
