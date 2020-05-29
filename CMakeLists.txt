@@ -28,10 +28,10 @@ ecbuild_requires_macro_version( 2.9 )
 # ----------
 find_package(eckit)
 if(NOT eckit_FOUND)
-    ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda/eckit.git" BRANCH develop UPDATE )
+    ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda/eckit.git" BRANCH release-stable UPDATE )
 endif()
-ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda/fckit.git" BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda/atlas.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda/fckit.git" BRANCH release-stable UPDATE )
+ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda/atlas.git" BRANCH release-stable UPDATE )
 
 # External observation operators
 # ------------------------------
@@ -51,28 +51,49 @@ ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH de
 # -------------------
 #ecbuild_bundle( PROJECT shallow-water GIT "https://github.com/jcsda/shallow-water.git" BRANCH develop UPDATE )
 
-# Options for building with GEOS or GFS models
+# Options for building with certain models
 # --------------------------------------------
-option(BUILD_WITH_GEOS "Build with GEOS model" OFF)
-option(BUILD_WITH_GFS  "Build with GFS model"  OFF)
+option(BUILD_WITH_MODEL "Build with some FV3 based model" FV3CORE)
+option(BUILD_WITH_LINEARMODEL "Build with linear model" ON)
+
+message("FV3 Based model to build with: ${BUILD_WITH_MODEL}")
 
 # FMS library
 # -----------
-if (NOT ${BUILD_WITH_GEOS})
+if (NOT ${BUILD_WITH_MODEL} MATCHES "GEOS" AND NOT ${BUILD_WITH_MODEL} MATCHES "UFS")
+  # GEOS and UFS come with FMS so otherwise build FMS
   ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH dev/master-ecbuild UPDATE )
+endif()
+
+# FV3 dynamical core model
+# ------------------------
+if (${BUILD_WITH_MODEL} MATCHES "FV3CORE")
+  ecbuild_bundle( PROJECT GFDL_atmos_cubed_sphere GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
 endif()
 
 # GFS model
 # ---------
-if (${BUILD_WITH_GFS})
+if (${BUILD_WITH_MODEL} MATCHES "GFS")
+  #ToDo (feature/gfs)
+endif()
+
+# UFS model
+# ---------
+if (${BUILD_WITH_MODEL} MATCHES "UFS")
   #ToDo
 endif()
+
+# fv3-jedi linear model
+# ---------------------
+#if (${BUILD_WITH_LINEARMODEL})
+  message("Building with the fv3-jedi linear model: ${BUILD_WITH_MODEL}")
+  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/geos UPDATE )
+#endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------
 ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/geos UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH feature/geos UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH feature/atmos_cubed_sphere UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------
