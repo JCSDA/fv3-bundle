@@ -87,7 +87,7 @@ endif()
 # ---------------------
 #if (${BUILD_WITH_LINEARMODEL})
   message("Building with the fv3-jedi linear model: ${BUILD_WITH_MODEL}")
-  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/geos UPDATE )
+  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/atmos_cubed_sphere UPDATE )
 #endif()
 
 # fv3-jedi and associated repositories
