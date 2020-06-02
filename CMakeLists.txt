@@ -52,8 +52,10 @@ ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH de
 #ecbuild_bundle( PROJECT shallow-water GIT "https://github.com/jcsda/shallow-water.git" BRANCH develop UPDATE )
 
 # Options for building with certain models
-# --------------------------------------------
-option(BUILD_WITH_MODEL "Build with some FV3 based model" FV3CORE)
+# ----------------------------------------
+if (NOT BUILD_WITH_MODEL)
+    set(BUILD_WITH_MODEL "FV3CORE")
+endif()
 option(BUILD_WITH_LINEARMODEL "Build with linear model" ON)
 
 message("FV3 Based model to build with: ${BUILD_WITH_MODEL}")
