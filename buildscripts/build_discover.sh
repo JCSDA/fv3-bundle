@@ -146,6 +146,16 @@ cp ../buildscripts/$file ./
 sed -i "s,OPTPATH,$OPTPATH,g" $file
 sed -i "s,MODLOAD,$MODLOAD,g" $file
 
+# Slurm job for running make
+# --------------------------
+file=make_slurm.sh
+cp ../buildscripts/$file ./
+sed -i "s,OPTPATH,$OPTPATH,g" $file
+sed -i "s,MODLOAD,$MODLOAD,g" $file
+sed -i "s,ACCOUNT,$account,g" $file
+sed -i "s,QUEUE,$queue,g" $file
+sed -i "s,BUILDDIR,$FV3JEDI_BUILD,g" $file
+
 # Slurm job for running tests
 # ---------------------------
 file=ctest_slurm.sh
@@ -160,11 +170,16 @@ sed -i "s,BUILDDIR,$FV3JEDI_BUILD,g" $file
 # -----
 ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $LINEARMODEL $FV3JEDI_SRC
 make update
+
+# Build fv3-jedi
+sbatch --wait make_slurm.sh
+
+# Data get test
 cd fv3-jedi
-make -j$nthreads
 ctest -R fv3_get_ioda_test_data
 cd ../
 
+# Run ctests
 [[ $run_ctest == "ON" ]] && sbatch ctest_slurm.sh
 
 exit 0
