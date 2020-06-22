@@ -144,11 +144,16 @@ sed -i "s,BUILDDIR,$FV3JEDI_BUILD,g" $file
 # -----
 ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $FV3JEDI_SRC
 make update
+
+# Build fv3-jedi
+sbatch --wait make_slurm.sh
+
+# Data get test
 cd fv3-jedi
-make -j$nthreads
 ctest -R fv3_get_ioda_test_data
 cd ../
 
+# Run ctests
 [[ $run_ctest == "ON" ]] && sbatch ctest_slurm.sh
 
 exit 0
