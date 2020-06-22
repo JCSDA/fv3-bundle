@@ -64,7 +64,7 @@ message("FV3 Based model to build with: ${BUILD_WITH_MODEL}")
 # -----------
 if (NOT ${BUILD_WITH_MODEL} MATCHES "GEOS" AND NOT ${BUILD_WITH_MODEL} MATCHES "UFS")
   # GEOS and UFS come with FMS so otherwise build FMS
-  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH dev/master-ecbuild UPDATE )
+  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH feature/atmos_cubed_sphere UPDATE )
 endif()
 
 # FV3 dynamical core model
@@ -87,10 +87,10 @@ endif()
 
 # fv3-jedi linear model
 # ---------------------
-#if (${BUILD_WITH_LINEARMODEL})
+if (${BUILD_WITH_LINEARMODEL})
   message("Building with the fv3-jedi linear model: ${BUILD_WITH_MODEL}")
   ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/atmos_cubed_sphere UPDATE )
-#endif()
+endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------

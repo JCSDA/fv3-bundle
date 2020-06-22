@@ -101,7 +101,7 @@ module list
 # Set up model specific paths for ecbuild.
 case "$model" in
     "fv3" )
-        MODEL="-DBUILD_WITH_MODEL=FV3CORE"
+       MODEL="" #Leave blank to test that default builds properly
         ;;
     "geos" )
         read -p "Enter the path for GEOS model [e.g: /discover/nobackup/GEOSgcm/install/] " GEOS_PATH
