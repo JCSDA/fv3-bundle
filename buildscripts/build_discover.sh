@@ -130,6 +130,16 @@ cp ../buildscripts/$file ./
 sed -i "s,OPTPATH,$OPTPATH,g" $file
 sed -i "s,MODLOAD,$MODLOAD,g" $file
 
+# Slurm job for running make
+# --------------------------
+file=make_slurm.sh
+cp ../buildscripts/$file ./
+sed -i "s,OPTPATH,$OPTPATH,g" $file
+sed -i "s,MODLOAD,$MODLOAD,g" $file
+sed -i "s,ACCOUNT,$account,g" $file
+sed -i "s,QUEUE,$queue,g" $file
+sed -i "s,BUILDDIR,$FV3JEDI_BUILD,g" $file
+
 # Slurm job for running tests
 # ---------------------------
 file=ctest_slurm.sh

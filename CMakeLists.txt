@@ -44,7 +44,7 @@ ecbuild_bundle( PROJECT crtm      GIT "https://github.com/JCSDA/crtm.git"       
 ecbuild_bundle( PROJECT oops  GIT "https://github.com/JCSDA/oops.git"  BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT saber GIT "https://github.com/JCSDA/saber.git" BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT ioda  GIT "https://github.com/JCSDA/ioda.git"  BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT ufo   GIT "https://github.com/JCSDA/ufo.git"   BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT ufo   GIT "https://github.com/JCSDA/ufo.git"   BRANCH feature/pointlonlat_fortran_interface UPDATE )
 
 # Shallow water model
 # -------------------
