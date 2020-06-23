@@ -106,8 +106,9 @@ case "$model" in
        MODEL="" #Leave blank to test that default builds properly
         ;;
     "geos" )
-        read -p "Enter the path for GEOS model [e.g: /discover/nobackup/GEOSgcm/install/] " GEOS_PATH
-        MODEL="-DBUILD_WITH_MODEL=GEOS -DGEOS_PATH=$GEOS_PATH"
+        read -p "Enter the path for GEOS model [e.g: /gpfsm/dswdev/tclune/GitHub/GEOS-ESM/GEOSgcm/build/install] " GEOS_PATH
+        read -p "Enter the path for GEOS/GFS ModelDirs [e.g: /discover/nobackup/drholdaw/JediData/ModelDirs] " MODELDIRS_PATH
+        MODEL="-DBUILD_WITH_MODEL=GEOS -DGEOS_PATH=$GEOS_PATH -DMODELDIRS_PATH=$MODELDIRS_PATH"
         ;;
     "gfs" )
         MODEL="-DBUILD_WITH_MODEL=GFS"

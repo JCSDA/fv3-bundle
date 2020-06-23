@@ -19,4 +19,4 @@ module list
 
 cd fv3-jedi
 
-make -j24
+make -j12
