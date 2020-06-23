@@ -3,7 +3,7 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|release] [-m fv3|geos|gfs|ufs] [-l ON|OFF (linear model)] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|release] [-m fv3|geos|gfs|ufs] [-l ON|OFF (linear model)] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-impi/20.0.0.166"
@@ -19,7 +19,7 @@ queue="debug"
 
 
 # Parse input arguments.
-while getopts 'v:t:xhc:b:m:n:' OPTION; do
+while getopts 'v:t:xhc:q:b:m:n:' OPTION; do
   case "$OPTION" in
     b)
         build="$OPTARG"
@@ -65,7 +65,9 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
         account="g0613"
         ;;
     q)
-        queue="debug"
+        queue="$OPTARG"
+        [[ "$queue" == "debug" || \
+           "$queue" == "advda" ]] || usage
         ;;
     h|?)
         usage
