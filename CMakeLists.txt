@@ -64,7 +64,7 @@ message("FV3 Based model to build with: ${BUILD_WITH_MODEL}")
 # -----------
 if (NOT ${BUILD_WITH_MODEL} MATCHES "GEOS" AND NOT ${BUILD_WITH_MODEL} MATCHES "UFS")
   # GEOS and UFS come with FMS so otherwise build FMS
-  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH feature/atmos_cubed_sphere UPDATE )
+  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH release-stable UPDATE )
 endif()
 
 # FV3 dynamical core model
