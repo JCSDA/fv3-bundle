@@ -89,13 +89,13 @@ endif()
 # ---------------------
 if (${BUILD_WITH_LINEARMODEL})
   message("Building with the fv3-jedi linear model: ${BUILD_WITH_MODEL}")
-  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/atmos_cubed_sphere UPDATE )
+  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
 endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------
 ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH feature/atmos_cubed_sphere UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH develop UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------
