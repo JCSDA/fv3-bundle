@@ -2,8 +2,8 @@
 
 #SBATCH -A ACCOUNT
 #SBATCH --qos=QUEUE
-#SBATCH --job-name=jedictest
-#SBATCH --output=jedictest.o%j
+#SBATCH --job-name=jedimake
+#SBATCH --output=jedimake.o%j
 #SBATCH --ntasks-per-node=24
 #SBATCH --nodes=1
 #SBATCH --time=00:30:00
@@ -19,4 +19,4 @@ module list
 
 cd fv3-jedi
 
-ctest -E fv3_get_ioda_test_data
+make -j12
