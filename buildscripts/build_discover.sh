@@ -3,7 +3,7 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|release] [-m fv3|geos|gfs|ufs] [-l ON|OFF (linear model)] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|release] [-m fv3|geos|ufs] [-l ON|OFF (linear model)] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-impi/20.0.0.166"
@@ -37,7 +37,6 @@ while getopts 'v:t:xhc:q:b:m:n:' OPTION; do
         model="$OPTARG"
         [[ "$model" == "fv3" || \
            "$model" == "geos" || \
-           "$model" == "gfs" || \
            "$model" == "ufs" ]] || usage
         ;;
     l)
@@ -107,14 +106,12 @@ case "$model" in
         ;;
     "geos" )
         read -p "Enter the path for GEOS model [e.g: /gpfsm/dswdev/tclune/GitHub/GEOS-ESM/GEOSgcm/build/install] " GEOS_PATH
-        read -p "Enter the path for GEOS/GFS ModelDirs [e.g: /discover/nobackup/drholdaw/JediData/ModelDirs] " MODELDIRS_PATH
+        read -p "Enter the path for GEOS testing directory [e.g: /discover/nobackup/drholdaw/JediData/ModelDirs/geos/c90] " MODELDIRS_PATH
         MODEL="-DBUILD_WITH_MODEL=GEOS -DGEOS_PATH=$GEOS_PATH -DMODELDIRS_PATH=$MODELDIRS_PATH"
-        ;;
-    "gfs" )
-        MODEL="-DBUILD_WITH_MODEL=GFS"
         ;;
     "ufs" )
         MODEL="-DBUILD_WITH_MODEL=UFS"
+        read -p "Enter the path for UFS testing directory [e.g: /discover/nobackup/drholdaw/JediData/ModelDirs/ufs/c96] " MODELDIRS_PATH
         ;;
 esac
 
@@ -128,8 +125,6 @@ case "$linearmodel" in
         lmflag="lmodoff"
         ;;
 esac
-
-module list
 
 # Set up FV3JEDI specific paths.
 compiler_build=`echo $compiler | tr / -`

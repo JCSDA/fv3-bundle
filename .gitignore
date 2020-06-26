@@ -34,9 +34,8 @@ shallow-water/
 # FMS
 fms/
 
-# GFS
-nceplibs/
-gfs/
+# UFS
+ufs/
 
 # fv3-jedi and related repos
 GFDL_atmos_cubed_sphere/

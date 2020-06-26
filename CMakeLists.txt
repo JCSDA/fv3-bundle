@@ -73,17 +73,10 @@ if (${BUILD_WITH_MODEL} MATCHES "FV3CORE")
   ecbuild_bundle( PROJECT GFDL_atmos_cubed_sphere GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
 endif()
 
-# GFS model
-# ---------
-if (${BUILD_WITH_MODEL} MATCHES "GFS")
-  ecbuild_bundle( PROJECT nceplibs GIT "https://github.com/jcsda/nceplibs.git" BRANCH develop UPDATE )
-  ecbuild_bundle( PROJECT gfs      GIT "https://github.com/jcsda/gfs.git"      BRANCH develop UPDATE )
-endif()
-
 # UFS model
 # ---------
 if (${BUILD_WITH_MODEL} MATCHES "UFS")
-  #ToDo
+  ecbuild_bundle( PROJECT ufs GIT "https://github.com/jcsda/ufs.git" BRANCH develop UPDATE )
 endif()
 
 # fv3-jedi linear model
@@ -95,8 +88,8 @@ endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"     BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"  BRANCH feature/gfs UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------
