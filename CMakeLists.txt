@@ -51,45 +51,25 @@ ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH de
 # -------------------
 #ecbuild_bundle( PROJECT shallow-water GIT "https://github.com/jcsda/shallow-water.git" BRANCH develop UPDATE )
 
-# Options for building with certain models
-# ----------------------------------------
-if (NOT BUILD_WITH_MODEL)
-    set(BUILD_WITH_MODEL "FV3CORE")
+# Default forecast model
+# ----------------------
+if (NOT FV3_FORECAST_MODEL)
+    set(FV3_FORECAST_MODEL "FV3CORE")
 endif()
-option(BUILD_WITH_LINEARMODEL "Build with linear model" ON)
-
-message("FV3 Based model to build with: ${BUILD_WITH_MODEL}")
-
-# FMS library
-# -----------
-if (NOT ${BUILD_WITH_MODEL} MATCHES "GEOS" AND NOT ${BUILD_WITH_MODEL} MATCHES "UFS")
-  # GEOS and UFS come with FMS so otherwise build FMS
-  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH release-stable UPDATE )
-endif()
+message("FV3 Based model to build with: ${FV3_FORECAST_MODEL}")
 
 # FV3 dynamical core model
 # ------------------------
-if (${BUILD_WITH_MODEL} MATCHES "FV3CORE")
+if (FV3_FORECAST_MODEL MATCHES FV3CORE)
+  ecbuild_bundle( PROJECT fms                     GIT "https://github.com/jcsda/FMS.git"                     BRANCH feature/gfs UPDATE )
   ecbuild_bundle( PROJECT GFDL_atmos_cubed_sphere GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
-endif()
-
-# UFS model
-# ---------
-if (${BUILD_WITH_MODEL} MATCHES "UFS")
-  ecbuild_bundle( PROJECT ufs GIT "https://github.com/jcsda/ufs.git" BRANCH develop UPDATE )
-endif()
-
-# fv3-jedi linear model
-# ---------------------
-if (${BUILD_WITH_LINEARMODEL})
-  message("Building with the fv3-jedi linear model: ${BUILD_WITH_MODEL}")
-  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
 endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"     BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"  BRANCH feature/gfs UPDATE )
+ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/gfs UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH feature/gfs UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------

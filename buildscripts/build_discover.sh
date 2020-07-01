@@ -3,14 +3,13 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|release] [-m fv3|geos|ufs] [-l ON|OFF (linear model)] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|release] [-m fv3|geos|ufs] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-impi/20.0.0.166"
 build="debug"
 clean="NO"
 model="fv3"
-linearmodel="ON"
 nthreads=12
 run_ctest="ON"
 verbose="OFF"
@@ -38,11 +37,6 @@ while getopts 'v:t:xhc:q:b:m:n:' OPTION; do
         [[ "$model" == "fv3" || \
            "$model" == "geos" || \
            "$model" == "ufs" ]] || usage
-        ;;
-    l)
-        linearmodel="$OPTARG"
-        [[ "$lienarmodel" == "ON" || \
-           "$lienarmodel" == "OFF" ]] || usage
         ;;
     n)
         n="$OPTARG"
@@ -79,7 +73,6 @@ echo "Summary of input arguments:"
 echo "      build = $build"
 echo "   compiler = $compiler"
 echo "      model = $model"
-echo "linearmodel = $linearmodel"
 echo "    threads = $nthreads"
 echo "      ctest = $run_ctest"
 echo "      clean = $clean"
@@ -99,36 +92,60 @@ module use $OPT/modulefiles
 module load $MODLOAD
 module list
 
-# Set up model specific paths for ecbuild.
+# Forecast model configuration
 case "$model" in
     "fv3" )
-       MODEL="" #Leave blank to test that default builds properly
+       MODEL="$MODEL" #Leave blank to test that default builds properly
+       FV3_PRECISION_DEFAULT=DOUBLE
         ;;
     "geos" )
-        read -p "Enter the path for GEOS model [e.g: /gpfsm/dswdev/tclune/GitHub/GEOS-ESM/GEOSgcm/build/install] " GEOS_PATH
-        read -p "Enter the path for GEOS testing directory [e.g: /discover/nobackup/drholdaw/JediData/ModelDirs/geos/c90] " MODELDIRS_PATH
-        MODEL="-DBUILD_WITH_MODEL=GEOS -DGEOS_PATH=$GEOS_PATH -DMODELDIRS_PATH=$MODELDIRS_PATH"
+        MODEL="$MODEL -DFV3_FORECAST_MODEL=GEOS"
+        FV3_PRECISION_DEFAULT=SINGLE
+        # Forecast install directory
+        FV3_FORECAST_MODEL_ROOT_DEFUALT=/gpfsm/dswdev/tclune/GitHub/GEOS-ESM/GEOSgcm/build/install
+        read -p "Enter the install path for the GEOS model [$FV3_FORECAST_MODEL_ROOT_DEFUALT] " FV3_FORECAST_MODEL_ROOT
+        FV3_FORECAST_MODEL_ROOT=${FV3_FORECAST_MODEL_ROOT:-$FV3_FORECAST_MODEL_ROOT_DEFUALT}
+        # Forecast run directory
+        FV3_FORECAST_MODEL_RUNDIR_DEFUALT=/discover/nobackup/drholdaw/JediData/ModelRunDirs/geos-c90
+        read -p "Enter the path for the GEOS testing directory [$FV3_FORECAST_MODEL_RUNDIR_DEFUALT] " FV3_FORECAST_MODEL_RUNDIR
+        FV3_FORECAST_MODEL_RUNDIR=${FV3_FORECAST_MODEL_RUNDIR:-$FV3_FORECAST_MODEL_RUNDIR_DEFUALT}
         ;;
     "ufs" )
-        MODEL="-DBUILD_WITH_MODEL=UFS"
-        read -p "Enter the path for UFS testing directory [e.g: /discover/nobackup/drholdaw/JediData/ModelDirs/ufs/c96] " MODELDIRS_PATH
+        MODEL="$MODEL -DFV3_FORECAST_MODEL=UFS"
+        FV3_PRECISION_DEFAULT=SINGLE
+        # Forecast install directory
+        FV3_FORECAST_MODEL_ROOT_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake-build/install
+        read -p "Enter the path for the UFS isntall directory [$FV3_FORECAST_MODEL_ROOT_DEFUALT] " FV3_FORECAST_MODEL_ROOT
+        FV3_FORECAST_MODEL_ROOT=${FV3_FORECAST_MODEL_ROOT:-$FV3_FORECAST_MODEL_ROOT_DEFUALT}
+        # Forecast run directory
+        FV3_FORECAST_MODEL_RUNDIR_DEFUALT=/discover/nobackup/drholdaw/JediData/ModelRunDirs/gfs-c96
+        read -p "Enter the path for the UFS testing directory [$FV3_FORECAST_MODEL_RUNDIR_DEFUALT] " FV3_FORECAST_MODEL_RUNDIR
+        FV3_FORECAST_MODEL_RUNDIR=${FV3_FORECAST_MODEL_RUNDIR:-$FV3_FORECAST_MODEL_RUNDIR_DEFUALT}
+        # Forecast src directory
+        FV3_FORECAST_MODEL_SRC_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake
+        read -p "Enter the path for the UFS source directory [$FV3_FORECAST_MODEL_SRC_DEFUALT] " FV3_FORECAST_MODEL_SRC
+        FV3_FORECAST_MODEL_SRC=${FV3_FORECAST_MODEL_SRC:-$FV3_FORECAST_MODEL_SRC_DEFUALT}
+        MODEL="$MODEL -DFV3_FORECAST_MODEL_SRC=$FV3_FORECAST_MODEL_SRC"
+        # Forecast build directory
+        FV3_FORECAST_MODEL_BUILD_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake-build
+        read -p "Enter the path for the UFS build directory [$FV3_FORECAST_MODEL_BUILD_DEFUALT] " FV3_FORECAST_MODEL_BUILD
+        FV3_FORECAST_MODEL_BUILD=${FV3_FORECAST_MODEL_BUILD:-$FV3_FORECAST_MODEL_BUILD_DEFUALT}
+        MODEL="$MODEL -DFV3_FORECAST_MODEL_BUILD=$FV3_FORECAST_MODEL_BUILD"
         ;;
 esac
 
-case "$linearmodel" in
-    "ON" )
-        LINEARMODEL="-DBUILD_WITH_LINEARMODEL=ON"
-        lmflag="lmodon"
-        ;;
-    "OFF" )
-        LINEARMODEL="-DBUILD_WITH_LINEARMODEL=OFF"
-        lmflag="lmodoff"
-        ;;
-esac
+# Dyn core precision
+read -p "Enter the dynamical core precision, DOUBLE/SINGLE (should match preinstalled models): [$FV3_PRECISION_DEFAULT] " FV3_PRECISION
+FV3_PRECISION=${FV3_PRECISION:-$FV3_PRECISION_DEFAULT}
+
+# Append with forecast model options
+MODEL="$MODEL -DFV3_PRECISION=$FV3_PRECISION"
+MODEL="$MODEL -DFV3_FORECAST_MODEL_ROOT=$FV3_FORECAST_MODEL_ROOT"
+MODEL="$MODEL -DFV3_FORECAST_MODEL_RUNDIR=$FV3_FORECAST_MODEL_RUNDIR"
 
 # Set up FV3JEDI specific paths.
 compiler_build=`echo $compiler | tr / -`
-FV3JEDI_BUILD="$PWD/build-$compiler_build-$build-$model-$lmflag"
+FV3JEDI_BUILD="$PWD/build-$compiler_build-$build-$model"
 cd $(dirname $0)/..
 FV3JEDI_SRC=$(pwd)
 
@@ -168,7 +185,8 @@ sed -i "s,BUILDDIR,$FV3JEDI_BUILD,g" $file
 
 # Build
 # -----
-ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $LINEARMODEL $FV3JEDI_SRC
+ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $FV3JEDI_SRC
+exit 0
 make update
 
 # Build fv3-jedi
