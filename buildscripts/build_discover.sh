@@ -3,7 +3,7 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|release] [-m fv3|geos|ufs] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|relwithdebinfo|release|bit|production] [-m fv3|geos|ufs] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-impi/20.0.0.166"
@@ -23,7 +23,10 @@ while getopts 'v:t:xhc:q:b:m:n:' OPTION; do
     b)
         build="$OPTARG"
         [[ "$build" == "debug" || \
-           "$build" == "release" ]] || usage
+           "$build" == "relwithdebinfo" || \
+           "$build" == "bit" || \
+           "$build" == "release" || \
+           "$build" == "production" ]] || usage
         ;;
     c)
         compiler="$OPTARG"
@@ -99,39 +102,43 @@ case "$model" in
        FV3_PRECISION_DEFAULT=DOUBLE
         ;;
     "geos" )
-        MODEL="$MODEL -DFV3_FORECAST_MODEL=GEOS"
-        FV3_PRECISION_DEFAULT=SINGLE
-        # Forecast install directory
-        FV3_FORECAST_MODEL_ROOT_DEFUALT=/gpfsm/dswdev/tclune/GitHub/GEOS-ESM/GEOSgcm/build/install
-        read -p "Enter the install path for the GEOS model [$FV3_FORECAST_MODEL_ROOT_DEFUALT] " FV3_FORECAST_MODEL_ROOT
-        FV3_FORECAST_MODEL_ROOT=${FV3_FORECAST_MODEL_ROOT:-$FV3_FORECAST_MODEL_ROOT_DEFUALT}
-        # Forecast run directory
-        FV3_FORECAST_MODEL_RUNDIR_DEFUALT=/discover/nobackup/drholdaw/JediData/ModelRunDirs/geos-c90
-        read -p "Enter the path for the GEOS testing directory [$FV3_FORECAST_MODEL_RUNDIR_DEFUALT] " FV3_FORECAST_MODEL_RUNDIR
-        FV3_FORECAST_MODEL_RUNDIR=${FV3_FORECAST_MODEL_RUNDIR:-$FV3_FORECAST_MODEL_RUNDIR_DEFUALT}
-        ;;
+       MODEL="$MODEL -DFV3_FORECAST_MODEL=GEOS"
+       FV3_PRECISION_DEFAULT=SINGLE
+       # Forecast install directory
+       FV3_FORECAST_MODEL_ROOT_DEFUALT=/gpfsm/dswdev/tclune/GitHub/GEOS-ESM/GEOSgcm/build/install
+       read -p "Enter the install path for the GEOS model [$FV3_FORECAST_MODEL_ROOT_DEFUALT] " FV3_FORECAST_MODEL_ROOT
+       FV3_FORECAST_MODEL_ROOT=${FV3_FORECAST_MODEL_ROOT:-$FV3_FORECAST_MODEL_ROOT_DEFUALT}
+       # Forecast run directory
+       FV3_FORECAST_MODEL_RUNDIR_DEFUALT=/discover/nobackup/drholdaw/JediData/ModelRunDirs/geos-c90
+       read -p "Enter the path for the GEOS testing directory [$FV3_FORECAST_MODEL_RUNDIR_DEFUALT] " FV3_FORECAST_MODEL_RUNDIR
+       FV3_FORECAST_MODEL_RUNDIR=${FV3_FORECAST_MODEL_RUNDIR:-$FV3_FORECAST_MODEL_RUNDIR_DEFUALT}
+       MODEL="$MODEL -DFV3_FORECAST_MODEL_ROOT=$FV3_FORECAST_MODEL_ROOT"
+       MODEL="$MODEL -DFV3_FORECAST_MODEL_RUNDIR=$FV3_FORECAST_MODEL_RUNDIR"
+       ;;
     "ufs" )
-        MODEL="$MODEL -DFV3_FORECAST_MODEL=UFS"
-        FV3_PRECISION_DEFAULT=SINGLE
-        # Forecast install directory
-        FV3_FORECAST_MODEL_ROOT_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake-build/install
-        read -p "Enter the path for the UFS isntall directory [$FV3_FORECAST_MODEL_ROOT_DEFUALT] " FV3_FORECAST_MODEL_ROOT
-        FV3_FORECAST_MODEL_ROOT=${FV3_FORECAST_MODEL_ROOT:-$FV3_FORECAST_MODEL_ROOT_DEFUALT}
-        # Forecast run directory
-        FV3_FORECAST_MODEL_RUNDIR_DEFUALT=/discover/nobackup/drholdaw/JediData/ModelRunDirs/gfs-c96
-        read -p "Enter the path for the UFS testing directory [$FV3_FORECAST_MODEL_RUNDIR_DEFUALT] " FV3_FORECAST_MODEL_RUNDIR
-        FV3_FORECAST_MODEL_RUNDIR=${FV3_FORECAST_MODEL_RUNDIR:-$FV3_FORECAST_MODEL_RUNDIR_DEFUALT}
-        # Forecast src directory
-        FV3_FORECAST_MODEL_SRC_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake
-        read -p "Enter the path for the UFS source directory [$FV3_FORECAST_MODEL_SRC_DEFUALT] " FV3_FORECAST_MODEL_SRC
-        FV3_FORECAST_MODEL_SRC=${FV3_FORECAST_MODEL_SRC:-$FV3_FORECAST_MODEL_SRC_DEFUALT}
-        MODEL="$MODEL -DFV3_FORECAST_MODEL_SRC=$FV3_FORECAST_MODEL_SRC"
-        # Forecast build directory
-        FV3_FORECAST_MODEL_BUILD_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake-build
-        read -p "Enter the path for the UFS build directory [$FV3_FORECAST_MODEL_BUILD_DEFUALT] " FV3_FORECAST_MODEL_BUILD
-        FV3_FORECAST_MODEL_BUILD=${FV3_FORECAST_MODEL_BUILD:-$FV3_FORECAST_MODEL_BUILD_DEFUALT}
-        MODEL="$MODEL -DFV3_FORECAST_MODEL_BUILD=$FV3_FORECAST_MODEL_BUILD"
-        ;;
+       MODEL="$MODEL -DFV3_FORECAST_MODEL=UFS"
+       FV3_PRECISION_DEFAULT=SINGLE
+       # Forecast install directory
+       FV3_FORECAST_MODEL_ROOT_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake-build/install
+       read -p "Enter the path for the UFS isntall directory [$FV3_FORECAST_MODEL_ROOT_DEFUALT] " FV3_FORECAST_MODEL_ROOT
+       FV3_FORECAST_MODEL_ROOT=${FV3_FORECAST_MODEL_ROOT:-$FV3_FORECAST_MODEL_ROOT_DEFUALT}
+       # Forecast run directory
+       FV3_FORECAST_MODEL_RUNDIR_DEFUALT=/discover/nobackup/drholdaw/JediData/ModelRunDirs/gfs-c96
+       read -p "Enter the path for the UFS testing directory [$FV3_FORECAST_MODEL_RUNDIR_DEFUALT] " FV3_FORECAST_MODEL_RUNDIR
+       FV3_FORECAST_MODEL_RUNDIR=${FV3_FORECAST_MODEL_RUNDIR:-$FV3_FORECAST_MODEL_RUNDIR_DEFUALT}
+       # Forecast src directory
+       FV3_FORECAST_MODEL_SRC_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake
+       read -p "Enter the path for the UFS source directory [$FV3_FORECAST_MODEL_SRC_DEFUALT] " FV3_FORECAST_MODEL_SRC
+       FV3_FORECAST_MODEL_SRC=${FV3_FORECAST_MODEL_SRC:-$FV3_FORECAST_MODEL_SRC_DEFUALT}
+       MODEL="$MODEL -DFV3_FORECAST_MODEL_SRC=$FV3_FORECAST_MODEL_SRC"
+       # Forecast build directory
+       FV3_FORECAST_MODEL_BUILD_DEFUALT=/gpfsm/dnb31/drholdaw/Models/NOAA/ufs-weather-model-cmake-build
+       read -p "Enter the path for the UFS build directory [$FV3_FORECAST_MODEL_BUILD_DEFUALT] " FV3_FORECAST_MODEL_BUILD
+       FV3_FORECAST_MODEL_BUILD=${FV3_FORECAST_MODEL_BUILD:-$FV3_FORECAST_MODEL_BUILD_DEFUALT}
+       MODEL="$MODEL -DFV3_FORECAST_MODEL_BUILD=$FV3_FORECAST_MODEL_BUILD"
+       MODEL="$MODEL -DFV3_FORECAST_MODEL_ROOT=$FV3_FORECAST_MODEL_ROOT"
+       MODEL="$MODEL -DFV3_FORECAST_MODEL_RUNDIR=$FV3_FORECAST_MODEL_RUNDIR"
+       ;;
 esac
 
 # Dyn core precision
@@ -140,14 +147,17 @@ FV3_PRECISION=${FV3_PRECISION:-$FV3_PRECISION_DEFAULT}
 
 # Append with forecast model options
 MODEL="$MODEL -DFV3_PRECISION=$FV3_PRECISION"
-MODEL="$MODEL -DFV3_FORECAST_MODEL_ROOT=$FV3_FORECAST_MODEL_ROOT"
-MODEL="$MODEL -DFV3_FORECAST_MODEL_RUNDIR=$FV3_FORECAST_MODEL_RUNDIR"
 
 # Set up FV3JEDI specific paths.
 compiler_build=`echo $compiler | tr / -`
 FV3JEDI_BUILD="$PWD/build-$compiler_build-$build-$model"
 cd $(dirname $0)/..
 FV3JEDI_SRC=$(pwd)
+
+# Add precision to build dir if single
+if [ "$FV3_PRECISION" == "SINGLE" ]; then
+  FV3JEDI_BUILD="${FV3JEDI_BUILD}-sp"
+fi
 
 case "$clean" in
     Y|YES ) rm -rf $FV3JEDI_BUILD ;;
@@ -156,9 +166,16 @@ esac
 
 mkdir -p $FV3JEDI_BUILD && cd $FV3JEDI_BUILD
 
-# Create module file for future sourcing
-# --------------------------------------
+# Create bash module file for future sourcing
+# -------------------------------------------
 file=modules.sh
+cp ../buildscripts/$file ./
+sed -i "s,OPTPATH,$OPTPATH,g" $file
+sed -i "s,MODLOAD,$MODLOAD,g" $file
+
+# Create csh/tsh module file for future sourcing
+# ----------------------------------------------
+file=modules.csh
 cp ../buildscripts/$file ./
 sed -i "s,OPTPATH,$OPTPATH,g" $file
 sed -i "s,MODLOAD,$MODLOAD,g" $file
@@ -186,18 +203,23 @@ sed -i "s,BUILDDIR,$FV3JEDI_BUILD,g" $file
 # Build
 # -----
 ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $FV3JEDI_SRC
-exit 0
+
+# Update the repos
+# ----------------
 make update
 
 # Build fv3-jedi
+# --------------
 sbatch --wait make_slurm.sh
 
 # Data get test
+# -------------
 cd fv3-jedi
 ctest -R fv3_get_ioda_test_data
 cd ../
 
 # Run ctests
+# ----------
 [[ $run_ctest == "ON" ]] && sbatch ctest_slurm.sh
 
 exit 0
