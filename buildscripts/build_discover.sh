@@ -3,7 +3,7 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|relwithdebinfo|release|bit|production] [-m fv3|geos|ufs] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|relwithdebinfo|release|bit|production] [-m fv3|geos|ufs] [-p DOUBLE|SINGLE] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
 compiler="intel-impi/20.0.0.166"
@@ -15,10 +15,10 @@ run_ctest="ON"
 verbose="OFF"
 account="g0613"
 queue="debug"
-
+fv3lmprec="DOUBLE"
 
 # Parse input arguments.
-while getopts 'v:t:xhc:q:b:m:n:' OPTION; do
+while getopts 'v:t:xhc:q:b:m:p:n:' OPTION; do
   case "$OPTION" in
     b)
         build="$OPTARG"
@@ -40,6 +40,11 @@ while getopts 'v:t:xhc:q:b:m:n:' OPTION; do
         [[ "$model" == "fv3" || \
            "$model" == "geos" || \
            "$model" == "ufs" ]] || usage
+        ;;
+    p)
+        fv3lmprec="$OPTARG"
+        [[ "$fv3lmprec" == "DOUBLE" || \
+           "$fv3lmprec" == "SINGLE" ]] || usage
         ;;
     n)
         n="$OPTARG"
@@ -73,15 +78,16 @@ done
 shift "$(($OPTIND -1))"
 
 echo "Summary of input arguments:"
-echo "      build = $build"
-echo "   compiler = $compiler"
-echo "      model = $model"
-echo "    threads = $nthreads"
-echo "      ctest = $run_ctest"
-echo "      clean = $clean"
-echo "    verbose = $verbose"
-echo "    account = $account"
-echo "      queue = $queue"
+echo "         build = $build"
+echo "      compiler = $compiler"
+echo "         model = $model"
+echo "lin model prec = $fv3lmprec"
+echo "       threads = $nthreads"
+echo "         ctest = $run_ctest"
+echo "         clean = $clean"
+echo "       verbose = $verbose"
+echo "       account = $account"
+echo "         queue = $queue"
 echo
 
 # Load JEDI modules.
@@ -99,7 +105,7 @@ module list
 case "$model" in
     "fv3" )
        MODEL="$MODEL" #Leave blank to test that default builds properly
-       FV3_PRECISION_DEFAULT=DOUBLE
+       FV3_PRECISION=$fv3lmprec
         ;;
     "geos" )
        MODEL="$MODEL -DFV3_FORECAST_MODEL=GEOS"
@@ -114,6 +120,9 @@ case "$model" in
        FV3_FORECAST_MODEL_RUNDIR=${FV3_FORECAST_MODEL_RUNDIR:-$FV3_FORECAST_MODEL_RUNDIR_DEFUALT}
        MODEL="$MODEL -DFV3_FORECAST_MODEL_ROOT=$FV3_FORECAST_MODEL_ROOT"
        MODEL="$MODEL -DFV3_FORECAST_MODEL_RUNDIR=$FV3_FORECAST_MODEL_RUNDIR"
+       # Dyn core precision
+       read -p "Enter the dynamical core precision, DOUBLE/SINGLE (should match preinstalled models): [$FV3_PRECISION_DEFAULT] " FV3_PRECISION
+       FV3_PRECISION=${FV3_PRECISION:-$FV3_PRECISION_DEFAULT}
        ;;
     "ufs" )
        MODEL="$MODEL -DFV3_FORECAST_MODEL=UFS"
@@ -138,15 +147,15 @@ case "$model" in
        MODEL="$MODEL -DFV3_FORECAST_MODEL_BUILD=$FV3_FORECAST_MODEL_BUILD"
        MODEL="$MODEL -DFV3_FORECAST_MODEL_ROOT=$FV3_FORECAST_MODEL_ROOT"
        MODEL="$MODEL -DFV3_FORECAST_MODEL_RUNDIR=$FV3_FORECAST_MODEL_RUNDIR"
+       # Dyn core precision
+       read -p "Enter the dynamical core precision, DOUBLE/SINGLE (should match preinstalled models): [$FV3_PRECISION_DEFAULT] " FV3_PRECISION
+       FV3_PRECISION=${FV3_PRECISION:-$FV3_PRECISION_DEFAULT}
        ;;
 esac
 
-# Dyn core precision
-read -p "Enter the dynamical core precision, DOUBLE/SINGLE (should match preinstalled models): [$FV3_PRECISION_DEFAULT] " FV3_PRECISION
-FV3_PRECISION=${FV3_PRECISION:-$FV3_PRECISION_DEFAULT}
 
 # Append with forecast model options
-MODEL="$MODEL -DFV3_PRECISION=$FV3_PRECISION"
+MODEL="$MODEL -DFV3LM_PRECISION=$fv3lmprec -DFV3_PRECISION=$FV3_PRECISION"
 
 # Set up FV3JEDI specific paths.
 compiler_build=`echo $compiler | tr / -`
@@ -155,8 +164,8 @@ cd $(dirname $0)/..
 FV3JEDI_SRC=$(pwd)
 
 # Add precision to build dir if single
-if [ "$FV3_PRECISION" == "SINGLE" ]; then
-  FV3JEDI_BUILD="${FV3JEDI_BUILD}-sp"
+if [ "$fv3lmprec" == "SINGLE" ]; then
+  FV3JEDI_BUILD="${FV3JEDI_BUILD}-fv3lmsp"
 fi
 
 case "$clean" in
