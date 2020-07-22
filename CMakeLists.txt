@@ -61,14 +61,14 @@ message("FV3 Based model to build with: ${FV3_FORECAST_MODEL}")
 # FV3 dynamical core model
 # ------------------------
 if (FV3_FORECAST_MODEL MATCHES FV3CORE)
-  ecbuild_bundle( PROJECT fms                     GIT "https://github.com/jcsda/FMS.git"                     BRANCH feature/flags UPDATE )
-  ecbuild_bundle( PROJECT GFDL_atmos_cubed_sphere GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH feature/flags UPDATE )
+  ecbuild_bundle( PROJECT fms                     GIT "https://github.com/jcsda/FMS.git"                     BRANCH release-stable UPDATE )
+  ecbuild_bundle( PROJECT GFDL_atmos_cubed_sphere GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
 endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH feature/flags UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH feature/flags UPDATE )
+ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH feature/flags UPDATE )
 
 # Build Doxygen documentation
