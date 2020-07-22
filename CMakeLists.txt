@@ -65,39 +65,23 @@ ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH de
 
 # Options for building with certain models
 # ----------------------------------------
-set(BUILD_WITH_MODEL "FV3CORE" CACHE STRING "Choose which MODEL to build with")
-set_property(CACHE BUILD_WITH_MODEL PROPERTY STRINGS "FV3CORE" "GFS" "UFS" "GEOS")
-if(NOT BUILD_WITH_MODEL MATCHES "^(FV3CORE|GFS|UFS|GEOS)$")
-  ecbuild_error("Valid options for -DBUILD_WITH_MODEL are FV3CORE|GFS|UFS|GEOS")
+set(FV3_FORECAST_MODEL "FV3CORE" CACHE STRING "Choose which MODEL to build with")
+set_property(CACHE FV3_FORECAST_MODEL PROPERTY STRINGS "FV3CORE" "UFS" "GEOS")
+if(NOT FV3_FORECAST_MODEL MATCHES "^(FV3CORE|UFS|GEOS)$")
+  ecbuild_error("Valid options for -DFV3_FORECAST_MODEL are FV3CORE|UFS|GEOS")
 endif()
-ecbuild_info("Building with FV3-based model: ${BUILD_WITH_MODEL}")
+ecbuild_info("Building with FV3-based model: ${FV3_FORECAST_MODEL}")
 
 # FMS and FV3 dynamical core model are needed for FV3CORE
 # -------------------------------------------------------
-if (BUILD_WITH_MODEL MATCHES "FV3CORE")
+if (FV3_FORECAST_MODEL MATCHES "FV3CORE")
   ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH release-stable UPDATE )
   ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
 endif()
 
-# GFS model
-# ---------
-if (BUILD_WITH_MODEL MATCHES "GFS")
-  find_package(gfs REQUIRED)
-endif()
-
-# UFS model
-# ---------
-if (BUILD_WITH_MODEL MATCHES "UFS")
-  find_package(ufs REQUIRED)
-endif()
-
 # fv3-jedi linear model
 # ---------------------
-option(BUILD_WITH_LINEARMODEL "Build linear model as part of the fv3-bundle" ON)
-if (BUILD_WITH_LINEARMODEL)
-  ecbuild_info("Building with the fv3-jedi linear model")
-  ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
-endif()
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
 
 # fv3-jedi and associated repositories
 # ------------------------------------
