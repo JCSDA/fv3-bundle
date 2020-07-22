@@ -37,8 +37,8 @@ ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda/atlas.git" BRANCH re
 # External (optional) observation operators
 # ------------------------------
 option(BUILD_GEOSAERO "Build GEOS-AERO as part of the fv3-bundle" OFF)
-option(BUILD_GSW      "Build GEOS-AERO as part of the fv3-bundle" OFF)
-option(BUILD_ROPP     "Build GEOS-AERO as part of the fv3-bundle" OFF)
+option(BUILD_GSW      "Build GSW       as part of the fv3-bundle" OFF)
+option(BUILD_ROPP     "Build ROPP-UFO  as part of the fv3-bundle" OFF)
 
 if(BUILD_GEOSAERO)
   ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/jcsda/geos-aero.git" BRANCH develop UPDATE )
