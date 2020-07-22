@@ -1,4 +1,4 @@
-# (C) Copyright 2017-2019 UCAR
+# (C) Copyright 2017-2020 UCAR
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -11,7 +11,8 @@ project( fv3-bundle C CXX Fortran )
 
 cmake_minimum_required( VERSION 3.3.2 FATAL_ERROR )
 
-set( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake;${CMAKE_CURRENT_SOURCE_DIR}/ecbuild/cmake;${CMAKE_MODULE_PATH}")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 include( ecbuild_bundle )
 
 # Default release mode
@@ -26,19 +27,34 @@ ecbuild_requires_macro_version( 2.9 )
 
 # ECMWF libs
 # ----------
-find_package(eckit)
-if(NOT eckit_FOUND)
-    ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda/eckit.git" BRANCH release-stable UPDATE )
+option(BUILD_ECKIT "Build ECKIT as part of the fv3-bundle" OFF)
+if (BUILD_ECKIT)
+  ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" UPDATE BRANCH release-stable )
 endif()
 ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda/fckit.git" BRANCH release-stable UPDATE )
 ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda/atlas.git" BRANCH release-stable UPDATE )
 
-# External observation operators
+# External (optional) observation operators
 # ------------------------------
-#ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/jcsda/geos-aero.git"    BRANCH develop UPDATE )
-#ecbuild_bundle( PROJECT gsw       GIT "https://github.com/jcsda/GSW-Fortran.git"  BRANCH develop UPDATE )
-#ecbuild_bundle( PROJECT ropp-ufo  GIT "https://github.com/jcsda/ropp-test.git"    BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT crtm      GIT "https://github.com/jcsda/crtm.git"         BRANCH develop UPDATE )
+option(BUILD_GEOSAERO "Build GEOS-AERO as part of the fv3-bundle" OFF)
+option(BUILD_GSW      "Build GEOS-AERO as part of the fv3-bundle" OFF)
+option(BUILD_ROPP     "Build GEOS-AERO as part of the fv3-bundle" OFF)
+
+if(BUILD_GEOSAERO)
+  ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/jcsda/geos-aero.git" BRANCH develop UPDATE )
+endif()
+
+if(BUILD_GSW)
+  ecbuild_bundle( PROJECT gsw GIT "https://github.com/jcsda/GSW-Fortran.git" BRANCH develop UPDATE )
+endif()
+
+if(BUILD_ROPP)
+  ecbuild_bundle( PROJECT ropp-ufo GIT "https://github.com/jcsda/ropp-test.git" BRANCH develop UPDATE )
+endif()
+
+# External (required) observation operators
+# ------------------------------
+ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" BRANCH develop UPDATE )
 
 # Core JEDI repositories
 # ----------------------
@@ -47,55 +63,46 @@ ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" BRANCH de
 ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH develop UPDATE )
 
-# Shallow water model
-# -------------------
-#ecbuild_bundle( PROJECT shallow-water GIT "https://github.com/jcsda/shallow-water.git" BRANCH develop UPDATE )
-
 # Options for building with certain models
 # ----------------------------------------
-if (NOT BUILD_WITH_MODEL)
-    set(BUILD_WITH_MODEL "FV3CORE")
+set(BUILD_WITH_MODEL "FV3CORE" CACHE STRING "Choose which MODEL to build with")
+set_property(CACHE BUILD_WITH_MODEL PROPERTY STRINGS "FV3CORE" "GFS" "UFS" "GEOS")
+if(NOT BUILD_WITH_MODEL MATCHES "^(FV3CORE|GFS|UFS|GEOS)$")
+  ecbuild_error("Valid options for -DBUILD_WITH_MODEL are FV3CORE|GFS|UFS|GEOS")
 endif()
-option(BUILD_WITH_LINEARMODEL "Build with linear model" ON)
+ecbuild_info("Building with FV3-based model: ${BUILD_WITH_MODEL}")
 
-message("FV3 Based model to build with: ${BUILD_WITH_MODEL}")
-
-# FMS library
-# -----------
-if (NOT ${BUILD_WITH_MODEL} MATCHES "GEOS" AND NOT ${BUILD_WITH_MODEL} MATCHES "UFS")
-  # GEOS and UFS come with FMS so otherwise build FMS
+# FMS and FV3 dynamical core model are needed for FV3CORE
+# -------------------------------------------------------
+if (BUILD_WITH_MODEL MATCHES "FV3CORE")
   ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH release-stable UPDATE )
-endif()
-
-# FV3 dynamical core model
-# ------------------------
-if (${BUILD_WITH_MODEL} MATCHES "FV3CORE")
-  ecbuild_bundle( PROJECT GFDL_atmos_cubed_sphere GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
+  ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
 endif()
 
 # GFS model
 # ---------
-if (${BUILD_WITH_MODEL} MATCHES "GFS")
-  #ToDo (feature/gfs)
+if (BUILD_WITH_MODEL MATCHES "GFS")
+  find_package(gfs REQUIRED)
 endif()
 
 # UFS model
 # ---------
-if (${BUILD_WITH_MODEL} MATCHES "UFS")
-  #ToDo
+if (BUILD_WITH_MODEL MATCHES "UFS")
+  find_package(ufs REQUIRED)
 endif()
 
 # fv3-jedi linear model
 # ---------------------
-if (${BUILD_WITH_LINEARMODEL})
-  message("Building with the fv3-jedi linear model: ${BUILD_WITH_MODEL}")
+option(BUILD_WITH_LINEARMODEL "Build linear model as part of the fv3-bundle" ON)
+if (BUILD_WITH_LINEARMODEL)
+  ecbuild_info("Building with the fv3-jedi linear model")
   ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
 endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT femps    GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH develop UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------
