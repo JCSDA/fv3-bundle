@@ -17,10 +17,13 @@ build_*/
 build-*/
 FV3/
 
-# Jedi Core repos
+# ecmwf libraries
 atlas/
 eckit/
 fckit/
+
+# Jedi core repos
+saber/
 odc/
 odyssey/
 ioda-converters/
@@ -29,13 +32,17 @@ oops/
 ufo/
 shallow-water/
 
-# fv3-jedi and related repos
+# FMS
 fms/
+
+# UFS
+ufs/
+
+# fv3-jedi and related repos
 GFDL_atmos_cubed_sphere/
 femps/
 fv3-jedi-lm/
 fv3-jedi/
-saber/
 
 # Opservation operators
 crtm/

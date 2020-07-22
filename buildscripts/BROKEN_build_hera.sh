@@ -3,19 +3,18 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-17.0.7.259|gcc-9.1_openmpi-4.0.1] [-b debug|release] [-m default|geos|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-19.0.5.281] [-b debug|release] [-m default|gfs] [-n 1..12] [-t ON|OFF] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
-compiler="intel-17.0.7.259"
-build="debug"
+compiler="intel-19.0.5.281"
+build="release"
 clean="NO"
 model="default"
 nthreads=12
-run_ctest="ON"
+run_ctest="OFF"
 verbose="OFF"
 
 # Set defaults for model paths.
-geos_path="/gpfsm/dnb31/drholdaw/GEOSagcm-Jason-GH/Linux"
 gfs_path="/dev/null"
 
 
@@ -29,8 +28,7 @@ while getopts 'v:t:xhc:b:m:n:' OPTION; do
         ;;
     c)
         compiler="$OPTARG"
-        [[ "$compiler" == "gcc-9.1_openmpi-4.0.1" || \
-           "$compiler" == "intel-17.0.7.259" ]] || usage
+        [[ "$compiler" == "intel-19.0.5.281" ]] || usage
         ;;
     m)
         model="$OPTARG"
@@ -74,9 +72,8 @@ echo
 # Load JEDI modules.
 source $MODULESHOME/init/sh
 module purge
-module use -a /discover/nobackup/mmiesch/modules/modulefiles
+module use -a /scratch1/NCEPDEV/da/Daniel.Holdaway/opt/modulefiles
 module load apps/jedi/$compiler
-module list
 
 # Set up model specific paths for ecbuild.
 case "$model" in
@@ -85,15 +82,17 @@ case "$model" in
         ;;
     "geos" )
         read -p "Enter the path for GEOS model [default: $geos_path] " choice
-        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$geos_path || FV3BASEDMODEL_PATH=$choice
-        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH -DBASELIBDIR=$BASELIBDIR"
+        [[ $choice == "" ]] && GEOS_PATH=$geos_path || GEOS_PATH=$choice
+        MODEL="-DBUILD_WITH_GEOS=ON -DGEOS_PATH=$GEOS_PATH -DBASELIBDIR=$BASELIBDIR"
         ;;
     "gfs" )
-        read -p "Enter the path for GFS model [default: $gfs_path] " choice
-        [[ $choice == "" ]] && FV3BASEDMODEL_PATH=$gfs_path || FV3BASEDMODEL_PATH=$choice
-        MODEL="-DFV3BASEDMODEL_PATH=$FV3BASEDMODEL_PATH"
+        module use -a /discover/nobackup/projects/gmao/obsdev/drholdaw/opt/modulefiles
+        module load apps/gfs/$compiler
+        MODEL="-DBUILD_WITH_GFS=ON"
         ;;
 esac
+
+module list
 
 # Set up FV3JEDI specific paths.
 FV3JEDI_BUILD="$PWD/build-$compiler-$build-$model"
@@ -109,7 +108,7 @@ mkdir -p $FV3JEDI_BUILD && cd $FV3JEDI_BUILD
 
 ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $FV3JEDI_SRC
 make update
-cd fv3-jedi
+cd fv3-jedi/
 make -j$nthreads
 
 [[ $run_ctest == "ON" ]] && ctest
