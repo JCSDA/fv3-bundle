@@ -60,7 +60,7 @@ message("FV3 Based model to build with: ${FV3_FORECAST_MODEL}")
 
 # FV3 dynamical core model
 # ------------------------
-if (FV3_FORECAST_MODEL MATCHES FV3CORE)
+if (FV3_FORECAST_MODEL MATCHES "FV3CORE")
   ecbuild_bundle( PROJECT fms                     GIT "https://github.com/jcsda/FMS.git"                     BRANCH release-stable UPDATE )
   ecbuild_bundle( PROJECT GFDL_atmos_cubed_sphere GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
 endif()
