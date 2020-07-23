@@ -28,11 +28,18 @@ ecbuild_requires_macro_version( 2.9 )
 # ECMWF libs
 # ----------
 option(BUILD_ECKIT "Build ECKIT as part of the fv3-bundle" OFF)
+option(BUILD_FCKIT "Build FCKIT as part of the fv3-bundle" ON)
+option(BUILD_ATLAS "Build ATLAS as part of the fv3-bundle" ON)
+
 if (BUILD_ECKIT)
-  ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" UPDATE BRANCH release-stable )
+  ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" BRANCH release-stable UPDATE )
 endif()
-ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda/fckit.git" BRANCH release-stable UPDATE )
-ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda/atlas.git" BRANCH release-stable UPDATE )
+if (BUILD_FCKIT)
+  ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda/fckit.git" BRANCH release-stable UPDATE )
+endif()
+if (BUILD_ATLAS)
+  ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda/atlas.git" BRANCH release-stable UPDATE )
+endif()
 
 # External (optional) observation operators
 # ------------------------------
