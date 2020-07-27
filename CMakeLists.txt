@@ -7,9 +7,9 @@
 # fv3-bundle
 # ##########
 
-project( fv3-bundle C CXX Fortran )
+cmake_minimum_required( VERSION 3.12 FATAL_ERROR )
 
-cmake_minimum_required( VERSION 3.3.2 FATAL_ERROR )
+project( fv3-bundle LANGUAGES C CXX Fortran )
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -23,44 +23,30 @@ set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 
 # Initialize
 ecbuild_bundle_initialize()
-ecbuild_requires_macro_version( 2.9 )
 
 # ECMWF libs
 # ----------
-option(BUILD_ECKIT "Build ECKIT as part of the fv3-bundle" OFF)
-option(BUILD_FCKIT "Build FCKIT as part of the fv3-bundle" ON)
-option(BUILD_ATLAS "Build ATLAS as part of the fv3-bundle" ON)
+option("BUNDLE_SKIP_ECKIT" "Don't build eckit" "ON" ) # Skip eckit build unless user passes -DBUNDLE_SKIP_ECKIT=OFF
+option("BUNDLE_SKIP_FCKIT" "Don't build eckit" "OFF") # Build fckit unless user passes -DBUNDLE_SKIP_FCKIT=ON
+option("BUNDLE_SKIP_ATLAS" "Don't build atlas" "OFF") # Build atlas unless user passes -DBUNDLE_SKIP_ATLAS=ON
 
-if (BUILD_ECKIT)
-  ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" BRANCH release-stable UPDATE )
-endif()
-if (BUILD_FCKIT)
-  ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda/fckit.git" BRANCH release-stable UPDATE )
-endif()
-if (BUILD_ATLAS)
-  ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda/atlas.git" BRANCH release-stable UPDATE )
-endif()
+ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" BRANCH release-stable UPDATE )
+ecbuild_bundle( PROJECT fckit GIT "https://github.com/JCSDA/fckit.git" BRANCH release-stable UPDATE )
+ecbuild_bundle( PROJECT atlas GIT "https://github.com/JCSDA/atlas.git" BRANCH release-stable UPDATE )
 
 # External (optional) observation operators
 # ------------------------------
-option(BUILD_GEOSAERO "Build GEOS-AERO as part of the fv3-bundle" OFF)
-option(BUILD_GSW      "Build GSW       as part of the fv3-bundle" OFF)
-option(BUILD_ROPP     "Build ROPP-UFO  as part of the fv3-bundle" OFF)
+option("BUNDLE_SKIP_GEOS-AERO" "Don't build GEOS-AERO" "ON") # Skip geos-aero build unless user passes -DBUNDLE_SKIP_GEOS-AERO=OFF
+option("BUNDLE_SKIP_GSW"       "Don't build GSW"       "ON") # Skip gsw build unless user passes -DBUNDLE_SKIP_GSW=OFF
+option("BUNDLE_SKIP_ROPP-UFO"  "Don't build ROPP-UFO"  "ON") # Skip ropp-ufo build unless user passes -DBUNDLE_SKIP_ROPP-UFO=OFF
 
-if(BUILD_GEOSAERO)
-  ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/jcsda/geos-aero.git" BRANCH develop UPDATE )
-endif()
-
-if(BUILD_GSW)
-  ecbuild_bundle( PROJECT gsw GIT "https://github.com/jcsda/GSW-Fortran.git" BRANCH develop UPDATE )
-endif()
-
-if(BUILD_ROPP)
-  ecbuild_bundle( PROJECT ropp-ufo GIT "https://github.com/jcsda/ropp-test.git" BRANCH develop UPDATE )
-endif()
+ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/jcsda/geos-aero.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT gsw GIT "https://github.com/jcsda/GSW-Fortran.git"     BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT ropp-ufo GIT "https://github.com/jcsda/ropp-test.git"  BRANCH develop UPDATE )
 
 # External (required) observation operators
 # ------------------------------
+option("BUNDLE_SKIP_CRTM" "Don't build CRTM" "OFF") # Skip crtm build unless user passes -DBUNDLE_SKIP_CRTM=ON
 ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" BRANCH develop UPDATE )
 
 # Core JEDI repositories

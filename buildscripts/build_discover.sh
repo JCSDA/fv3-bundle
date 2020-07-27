@@ -111,7 +111,7 @@ case "$model" in
        MODEL="$MODEL -DFV3_FORECAST_MODEL=GEOS"
        FV3_PRECISION_DEFAULT=SINGLE
        # Forecast install directory
-       FV3_FORECAST_MODEL_ROOT_DEFUALT=/gpfsm/dswdev/tclune/GitHub/GEOS-ESM/GEOSgcm/build/install
+       FV3_FORECAST_MODEL_ROOT_DEFUALT=/discover/nobackup/drholdaw/Models/GEOS/Tags/GEOSgcm/GEOSgcm-default/install
        read -p "Enter the install path for the GEOS model [$FV3_FORECAST_MODEL_ROOT_DEFUALT] " FV3_FORECAST_MODEL_ROOT
        FV3_FORECAST_MODEL_ROOT=${FV3_FORECAST_MODEL_ROOT:-$FV3_FORECAST_MODEL_ROOT_DEFUALT}
        # Forecast run directory
