@@ -1,4 +1,4 @@
-# (C) Copyright 2017-2019 UCAR
+# (C) Copyright 2017-2020 UCAR
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
@@ -11,8 +11,8 @@ cmake_minimum_required( VERSION 3.12 FATAL_ERROR )
 
 project( fv3-bundle LANGUAGES C CXX Fortran )
 
-find_package(ecbuild)
-set( CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake;${CMAKE_CURRENT_SOURCE_DIR}/ecbuild/cmake;${CMAKE_MODULE_PATH}")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 include( ecbuild_bundle )
 
 # Default release mode
@@ -26,17 +26,28 @@ ecbuild_bundle_initialize()
 
 # ECMWF libs
 # ----------
-option("BUNDLE_SKIP_ECKIT" "Don't build eckit" "ON") #Skip eckit build unless user passes -DBUNDLE_SKIP_ECKIT=0
+option("BUNDLE_SKIP_ECKIT" "Don't build eckit" "ON" ) # Skip eckit build unless user passes -DBUNDLE_SKIP_ECKIT=OFF
+option("BUNDLE_SKIP_FCKIT" "Don't build eckit" "OFF") # Build fckit unless user passes -DBUNDLE_SKIP_FCKIT=ON
+option("BUNDLE_SKIP_ATLAS" "Don't build atlas" "OFF") # Build atlas unless user passes -DBUNDLE_SKIP_ATLAS=ON
+
 ecbuild_bundle( PROJECT eckit GIT "https://github.com/JCSDA/eckit.git" BRANCH release-stable UPDATE )
 ecbuild_bundle( PROJECT fckit GIT "https://github.com/JCSDA/fckit.git" BRANCH release-stable UPDATE )
 ecbuild_bundle( PROJECT atlas GIT "https://github.com/JCSDA/atlas.git" BRANCH release-stable UPDATE )
 
-# External observation operators
+# External (optional) observation operators
 # ------------------------------
-#ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/jcsda/geos-aero.git"    BRANCH develop UPDATE )
-#ecbuild_bundle( PROJECT gsw       GIT "https://github.com/jcsda/GSW-Fortran.git"  BRANCH develop UPDATE )
-#ecbuild_bundle( PROJECT ropp-ufo  GIT "https://github.com/jcsda/ropp-test.git"    BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT crtm      GIT "https://github.com/jcsda/crtm.git"         BRANCH develop UPDATE )
+option("BUNDLE_SKIP_GEOS-AERO" "Don't build GEOS-AERO" "ON") # Skip geos-aero build unless user passes -DBUNDLE_SKIP_GEOS-AERO=OFF
+option("BUNDLE_SKIP_GSW"       "Don't build GSW"       "ON") # Skip gsw build unless user passes -DBUNDLE_SKIP_GSW=OFF
+option("BUNDLE_SKIP_ROPP-UFO"  "Don't build ROPP-UFO"  "ON") # Skip ropp-ufo build unless user passes -DBUNDLE_SKIP_ROPP-UFO=OFF
+
+ecbuild_bundle( PROJECT geos-aero GIT "https://github.com/jcsda/geos-aero.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT gsw GIT "https://github.com/jcsda/GSW-Fortran.git"     BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT ropp-ufo GIT "https://github.com/jcsda/ropp-test.git"  BRANCH develop UPDATE )
+
+# External (required) observation operators
+# ------------------------------
+option("BUNDLE_SKIP_CRTM" "Don't build CRTM" "OFF") # Skip crtm build unless user passes -DBUNDLE_SKIP_CRTM=ON
+ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" BRANCH develop UPDATE )
 
 # Core JEDI repositories
 # ----------------------
@@ -45,29 +56,30 @@ ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" BRANCH de
 ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH develop UPDATE )
 
-# Shallow water model
-# -------------------
-#ecbuild_bundle( PROJECT shallow-water GIT "https://github.com/jcsda/shallow-water.git" BRANCH develop UPDATE )
-
-# Default forecast model
-# ----------------------
-if (NOT FV3_FORECAST_MODEL)
-    set(FV3_FORECAST_MODEL "FV3CORE")
+# Options for building with certain models
+# ----------------------------------------
+set(FV3_FORECAST_MODEL "FV3CORE" CACHE STRING "Choose which MODEL to build with")
+set_property(CACHE FV3_FORECAST_MODEL PROPERTY STRINGS "FV3CORE" "UFS" "GEOS")
+if(NOT FV3_FORECAST_MODEL MATCHES "^(FV3CORE|UFS|GEOS)$")
+  ecbuild_error("Valid options for -DFV3_FORECAST_MODEL are FV3CORE|UFS|GEOS")
 endif()
-message("FV3 Based model to build with: ${FV3_FORECAST_MODEL}")
+ecbuild_info("Building with FV3-based model: ${FV3_FORECAST_MODEL}")
 
-# FV3 dynamical core model
-# ------------------------
+# FMS and FV3 dynamical core model are needed for FV3CORE
+# -------------------------------------------------------
 if (FV3_FORECAST_MODEL MATCHES "FV3CORE")
-  ecbuild_bundle( PROJECT fms                     GIT "https://github.com/jcsda/FMS.git"                     BRANCH release-stable UPDATE )
-  ecbuild_bundle( PROJECT GFDL_atmos_cubed_sphere GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
+  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH release-stable UPDATE )
+  ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
 endif()
+
+# fv3-jedi linear model
+# ---------------------
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
 
 # fv3-jedi and associated repositories
 # ------------------------------------
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT femps    GIT "https://github.com/jcsda/femps.git"    BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi GIT "https://github.com/jcsda/fv3-jedi.git" BRANCH develop UPDATE )
 
 # Build Doxygen documentation
 # ---------------------------

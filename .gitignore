@@ -12,8 +12,7 @@
 *~
 
 # Ignore the contents of these directories
-build_*/
-build-*/
+build*/
 FV3/
 
 # ecmwf libraries
