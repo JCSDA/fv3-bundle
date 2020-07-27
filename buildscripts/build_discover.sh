@@ -123,6 +123,7 @@ case "$model" in
        # Dyn core precision
        read -p "Enter the dynamical core precision, DOUBLE/SINGLE (should match preinstalled models): [$FV3_PRECISION_DEFAULT] " FV3_PRECISION
        FV3_PRECISION=${FV3_PRECISION:-$FV3_PRECISION_DEFAULT}
+       MODEL="$MODEL -DBUNDLE_SKIP_ECKIT=OFF"
        ;;
     "ufs" )
        MODEL="$MODEL -DFV3_FORECAST_MODEL=UFS"
