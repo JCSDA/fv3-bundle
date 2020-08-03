@@ -37,7 +37,7 @@ fms/
 ufs/
 
 # fv3-jedi and related repos
-GFDL_atmos_cubed_sphere/
+fv3/
 femps/
 fv3-jedi-lm/
 fv3-jedi/
