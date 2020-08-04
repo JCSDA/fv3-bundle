@@ -21,6 +21,7 @@ eckit/
 fckit/
 
 # Jedi core repos
+jedicmake/
 saber/
 odc/
 odyssey/

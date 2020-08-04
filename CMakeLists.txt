@@ -7,10 +7,11 @@
 # fv3-bundle
 # ##########
 
-cmake_minimum_required( VERSION 3.12 FATAL_ERROR )
+cmake_minimum_required( VERSION 3.12 )
 
 project( fv3-bundle LANGUAGES C CXX Fortran )
 
+find_package(ecbuild QUIET)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include( ecbuild_bundle )
@@ -23,6 +24,7 @@ set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 
 # Initialize
 ecbuild_bundle_initialize()
+ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/JCSDA/jedi-toolchains.git" BRANCH feature/bundles UPDATE )
 
 # ECMWF libs
 # ----------
