@@ -115,7 +115,7 @@ case "$model" in
        read -p "Enter the install path for the GEOS model [$FV3_FORECAST_MODEL_ROOT_DEFUALT] " FV3_FORECAST_MODEL_ROOT
        FV3_FORECAST_MODEL_ROOT=${FV3_FORECAST_MODEL_ROOT:-$FV3_FORECAST_MODEL_ROOT_DEFUALT}
        # Forecast run directory
-       FV3_FORECAST_MODEL_RUNDIR_DEFUALT=/discover/nobackup/drholdaw/JediData/ModelRunDirs/geos-c90
+       FV3_FORECAST_MODEL_RUNDIR_DEFUALT=/discover/nobackup/drholdaw/JediData/ModelRunDirs/geos-c24
        read -p "Enter the path for the GEOS testing directory [$FV3_FORECAST_MODEL_RUNDIR_DEFUALT] " FV3_FORECAST_MODEL_RUNDIR
        FV3_FORECAST_MODEL_RUNDIR=${FV3_FORECAST_MODEL_RUNDIR:-$FV3_FORECAST_MODEL_RUNDIR_DEFUALT}
        MODEL="$MODEL -DFV3_FORECAST_MODEL_ROOT=$FV3_FORECAST_MODEL_ROOT"
