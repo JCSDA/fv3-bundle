@@ -24,7 +24,7 @@ set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 
 # Initialize
 ecbuild_bundle_initialize()
-ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/JCSDA/jedi-toolchains.git" BRANCH feature/bundles UPDATE )
+ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/JCSDA/jedi-cmake.git" BRANCH develop UPDATE )
 
 # ECMWF libs
 # ----------
