@@ -98,6 +98,8 @@ source $MODULESHOME/init/sh
 module purge
 export OPT=$OPTPATH
 module use $OPT/modulefiles
+module use $OPT/modulefiles/core
+module use $OPT/modulefiles/apps
 module load $MODLOAD
 module list
 
