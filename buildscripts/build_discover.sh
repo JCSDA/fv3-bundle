@@ -3,10 +3,10 @@
 set -e
 
 # Usage of this script.
-usage() { echo "Usage: $(basename $0) [-c intel-impi/20.0.0.166|intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|relwithdebinfo|release|bit|production] [-m fv3|geos|ufs] [-p DOUBLE|SINGLE] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
+usage() { echo "Usage: $(basename $0) [-c intel-impi/19.1.0.166|gnu-impi/9.2.0|baselibs/intel-impi/19.1.0.166] [-b debug|relwithdebinfo|release|bit|production] [-m fv3|geos|ufs] [-p DOUBLE|SINGLE] [-n 1..12] [-t ON|OFF] [-q debug|advda] [-x] [-v] [-h]" 1>&2; exit 1; }
 
 # Set input argument defaults.
-compiler="intel-impi/20.0.0.166"
+compiler="intel-impi/19.1.0.166"
 build="debug"
 clean="NO"
 model="fv3"
@@ -32,8 +32,7 @@ while getopts 'v:t:xhc:q:b:m:p:n:' OPTION; do
         compiler="$OPTARG"
         [[ "$compiler" == "gnu-impi/9.2.0" || \
            "$compiler" == "intel-impi/19.1.0.166" || \
-           "$compiler" == "baselibs/intel-impi/19.1.0.166" || \
-           "$compiler" == "intel-impi/20.0.0.166" ]] || usage
+           "$compiler" == "baselibs/intel-impi/19.1.0.166" ]] || usage
         ;;
     m)
         model="$OPTARG"
@@ -92,12 +91,11 @@ echo
 
 # Load JEDI modules.
 OPTPATH=/discover/swdev/jcsda/modules
-MODLOAD=apps/jedi/$compiler
+MODLOAD=jedi/$compiler
 
 source $MODULESHOME/init/sh
 module purge
 export OPT=$OPTPATH
-module use $OPT/modulefiles
 module use $OPT/modulefiles/core
 module use $OPT/modulefiles/apps
 module load $MODLOAD
@@ -212,9 +210,14 @@ sed -i "s,ACCOUNT,$account,g" $file
 sed -i "s,QUEUE,$queue,g" $file
 sed -i "s,BUILDDIR,$FV3JEDI_BUILD,g" $file
 
+# Optional obs operators
+# ----------------------
+OBSOPS=""
+#OBSOPS="-DBUNDLE_SKIP_GEOS-AERO=OFF -DBUNDLE_SKIP_ROPP-UFO=OFF" 
+
 # Build
 # -----
-ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $FV3JEDI_SRC
+ecbuild --build=$build -DMPIEXEC=$MPIEXEC $MODEL $OBSOPS $FV3JEDI_SRC
 
 # Update the repos
 # ----------------
