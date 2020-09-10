@@ -13,7 +13,8 @@ cd BUILDDIR
 source $MODULESHOME/init/sh
 module purge
 OPT=OPTPATH
-module use $OPT/modulefiles
+module use $OPT/modulefiles/core
+module use $OPT/modulefiles/apps
 module load MODLOAD
 module list
 
