@@ -69,7 +69,8 @@ ecbuild_info("Building with FV3-based model: ${FV3_FORECAST_MODEL}")
 # FMS and FV3 dynamical core model are needed for FV3CORE
 # -------------------------------------------------------
 if (FV3_FORECAST_MODEL MATCHES "FV3CORE")
-  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH release-stable UPDATE )
+  option("BUNDLE_SKIP_FMS" "Don't build FMS" "OFF")
+  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH release-stable-ecbuild UPDATE )
   ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
 endif()
 
