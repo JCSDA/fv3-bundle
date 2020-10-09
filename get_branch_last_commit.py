@@ -51,6 +51,11 @@ def main():
         process = subprocess.Popen(['git', 'pull'], stdout=PIPE, stderr=PIPE)
         stdout = runprocess(process)
 
+        # Prune remote branches
+        PIPE = subprocess.PIPE
+        process = subprocess.Popen(['git', 'remote', 'prune', 'origin'], stdout=PIPE, stderr=PIPE)
+        stdout = runprocess(process)
+
         # Set and run command to get branches
         PIPE = subprocess.PIPE
         process = subprocess.Popen(['git', 'branch', '-a'], stdout=PIPE, stderr=PIPE)
