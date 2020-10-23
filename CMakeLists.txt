@@ -23,7 +23,7 @@ set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 
 # Initialize
 ecbuild_bundle_initialize()
-ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/JCSDA/jedi-cmake.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/JCSDA/jedi-cmake.git" BRANCH v1.0 UPDATE )
 
 # ECMWF libs
 # ----------
@@ -47,8 +47,8 @@ ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" BRANCH v1
 ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  BRANCH v1.0 UPDATE )
 ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH v1.0 UPDATE )
 
-# Options for building with certain models
-# ----------------------------------------
+# Options for building with different models
+# ------------------------------------------
 set(FV3_FORECAST_MODEL "FV3CORE" CACHE STRING "Choose which MODEL to build with")
 set_property(CACHE FV3_FORECAST_MODEL PROPERTY STRINGS "FV3CORE" "UFS" "GEOS")
 if(NOT FV3_FORECAST_MODEL MATCHES "^(FV3CORE|UFS|GEOS)$")
@@ -56,28 +56,19 @@ if(NOT FV3_FORECAST_MODEL MATCHES "^(FV3CORE|UFS|GEOS)$")
 endif()
 ecbuild_info("Building with FV3-based model: ${FV3_FORECAST_MODEL}")
 
-# FMS and FV3 dynamical core model are needed for FV3CORE
-# -------------------------------------------------------
+# FMS and FV3 dynamical core
+# --------------------------
 if (FV3_FORECAST_MODEL MATCHES "FV3CORE")
   option("BUNDLE_SKIP_FMS" "Don't build FMS" "OFF")
-  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git" BRANCH release-stable-ecbuild UPDATE )
-  ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable UPDATE )
+  ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git"                     BRANCH release-stable-ecbuild UPDATE )
+  ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH release-stable         UPDATE )
 endif()
-
-# fv3-jedi linear model
-# ---------------------
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH v1.0 UPDATE )
 
 # fv3-jedi and associated repositories
 # ------------------------------------
-ecbuild_bundle( PROJECT femps    GIT "https://github.com/jcsda/femps.git"    BRANCH v1.0 UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi GIT "https://github.com/jcsda/fv3-jedi.git" BRANCH v1.0 UPDATE )
+ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH v1.0 UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH v1.0 UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH v1.0 UPDATE )
 
-# Build Doxygen documentation
-# ---------------------------
-option(BUILD_FV3_BUNDLE_DOC "Build documentation" OFF)
-if(BUILD_FV3_BUNDLE_DOC)
-   add_subdirectory( Documentation )
-endif(BUILD_FV3_BUNDLE_DOC)
 
 ecbuild_bundle_finalize()
