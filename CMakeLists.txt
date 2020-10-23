@@ -23,7 +23,7 @@ set( ENABLE_MPI ON CACHE BOOL "Compile with MPI" )
 
 # Initialize
 ecbuild_bundle_initialize()
-ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/JCSDA/jedi-cmake.git" BRANCH v1.0 UPDATE )
+ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/JCSDA/jedi-cmake.git" BRANCH release/1.0 UPDATE )
 
 # ECMWF libs
 # ----------
@@ -31,9 +31,9 @@ option("BUNDLE_SKIP_ECKIT" "Don't build eckit" "OFF") # Build eckit unless user 
 option("BUNDLE_SKIP_FCKIT" "Don't build fckit" "OFF") # Build fckit unless user passes -DBUNDLE_SKIP_FCKIT=ON
 option("BUNDLE_SKIP_ATLAS" "Don't build atlas" "OFF") # Build atlas unless user passes -DBUNDLE_SKIP_ATLAS=ON
 
-ecbuild_bundle( PROJECT eckit GIT "https://github.com/ecmwf/eckit.git" BRANCH 1.13   UPDATE )
-ecbuild_bundle( PROJECT fckit GIT "https://github.com/ecmwf/fckit.git" BRANCH 0.9.0  UPDATE )
-ecbuild_bundle( PROJECT atlas GIT "https://github.com/ecmwf/atlas.git" BRANCH 0.22.1 UPDATE )
+ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda/eckit.git" BRANCH release-stable UPDATE )
+ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda/fckit.git" BRANCH release-stable UPDATE )
+ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda/atlas.git" BRANCH release-stable UPDATE )
 
 # External (required) observation operators
 # -----------------------------------------
@@ -42,10 +42,10 @@ ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" BRANCH rele
 
 # Core JEDI repositories
 # ----------------------
-ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  BRANCH v1.0 UPDATE )
-ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" BRANCH v1.0 UPDATE )
-ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  BRANCH v1.0 UPDATE )
-ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH v1.0 UPDATE )
+ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  BRANCH release/1.0 UPDATE )
+ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" BRANCH release/1.0 UPDATE )
+ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  BRANCH release/1.0 UPDATE )
+ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH release/1.0 UPDATE )
 
 # Options for building with different models
 # ------------------------------------------
@@ -66,9 +66,9 @@ endif()
 
 # fv3-jedi and associated repositories
 # ------------------------------------
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH v1.0 UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH v1.0 UPDATE )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH v1.0 UPDATE )
+ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH release/1.0 UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH release/1.0 UPDATE )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH release/1.0 UPDATE )
 
 
 ecbuild_bundle_finalize()
