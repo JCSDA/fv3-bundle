@@ -50,10 +50,13 @@ verbose=1
 BASE_URL=https://jedi-test-files.s3.amazonaws.com/tutorials
 #BASE_URL=https://dashrepo.ucar.edu/dataset/147_miesch/file
 
-#parse flags
+BGFILE=tutorials_Hofx-NRT_input_bg.tar.gz
+OBSFILE=tutorials_Hofx-NRT_input_obs.tar.gz
 
 mkdir -p input
 cd input
+
+#parse flags
 
 while getopts ':pdvqko:' OPT; do
 
@@ -171,8 +174,8 @@ download() {
         fi
 
     done <<EOF--dataset.file.url.chksum_type.chksum
-'tutorials_Hofx-NRT_input_bg.tar.gz' '${BASE_URL}/tutorials_Hofx-NRT_input_bg.tar.gz' 'md5' 'a77f51f626bb1ac2c81b2b9137c07670'
-'tutorials_Hofx-NRT_input_obs.tar.gz' '${BASE_URL}/tutorials_Hofx-NRT_input_obs.tar.gz' 'md5' 'b209d9a54dd6874fef18fe5f7e2ccfff'
+'${BGFILE}' '${BASE_URL}/${BGFILE}' 'md5' 'a77f51f626bb1ac2c81b2b9137c07670'
+'${OBSFILE}' '${BASE_URL}/${OBSFILE}' 'md5' 'b209d9a54dd6874fef18fe5f7e2ccfff'
 EOF--dataset.file.url.chksum_type.chksum
 
 }
@@ -186,7 +189,17 @@ echo "Running $(basename $0) version: $version"
 #do we have old results? Create the file if not
 [ ! -f $CACHE_FILE ] && echo "#filename mtime checksum" > $CACHE_FILE
 
+# if the directories already exist return
+[[ -d bg ]] && [[ -d obs ]] && echo "the input data is already there" && exit 0
+
 download
+
+# untar
+[[ -e ${BGFILE} ]] && tar xvf ${BGFILE}
+[[ -e ${OBSFILE} ]] && tar xvf ${OBSFILE}
+
+[[ -e ${BGFILE} ]] && rm ${BGFILE}
+[[ -e ${OBSFILE} ]] && rm ${OBSFILE}
 
 #remove duplicates (if any)
 { rm $CACHE_FILE && tac | awk '!x[$1]++' | tac > $CACHE_FILE; } < $CACHE_FILE
