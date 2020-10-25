@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/bin/bash
 
 
 WGET_VERSION=$(wget --version | grep -oie "wget [0-9][0-9.]*" | head -n 1 | awk '{print $2}')
@@ -47,10 +47,13 @@ debug=0
 clean_work=1
 verbose=1
 
-BASE_URL='https://jedi-test-files.s3.amazonaws.com/tutorials'
-#BASE_URL='https://dashrepo.ucar.edu/dataset/147_miesch/file'
+BASE_URL=https://jedi-test-files.s3.amazonaws.com/tutorials
+#BASE_URL=https://dashrepo.ucar.edu/dataset/147_miesch/file
 
 #parse flags
+
+mkdir -p input
+cd input
 
 while getopts ':pdvqko:' OPT; do
 
@@ -168,8 +171,8 @@ download() {
         fi
 
     done <<EOF--dataset.file.url.chksum_type.chksum
-'tutorials_Hofx-NRT_input_bg.tar.gz' BASE_URL+'tutorials_Hofx-NRT_input_bg.tar.gz' 'md5' 'a77f51f626bb1ac2c81b2b9137c07670'
-'tutorials_Hofx-NRT_input_bg.tar.gz' BASE_URL+'tutorials_Hofx-NRT_input_obs.tar.gz' 'md5' 'b209d9a54dd6874fef18fe5f7e2ccfff'
+'tutorials_Hofx-NRT_input_bg.tar.gz' '${BASE_URL}/tutorials_Hofx-NRT_input_bg.tar.gz' 'md5' 'a77f51f626bb1ac2c81b2b9137c07670'
+'tutorials_Hofx-NRT_input_obs.tar.gz' '${BASE_URL}/tutorials_Hofx-NRT_input_obs.tar.gz' 'md5' 'b209d9a54dd6874fef18fe5f7e2ccfff'
 EOF--dataset.file.url.chksum_type.chksum
 
 }
