@@ -26,7 +26,7 @@ echo "JEDI build directory = "${JEDI_BUILD_DIR}
 
 # Create directories to store output
 # --------------------------------
-mkdir -p run-$expid/hofx/
+mkdir -p run-output/hofx/
 
 # ---------------------------------------------------------
 # Define JEDI bin directory where the executables are found
