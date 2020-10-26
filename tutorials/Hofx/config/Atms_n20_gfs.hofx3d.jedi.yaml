@@ -78,7 +78,7 @@ observations:
     obs options:
       Sensor_ID: atms_n20
       EndianType: little_endian
-      CoefficientPath: /data/users/whan/JEDI/fv3-bundle/build/fv3-jedi/test/Data/crtm/
+      CoefficientPath: Data/crtm/
   obs filters:
     - filter: Bounds Check
       filter variables:
