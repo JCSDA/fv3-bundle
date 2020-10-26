@@ -47,6 +47,8 @@ echo "JEDI build directory = "${JEDI_BUILD_DIR}
 # link to crtm coefficents
 mkdir -p Data
 ln -sf ${JEDI_BUILD_DIR}/fv3-jedi/test/Data/crtm Data/crtm
+ln -sf ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/SpcCoeff/Little_Endian/atms_n20* Data/crtm
+ln -sf ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/TauCoeff/ODPS/Little_Endian/atms_n20* Data/crtm
 
 # Create directories to store output
 # --------------------------------
