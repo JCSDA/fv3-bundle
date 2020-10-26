@@ -14,7 +14,6 @@ git_branches_as_of_*
 
 # Ignore the contents of these directories
 build*/
-FV3/
 tutorials/Hofx_NRT/input/
 
 # ecmwf libraries
@@ -31,15 +30,9 @@ ioda-converters/
 ioda/
 oops/
 ufo/
-shallow-water/
-
-# FMS
-fms/
-
-# UFS
-ufs/
 
 # fv3-jedi and related repos
+fms/
 fv3/
 femps/
 fv3-jedi-lm/
