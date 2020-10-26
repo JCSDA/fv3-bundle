@@ -53,6 +53,7 @@ mkdir -p output/hofx
 
 #------------------------------------------------------------------------------#
 # Run
+#------------------------------------------------------------------------------#
 # Examples are provided for different observation types with use of different 
 # QC (filters) and other features
 # - Radiosonde
@@ -69,7 +70,4 @@ mkdir -p output/hofx
 export instrument=Cris_n20
 export application=gfs
 
-#---------------
-#Example: run radiosonde operator using fv3 background (no QC)
-#---------------
 srun --ntasks=12 --cpu_bind=core --distribution=block:block ../../build/bin/fv3jedi_hofx_nomodel.x config/${instrument}_${application}.hofx3d.jedi.yaml  output/log/log_3dhofx
