@@ -59,9 +59,14 @@ mkdir -p output/hofx
 # - Aircraft
 # - Satwinds
 # - GnssroBnd
+# - Amsua_n19
+# - Atms_n20
+# - Cris_n20
+# Notes:
+# For radiance, it is critical to set up the correct CoefficientPath in the yaml file. 
 #------------------------------------------------------------------------------#
 
-export instrument=GnssroBnd
+export instrument=Cris_n20
 export application=gfs
 
 #---------------
