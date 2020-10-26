@@ -1,0 +1,71 @@
+# hofx3d jedi config.yaml
+window begin: 2020-10-01T03:00:00Z
+window length: PT6H
+forecast length: PT6H
+# model/gfs/hofx3d.jedi.yaml
+geometry:
+  nml_file_mpp: config/fmsmpp.nml
+  trc_file: config/field_table
+  akbk: config/akbk_gfs.nc4
+  nml_file: config/geometry_gfs_c48.nml
+  #layout:
+  #- 
+  #- 
+  #io_layout:
+  #- 
+  #- 
+  npx: 49
+  npy: 49
+  npz: 64
+  ntiles: 6
+  fieldsets:
+  - fieldset: config/fieldsets/dynamics.yaml
+  - fieldset: config/fieldsets/ufo.yaml
+  interp_method: barycent
+forecasts:
+  #state
+  filetype: gfs
+  datapath: input/bg/window_center
+  filename_core: 20201001.060000.fv_core.res.nc
+  filename_trcr: 20201001.060000.fv_tracer.res.nc
+  filename_sfcd: 20201001.060000.sfc_data.nc
+  filename_sfcw: 20201001.060000.fv_srf_wnd.res.nc
+  filename_cplr: 20201001.060000.coupler.res
+  state variables:
+  - u
+  - v
+  - ua
+  - va
+  - T
+  - DELP
+  - sphum
+  - ice_wat
+  - liq_wat
+  - o3mr
+  - phis
+  - slmsk
+  - sheleg
+  - tsea
+  - vtype
+  - stype
+  - vfrac
+  - stc
+  - smc
+  - snwdph
+  - u_srf
+  - v_srf
+  - f10m
+observations:
+- obs space:
+    name: Aircraft
+    obsdatain:
+      obsfile: input/obs/ioda_ncdiag_aircraft_PT6H_20201001_0300Z.nc4
+    obsdataout:
+      obsfile: output/hofx/hofx3d_gfs_c48_ncdiag_aircraft_PT6H_20201001_0300Z.nc4
+    simulated variables:
+    - eastward_wind
+    - northward_wind
+    - air_temperature
+    - specific_humidity
+  obs operator:
+    name: VertInterp
