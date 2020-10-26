@@ -1,15 +1,31 @@
 #!/bin/bash
 
-# Experiment to run from user
 # ---------------------------
-export expid=$1
-if [ -z "$1" ]
-  then
-    echo "Provide experiment id expid for running conf/expid.yaml"
-    exit 0
-else
-  echo "Running" $expid
+function get_dir {
+    ans=''
+    while [[ ! -d $dir ]]; do
+      echo "Please enter the JEDI build directory"
+      read indir < /dev/stdin
+      dir=$(eval echo $indir)
+      echo $dir
+      [[ ! -d $dir ]] && echo "Sorry - that directory doesn't exist"
+    done
+}
+
+# ---------------------------
+# Path to fv3-bundle
+
+JEDI_BUILD_DIR=${1:-"/opt/jedi/fv3-bundle/build"}
+
+if [[ ! -d ${JEDI_BUILD_DIR} ]]; then
+   get_dir
+   JEDI_BUILD_DIR=$dir
 fi
+
+echo "JEDI build directory = "${JEDI_BUILD_DIR}
+
+exit 0
+
 
 # Create directories to store output
 # --------------------------------
@@ -18,7 +34,6 @@ mkdir -p run-$expid/hofx/
 mkdir -p run-$expid/logs/
 mkdir -p run-$expid/analysis/
 mkdir -p run-$expid/increment/
-
 
 # Define JEDI bin directory where the executables are found
 # ---------------------------------------------------------
