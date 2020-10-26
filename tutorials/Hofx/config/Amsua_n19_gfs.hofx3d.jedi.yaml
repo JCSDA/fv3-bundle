@@ -1,0 +1,103 @@
+# hofx3d jedi config.yaml
+window begin: 2020-10-01T03:00:00Z
+window length: PT6H
+forecast length: PT6H
+# model/gfs/hofx3d.jedi.yaml
+geometry:
+  nml_file_mpp: config/fmsmpp.nml
+  trc_file: config/field_table
+  akbk: config/akbk_gfs.nc4
+  nml_file: config/geometry_gfs_c48.nml
+  #layout:
+  #- 
+  #- 
+  #io_layout:
+  #- 
+  #- 
+  npx: 49
+  npy: 49
+  npz: 64
+  ntiles: 6
+  fieldsets:
+  - fieldset: config/fieldsets/dynamics.yaml
+  - fieldset: config/fieldsets/ufo.yaml
+  interp_method: barycent
+forecasts:
+  #state
+  filetype: gfs
+  datapath: input/bg/window_center
+  filename_core: 20201001.060000.fv_core.res.nc
+  filename_trcr: 20201001.060000.fv_tracer.res.nc
+  filename_sfcd: 20201001.060000.sfc_data.nc
+  filename_sfcw: 20201001.060000.fv_srf_wnd.res.nc
+  filename_cplr: 20201001.060000.coupler.res
+  state variables:
+  - u
+  - v
+  - ua
+  - va
+  - T
+  - DELP
+  - sphum
+  - ice_wat
+  - liq_wat
+  - o3mr
+  - phis
+  - slmsk
+  - sheleg
+  - tsea
+  - vtype
+  - stype
+  - vfrac
+  - stc
+  - smc
+  - snwdph
+  - u_srf
+  - v_srf
+  - f10m
+observations:
+- obs space:
+    name: AMSUA-NOAA19
+    obsdatain:
+      obsfile: input/obs/ioda_ncdiag_amsua-n19_PT6H_20201001_0300Z.nc4
+    obsdataout:
+      obsfile: output/hofx/hofx3d_gfs_c48_ncdiag_amsua-n19_PT6H_20201001_0300Z.nc4
+    simulated variables:
+    - brightness_temperature
+    channels: 1-15
+  obs operator:
+    name: CRTM
+    Absorbers:
+    - H2O
+    - O3
+    - CO2
+    Clouds:
+    - Water
+    - Ice
+    Cloud_Fraction: 1.0
+    obs options:
+      Sensor_ID: amsua_n19
+      EndianType: little_endian
+      CoefficientPath: /data/users/whan/JEDI/fv3-bundle/build/fv3-jedi/test/Data/crtm/
+  obs filters:
+    - filter: Bounds Check
+      filter variables:
+      - name: brightness_temperature
+        channels: 1-15
+      minvalue: 150.0
+      maxvalue: 350.0
+    - filter: Background Check
+      filter variables:
+      - name: brightness_temperature
+        channels: 1-15
+      threshold: 1.0  
+      absolute threshold: 1.5     
+      action:
+        name: reject
+##  channel use flag check
+    - filter: BlackList
+      filter variables:
+      - name: brightness_temperature
+        channels: 1-5,14
+      action:
+        name: reject        

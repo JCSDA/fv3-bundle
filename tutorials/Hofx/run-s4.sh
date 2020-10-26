@@ -55,24 +55,16 @@ mkdir -p output/hofx
 # Run
 # Examples are provided for different observation types with use of different 
 # QC (filters) and other features
+# - Radiosonde
+# - Aircraft
+# - Satwinds
+# - GnssroBnd
 #------------------------------------------------------------------------------#
+
+export instrument=GnssroBnd
+export application=gfs
 
 #---------------
 #Example: run radiosonde operator using fv3 background (no QC)
 #---------------
-srun --ntasks=12 --cpu_bind=core --distribution=block:block ../../build/bin/fv3jedi_hofx_nomodel.x config/Radiosonde_fv3.hofx3d.jedi.yaml  output/log/log_3dhofx
-
-#---------------
-#Example: run aircraft operator using fv3 background (no QC)
-#---------------
-#srun --ntasks=12 --cpu_bind=core --distribution=block:block ../../build/bin/fv3jedi_hofx_nomodel.x config/Aircraft_fv3.hofx3d.jedi.yaml  output/log/log_3dhofx
-
-#---------------
-#Example: run Satwinds operator using fv3 background (no QC)
-#---------------
-#srun --ntasks=12 --cpu_bind=core --distribution=block:block ../../build/bin/fv3jedi_hofx_nomodel.x config/Satwinds_fv3.hofx3d.jedi.yaml  output/log/log_3dhofx
-
-#---------------
-#Example: run GNSSRO NBAM operator using fv3 background and GDAS filter configuration
-#---------------
-#srun --ntasks=12 --cpu_bind=core --distribution=block:block /data/users/hshao/JEDI_public/fv3-bundle/build/bin/fv3jedi_hofx_nomodel.x config/GnssroBnd_gdas.hofx3d.jedi.yaml  output/log/log_3dhofx
+srun --ntasks=12 --cpu_bind=core --distribution=block:block ../../build/bin/fv3jedi_hofx_nomodel.x config/${instrument}_${application}.hofx3d.jedi.yaml  output/log/log_3dhofx
