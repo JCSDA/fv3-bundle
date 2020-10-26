@@ -92,7 +92,7 @@ observations:
     obs options:
       Sensor_ID: airs_aqua
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AMSUA-AQUA
     obsdatain:
@@ -115,7 +115,7 @@ observations:
     obs options:
       Sensor_ID: amsua_aqua
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AMSUA-METOPA
     obsdatain:
@@ -138,7 +138,7 @@ observations:
     obs options:
       Sensor_ID: amsua_metop-a
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AMSUA-METOPB
     obsdatain:
@@ -161,7 +161,7 @@ observations:
     obs options:
       Sensor_ID: amsua_metop-b
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AMSUA-METOPC
     obsdatain:
@@ -184,7 +184,7 @@ observations:
     obs options:
       Sensor_ID: amsua_metop-c
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AMSUA-NOAA15
     obsdatain:
@@ -207,7 +207,7 @@ observations:
     obs options:
       Sensor_ID: amsua_n15
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AMSUA-NOAA18
     obsdatain:
@@ -230,7 +230,7 @@ observations:
     obs options:
       Sensor_ID: amsua_n18
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AMSUA-NOAA19
     obsdatain:
@@ -253,7 +253,7 @@ observations:
     obs options:
       Sensor_ID: amsua_n19
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: ATMS-NOAA20
     obsdatain:
@@ -276,7 +276,7 @@ observations:
     obs options:
       Sensor_ID: atms_n20
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: ATMS-NPP
     obsdatain:
@@ -299,7 +299,7 @@ observations:
     obs options:
       Sensor_ID: atms_npp
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AVHRR-METOPA
     obsdatain:
@@ -319,7 +319,7 @@ observations:
     obs options:
       Sensor_ID: avhrr3_metop-a
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: AVHRR-N18
     obsdatain:
@@ -339,7 +339,7 @@ observations:
     obs options:
       Sensor_ID: avhrr3_n18
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: CRIS-FSR-N20
     obsdatain:
@@ -362,7 +362,7 @@ observations:
     obs options:
       Sensor_ID: cris-fsr_n20
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: CRIS-FSR-NPP
     obsdatain:
@@ -385,7 +385,7 @@ observations:
     obs options:
       Sensor_ID: cris-fsr_npp
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: IASI-METOPA
     obsdatain:
@@ -411,7 +411,7 @@ observations:
     obs options:
       Sensor_ID: iasi_metop-a
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: IASI-METOPB
     obsdatain:
@@ -437,7 +437,7 @@ observations:
     obs options:
       Sensor_ID: iasi_metop-b
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: GOME-METOPA
     obsdatain:
@@ -489,7 +489,7 @@ observations:
     obs options:
       Sensor_ID: mhs_metop-a
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: MHS-METOPB
     obsdatain:
@@ -509,7 +509,7 @@ observations:
     obs options:
       Sensor_ID: mhs_metop-b
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: MHS-METOPC
     obsdatain:
@@ -529,7 +529,7 @@ observations:
     obs options:
       Sensor_ID: mhs_metop-c
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: MHS-NOAA19
     obsdatain:
@@ -549,7 +549,7 @@ observations:
     obs options:
       Sensor_ID: mhs_n19
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: OMI-AURA
     obsdatain:
@@ -677,7 +677,7 @@ observations:
     obs options:
       Sensor_ID: seviri_m08
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: SEVIRI-METEOSAT11
     obsdatain:
@@ -697,7 +697,7 @@ observations:
     obs options:
       Sensor_ID: seviri_m11
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: Ship
     obsdatain:
@@ -728,7 +728,7 @@ observations:
     obs options:
       Sensor_ID: ssmis_f17
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: SSMIS-F18
     obsdatain:
@@ -748,7 +748,7 @@ observations:
     obs options:
       Sensor_ID: ssmis_f18
       EndianType: little_endian
-      CoefficientPath: /nfs/scratch2/mjo/rapids/prefix/develop/share/crtm/UFOCoeff/
+      CoefficientPath: Data/crtm/
 - obs space:
     name: SeaSurfaceTemp
     obsdatain:
