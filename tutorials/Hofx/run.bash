@@ -14,22 +14,26 @@ function get_dir {
 
 # ---------------------------
 # get desired instrument
+instrlist=(Aircraft Amsua_n19 Atms_n20 Cris_n20 GnssroBnd Radiosonde Satwinds Medley)
 
 if [ $# -ne 1 ]; then
    echo "Usage: "
    echo "./run.bash <instrument-name>"
    echo "Where <instrument-name> is one of these:"
-   echo "Aircraft"
-   echo "Amsua_n19"
-   echo "Atms_n20"
-   echo "Cris_n20"
-   echo "GnssroBnd"
-   echo "Radiosonde"
-   echo "Satwinds"
+   for instr in "${instrlist[@]}"; do
+       echo $instr
+   done
    exit 0
 fi
 
 instrument=$1
+
+if [[ " ${instrlist[@]} " =~ " ${instrument} " ]]; then
+   echo "instrument = " $instrument
+else
+   echo "You must pick an instrument from the list"
+   exit 0
+fi
 
 # ---------------------------
 # Path to fv3-bundle
@@ -47,10 +51,8 @@ echo "JEDI build directory = "${JEDI_BUILD_DIR}
 # link to crtm coefficents
 mkdir -p Data
 ln -sf ${JEDI_BUILD_DIR}/fv3-jedi/test/Data/crtm Data/crtm
-ln -sf ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/SpcCoeff/Little_Endian/atms_n20* Data/crtm
-ln -sf ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/TauCoeff/ODPS/Little_Endian/atms_n20* Data/crtm
-ln -sf ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/SpcCoeff/Little_Endian/cris-fsr_n20* Data/crtm
-ln -sf ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/TauCoeff/ODPS/Little_Endian/cris-fsr_n20* Data/crtm
+ln -sf ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/SpcCoeff/Little_Endian/* Data/crtm
+ln -sf ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/TauCoeff/ODPS/Little_Endian/* Data/crtm
 
 # Create directories to store output
 # --------------------------------
