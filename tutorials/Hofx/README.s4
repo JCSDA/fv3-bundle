@@ -9,10 +9,10 @@ export OPT=/data/users/mmiesch/modules
 module use $OPT/modulefiles/core
 module load jedi/intel19-impi
 module list
-module unload eckit  #in some cases, previous stored eckit may cause issues
+module unload eckit  #in some cases, previously stored eckit may cause issues
 
 3. build
-mkdie build
+mkdir build
 cd build
 ecbuild -DMPIRXEC=$MPIEXEC path-to-fv3-bundle-dir
 make -j4
@@ -27,10 +27,10 @@ under config/)
 
 #---------------------------------
 Instructions for running the h(x) diagnostic tools, ioda-plots, can be found in README.md. 
-Here is a brief instructions:
+Here are brief instructions:
 #---------------------------------
 
-1. Clone the ioda-plots repo root is at: 
+1. Clone the ioda-plots repository, located at: 
     git clone https://github.com/JCSDA/ioda-plots.git 
 
 2. Inside the cloned repo, run: 
