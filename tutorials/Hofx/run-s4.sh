@@ -58,17 +58,17 @@ mkdir -p output/hofx
 #------------------------------------------------------------------------------#
 
 #---------------
-#Example: run radiosonde operator using fv3 background
+#Example: run radiosonde operator using fv3 background (no QC)
 #---------------
 srun --ntasks=12 --cpu_bind=core --distribution=block:block ../../build/bin/fv3jedi_hofx_nomodel.x config/Radiosonde_fv3.hofx3d.jedi.yaml  output/log/log_3dhofx
 
 #---------------
-#Example: run aircraft operator using fv3 background
+#Example: run aircraft operator using fv3 background (no QC)
 #---------------
 #srun --ntasks=12 --cpu_bind=core --distribution=block:block ../../build/bin/fv3jedi_hofx_nomodel.x config/Aircraft_fv3.hofx3d.jedi.yaml  output/log/log_3dhofx
 
 #---------------
-#Example: run Satwinds operator using fv3 background
+#Example: run Satwinds operator using fv3 background (no QC)
 #---------------
 #srun --ntasks=12 --cpu_bind=core --distribution=block:block ../../build/bin/fv3jedi_hofx_nomodel.x config/Satwinds_fv3.hofx3d.jedi.yaml  output/log/log_3dhofx
 
