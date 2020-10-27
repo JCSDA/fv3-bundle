@@ -397,12 +397,12 @@ cost function:
       - fieldset: /opt/jedi/build/fv3-jedi/test/Data/fieldsets/ufo.yaml
 output:
   filetype: gfs
-  datapath: run-3denvar/analysis/
-  filename_core: 4denvar-gfs.fv_core.res.nc
-  filename_trcr: 4denvar-gfs.fv_tracer.res.nc
-  filename_sfcd: 4denvar-gfs.sfc_data.nc
-  filename_sfcw: 4denvar-gfs.fv_srf_wnd.res.nc
-  filename_cplr: 4denvar-gfs.coupler.res
+  datapath: run-4denvar/analysis/
+  filename_core: 4denvar.fv_core.res.nc
+  filename_trcr: 4denvar.fv_tracer.res.nc
+  filename_sfcd: 4denvar.sfc_data.nc
+  filename_sfcw: 4denvar.fv_srf_wnd.res.nc
+  filename_cplr: 4denvar.coupler.res
   first: PT0H
   frequency: PT3H
 final:
