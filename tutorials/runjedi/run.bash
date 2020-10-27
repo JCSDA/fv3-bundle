@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 
 # Experiment to run from user
 # ---------------------------
@@ -13,17 +13,20 @@ fi
 
 # Create directories to store output
 # --------------------------------
-mkdir -p run-$expid/bump/
+mkdir -p bump/
 mkdir -p run-$expid/hofx/
 mkdir -p run-$expid/logs/
 mkdir -p run-$expid/analysis/
 mkdir -p run-$expid/increment/
 
-exit 0
-
 # Define JEDI bin directory where the executables are found
 # ---------------------------------------------------------
-export jedibin=/jedi/build/bin
+#export jedibuild=/jedi/build
+export jedibuild=$HOME/jedi/build
+
+export jedibin=$jedibuild/bin
+
+ln -sf $jedibuild/fv3-jedi/test/Data .
 
 # Define Environment variables
 # ---------------------------------------------------------
@@ -31,9 +34,11 @@ export OMP_NUM_THREADS=1
 
 # Run the BUMP parameter scripts to produce the B matrix
 # ------------------------------------------------------
-echo "Computing B matrix parameters using $expid-bumppar_cor.yaml
+echo "Computing B matrix parameters"
 
-mpirun -np 6 $jedibin/fv3jedi_parameters.x conf/$expid-bumppar_cor.yaml run-$expid/logs/$expid-bumppar_cor.log
+mpirun -np 6 $jedibin/fv3jedi_parameters.x config/bumpparameters_nicas_gfs.yaml 
+
+exit 0
 
 # Run the variational application
 # -------------------------------
