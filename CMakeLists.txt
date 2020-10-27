@@ -44,13 +44,13 @@ find_package( eckit 1.11.6 QUIET)
 if (${eckit_FOUND})
   message(STATUS "Found ECKIT package, not building as part of the bundle" )
 else()
-  ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda-internal/eckit.git" BRANCH release-stable UPDATE )
+  ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda-internal/eckit.git" TAG 1.11.jcsda )
 endif()
-ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda-internal/fckit.git" BRANCH release-stable UPDATE )
-ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda-internal/atlas.git" BRANCH release-stable UPDATE )
+ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda-internal/fckit.git" TAG 0.7.jcsda )
+ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda-internal/atlas.git" TAG 0.20.jcsda )
 
 # External (required) observation operators
-ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" BRANCH release/crtm_jedi UPDATE )
+ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git"   TAG v2.3-jedi )
 
 # Core JEDI repositories
 ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  BRANCH develop UPDATE )
