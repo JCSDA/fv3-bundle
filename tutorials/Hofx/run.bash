@@ -38,8 +38,7 @@ fi
 # ---------------------------
 # Path to fv3-bundle
 
-#JEDI_BUILD_DIR="/opt/jedi/build"
-JEDI_BUILD_DIR="$HOME/jedi/build"
+JEDI_BUILD_DIR=${JEDI_BUILD_DIR:-/opt/jedi/build}
 
 if [[ ! -d ${JEDI_BUILD_DIR} ]]; then
    get_dir
