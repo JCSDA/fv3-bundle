@@ -50,7 +50,7 @@ ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda-internal/fckit.git" 
 ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda-internal/atlas.git" TAG 0.20.2.jcsda1 )
 
 # External (required) observation operators
-ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" TAG v2.3-jedi UPDATE )
+ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" TAG v2.3-jedi )
 
 # Core JEDI repositories
 ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  TAG 1.0.0 )
