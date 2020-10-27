@@ -75,12 +75,19 @@ if [[ ${instrument} == Aircraft ]]; then
     fileprefix=hofx3d_gfs_c48_ncdiag_aircraft_
 elif [[ ${instrument} == Amsua_n19 ]]; then
     fileprefix=hofx3d_gfs_c48_ncdiag_amsua-n19_
+elif [[ ${instrument} == Atms_n20 ]]; then
+    fileprefix=hofx3d_gfs_c48_ncdiag_atms-n20_
 elif [[ ${instrument} == Cris_n20 ]]; then
-    fileprefix=hofx3d_gfs_c48_ncdiag_cris-n20
+    fileprefix=hofx3d_gfs_c48_ncdiag_cris-n20_
+elif [[ ${instrument} == GnssroBnd ]]; then
+    fileprefix=hofx3d_gfs_c48_nomads_gnssro_
 elif [[ ${instrument} == Radiosonde ]]; then
     fileprefix=hofx3d_gfs_c48_ncdiag_radiosonde_
 elif [[ ${instrument} == Satwinds ]]; then
     fileprefix=hofx3d_gfs_c48_ncdiag_radiosonde_
+else
+    echo "Medley option is run only: not generating plots"
+    exit 0
 fi
 
 application=gfs
