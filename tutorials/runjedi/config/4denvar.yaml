@@ -41,7 +41,7 @@ cost function:
     ensemble:
     localization:
       bump:
-        prefix: Data/bump/fv3jedi_bumpparameters_nicas_gfs
+        prefix: bump/fv3jedi_bumpparameters_nicas_gfs
         method: loc
         strategy: common
         load_nicas: 1
@@ -309,7 +309,7 @@ cost function:
       obsdatain:
         obsfile: /opt/jedi/build/fv3-jedi/test/Data/obs/testinput_tier_1/aircraft_obs_2018041500_m.nc4
       obsdataout:
-        obsfile: Data/hofx/aircraft_4denvar-gfs_2018041500_m.nc4
+        obsfile: run-4denvar/hofx/aircraft_4denvar-gfs_2018041500_m.nc4
       simulated variables: [eastward_wind, northward_wind, air_temperature]
     obs operator:
       name: VertInterp
@@ -324,10 +324,6 @@ cost function:
       - name: northward_wind
       - name: air_temperature
       threshold: 6.0
-#    - filter: BlackList
-#      where:
-#      - variable: Land_Fraction@GeoVaLs
-#        maxvalue: 0.0
   - obs space:
       name: GnssroBndNBAM
       obsdatain:
@@ -401,7 +397,7 @@ cost function:
       - fieldset: /opt/jedi/build/fv3-jedi/test/Data/fieldsets/ufo.yaml
 output:
   filetype: gfs
-  datapath: Data/analysis/
+  datapath: run-3denvar/analysis/
   filename_core: 4denvar-gfs.fv_core.res.nc
   filename_trcr: 4denvar-gfs.fv_tracer.res.nc
   filename_sfcd: 4denvar-gfs.sfc_data.nc

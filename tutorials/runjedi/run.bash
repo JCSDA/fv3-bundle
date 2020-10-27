@@ -38,8 +38,13 @@ echo "Computing B matrix parameters"
 
 # Run the variational application
 # -------------------------------
-#mpirun -np 6 $jedibin/fv3jedi_var.x config/$expid.yaml
+[[ $expid == 4denvar ]] && ntasks=18 || ntasks=6
+mpirun -np $ntasks $jedibin/fv3jedi_var.x config/$expid.yaml
+
+exit 0
 
 # Compute the increment for plotting
 # ----------------------------------
-mpirun -np 6 $jedibin/fv3jedi_diffstates.x config/$expid-diffstates.yaml
+mpirun -np 6 $jedibin/fv3jedi_diffstates.x config/$expid-increment.yaml
+
+exit 0
