@@ -7,7 +7,7 @@ cost function:
   background:
     states:
     - filetype: gfs
-      datapath: Data/inputs/gfs_c12/bkg/
+      datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/bkg/
       filename_core: 20180414.210000.fv_core.res.nc
       filename_trcr: 20180414.210000.fv_tracer.res.nc
       filename_sfcd: 20180414.210000.sfc_data.nc
@@ -17,7 +17,7 @@ cost function:
                         slmsk,sheleg,tsea,vtype,stype,vfrac,stc,smc,snwdph,
                         u_srf,v_srf,f10m]
     - filetype: gfs
-      datapath: Data/inputs/gfs_c12/bkg/
+      datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/bkg/
       filename_core: 20180415.000000.fv_core.res.nc
       filename_trcr: 20180415.000000.fv_tracer.res.nc
       filename_sfcd: 20180415.000000.sfc_data.nc
@@ -27,7 +27,7 @@ cost function:
                         slmsk,sheleg,tsea,vtype,stype,vfrac,stc,smc,snwdph,
                         u_srf,v_srf,f10m]
     - filetype: gfs
-      datapath: Data/inputs/gfs_c12/bkg/
+      datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/bkg/
       filename_core: 20180415.030000.fv_core.res.nc
       filename_trcr: 20180415.030000.fv_tracer.res.nc
       filename_sfcd: 20180415.030000.sfc_data.nc
@@ -56,7 +56,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem001/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem001/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -64,7 +64,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem001/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem001/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -72,7 +72,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem001/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem001/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -81,7 +81,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem002/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem002/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -89,7 +89,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem002/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem002/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -97,7 +97,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem002/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem002/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -106,7 +106,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem003/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem003/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -114,7 +114,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem003/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem003/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -122,7 +122,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem003/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem003/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -131,7 +131,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem004/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem004/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -139,7 +139,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem004/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem004/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -147,7 +147,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem004/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem004/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -156,7 +156,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem005/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem005/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -164,7 +164,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem005/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem005/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -172,7 +172,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem005/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem005/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -181,7 +181,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem006/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem006/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -189,7 +189,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem006/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem006/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -197,7 +197,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem006/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem006/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -206,7 +206,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem007/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem007/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -214,7 +214,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem007/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem007/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -222,7 +222,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem007/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem007/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -231,7 +231,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem008/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem008/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -239,7 +239,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem008/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem008/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -247,7 +247,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem008/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem008/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -256,7 +256,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem009/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem009/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -264,7 +264,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem009/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem009/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -272,7 +272,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem009/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem009/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -281,7 +281,7 @@ cost function:
     - states:
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem010/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem010/
         filename_core: 20180414.210000.fv_core.res.nc
         filename_trcr: 20180414.210000.fv_tracer.res.nc
         filename_sfcd: 20180414.210000.sfc_data.nc
@@ -289,7 +289,7 @@ cost function:
         filename_cplr: 20180414.210000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem010/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem010/
         filename_core: 20180415.000000.fv_core.res.nc
         filename_trcr: 20180415.000000.fv_tracer.res.nc
         filename_sfcd: 20180415.000000.sfc_data.nc
@@ -297,7 +297,7 @@ cost function:
         filename_cplr: 20180415.000000.coupler.res
       - filetype: gfs
         state variables: [ua,va,T,ps,sphum,ice_wat,liq_wat,o3mr]
-        datapath: Data/inputs/gfs_c12/mem010/
+        datapath: /opt/jedi/build/fv3-jedi/test/Data/inputs/gfs_c12/mem010/
         filename_core: 20180415.030000.fv_core.res.nc
         filename_trcr: 20180415.030000.fv_tracer.res.nc
         filename_sfcd: 20180415.030000.sfc_data.nc
@@ -307,7 +307,7 @@ cost function:
   - obs space:
       name: Aircraft
       obsdatain:
-        obsfile: Data/obs/testinput_tier_1/aircraft_obs_2018041500_m.nc4
+        obsfile: /opt/jedi/build/fv3-jedi/test/Data/obs/testinput_tier_1/aircraft_obs_2018041500_m.nc4
       obsdataout:
         obsfile: Data/hofx/aircraft_4denvar-gfs_2018041500_m.nc4
       simulated variables: [eastward_wind, northward_wind, air_temperature]
@@ -331,7 +331,7 @@ cost function:
   - obs space:
       name: GnssroBndNBAM
       obsdatain:
-        obsfile: Data/obs/testinput_tier_1/gnssro_obs_2018041500_m.nc4
+        obsfile: /opt/jedi/build/fv3-jedi/test/Data/obs/testinput_tier_1/gnssro_obs_2018041500_m.nc4
       simulated variables: [bending_angle]
     obs operator:
       name: GnssroBndNBAM
@@ -361,7 +361,7 @@ cost function:
   - obs space:
       name: AMSUA-NOAA19
       obsdatain:
-        obsfile: Data/obs/testinput_tier_1/amsua_n19_obs_2018041500_m.nc4
+        obsfile: /opt/jedi/build/fv3-jedi/test/Data/obs/testinput_tier_1/amsua_n19_obs_2018041500_m.nc4
       simulated variables: [brightness_temperature]
       channels: 10
     obs operator:
@@ -370,7 +370,7 @@ cost function:
       obs options:
         Sensor_ID: amsua_n19
         EndianType: little_endian
-        CoefficientPath: Data/crtm/
+        CoefficientPath: /opt/jedi/build/fv3-jedi/test/Data/crtm/
     obs error:
       covariance model: diagonal
     obs filters:
@@ -386,9 +386,9 @@ cost function:
         channels: 10
       threshold: 3.0
   geometry:
-    nml_file_mpp: Data/fv3files/fmsmpp.nml
-    trc_file: Data/fv3files/field_table
-    akbk: Data/fv3files/akbk64.nc4
+    nml_file_mpp: /opt/jedi/build/fv3-jedi/test/Data/fv3files/fmsmpp.nml
+    trc_file: /opt/jedi/build/fv3-jedi/test/Data/fv3files/field_table
+    akbk: /opt/jedi/build/fv3-jedi/test/Data/fv3files/akbk64.nc4
     # input.nml
     layout: [1,1]
     io_layout: [1,1]
@@ -397,8 +397,8 @@ cost function:
     npz: 64
     ntiles: 6
     fieldsets:
-      - fieldset: Data/fieldsets/dynamics.yaml
-      - fieldset: Data/fieldsets/ufo.yaml
+      - fieldset: /opt/jedi/build/fv3-jedi/test/Data/fieldsets/dynamics.yaml
+      - fieldset: /opt/jedi/build/fv3-jedi/test/Data/fieldsets/ufo.yaml
 output:
   filetype: gfs
   datapath: Data/analysis/
@@ -420,8 +420,8 @@ variational:
     gradient norm reduction: 1e-10
     test: on
     geometry:
-      trc_file: Data/fv3files/field_table
-      akbk: Data/fv3files/akbk64.nc4
+      trc_file: /opt/jedi/build/fv3-jedi/test/Data/fv3files/field_table
+      akbk: /opt/jedi/build/fv3-jedi/test/Data/fv3files/akbk64.nc4
       # input.nml
       layout: [1,1]
       io_layout: [1,1]
@@ -430,7 +430,7 @@ variational:
       npz: 64
       ntiles: 6
       fieldsets:
-      - fieldset: Data/fieldsets/dynamics.yaml
-      - fieldset: Data/fieldsets/ufo.yaml
+      - fieldset: /opt/jedi/build/fv3-jedi/test/Data/fieldsets/dynamics.yaml
+      - fieldset: /opt/jedi/build/fv3-jedi/test/Data/fieldsets/ufo.yaml
     diagnostics:
       departures: ombg

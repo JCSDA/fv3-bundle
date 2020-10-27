@@ -26,8 +26,6 @@ export jedibuild=$HOME/jedi/build
 
 export jedibin=$jedibuild/bin
 
-ln -sf $jedibuild/fv3-jedi/test/Data .
-
 # Define Environment variables
 # ---------------------------------------------------------
 export OMP_NUM_THREADS=1
@@ -38,12 +36,12 @@ echo "Computing B matrix parameters"
 
 mpirun -np 6 $jedibin/fv3jedi_parameters.x config/bumpparameters_nicas_gfs.yaml 
 
-exit 0
-
 # Run the variational application
 # -------------------------------
-mpirun -np 6 $jedibin/fv3jedi_var.x conf/$expid.yaml run-$expid/logs/$expid.log
+mpirun -np 6 $jedibin/fv3jedi_var.x config/$expid.yaml
+
+exit 0
 
 # Compute the increment for plotting
 # ----------------------------------
-mpirun -np 6 $jedibin/fv3jedi_diffstates.x conf/$expid-diffstates.yaml run-hyb-3dvar/logs/$expid-diffstates.log
+mpirun -np 6 $jedibin/fv3jedi_diffstates.x config/$expid-diffstates.yaml
