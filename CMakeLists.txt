@@ -21,7 +21,7 @@ project( fv3-bundle LANGUAGES C CXX Fortran )
 # Include ecbuild_bundle macro
 include( ecbuild_bundle )
 
-# Default build mode, change with -DCMAKE_BUILD_TYPE= (options: Debug, RelWithDebInfo, Release)
+# Default build mode, change with --build=[release]|debug|bit
 set( ECBUILD_DEFAULT_BUILD_TYPE Release )
 
 # Enable MPI
@@ -40,7 +40,7 @@ ecbuild_bundle_initialize()
 ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" BRANCH develop UPDATE )
 
 # ECMWF libraries
-find_package( eckit 1.4.0 )
+find_package( eckit 1.11.6 QUIET)
 if (${eckit_FOUND})
   message(STATUS "Found ECKIT package, not building as part of the bundle" )
 else()
