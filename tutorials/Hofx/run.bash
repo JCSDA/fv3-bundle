@@ -14,7 +14,7 @@ function get_dir {
 
 # ---------------------------
 # get desired instrument
-instrlist=(Aircraft Amsua_n19 Atms_n20 Cris_n20 GnssroBnd Radiosonde Satwinds Medley)
+instrlist=(Aircraft Amsua_n19 Atms_n20 Cris_n20 GnssroBnd Radiosonde Satwinds)
 
 if [ $# -ne 1 ]; then
    echo "Usage: "
@@ -85,7 +85,6 @@ elif [[ ${instrument} == Radiosonde ]]; then
 elif [[ ${instrument} == Satwinds ]]; then
     fileprefix=hofx3d_gfs_c48_ncdiag_radiosonde_
 else
-    echo "Medley option is run only: not generating plots"
     exit 0
 fi
 
