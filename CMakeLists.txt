@@ -47,7 +47,7 @@ else()
   ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda-internal/eckit.git" BRANCH 1.11.6.jcsda2 )
 endif()
 ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda-internal/fckit.git" BRANCH 0.7.0.jcsda1 )
-ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda-internal/atlas.git" BRANCH 0.20.2.jcsda1 UPDATE )
+ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda-internal/atlas.git" BRANCH 0.20.2.jcsda1 )
 
 # External (required) observation operators
 ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" BRANCH release/crtm_jedi UPDATE )
