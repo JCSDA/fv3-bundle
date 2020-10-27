@@ -37,35 +37,35 @@ ecbuild_bundle_initialize()
 # --------------------------
 
 # jedi-cmake
-ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" BRANCH 1.0.0 )
+ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" TAG 1.0.0 )
 
 # ECMWF libraries
 find_package( eckit 1.11.6 QUIET)
 if (${eckit_FOUND})
   message(STATUS "Found ECKIT package, not building as part of the bundle" )
 else()
-  ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda-internal/eckit.git" BRANCH 1.11.6.jcsda2 )
+  ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda-internal/eckit.git" TAG 1.11.6.jcsda2 )
 endif()
-ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda-internal/fckit.git" BRANCH 0.7.0.jcsda1 )
-ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda-internal/atlas.git" BRANCH 0.20.2.jcsda1 )
+ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda-internal/fckit.git" TAG 0.7.0.jcsda1 )
+ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda-internal/atlas.git" TAG 0.20.2.jcsda1 )
 
 # External (required) observation operators
-ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" BRANCH release/crtm_jedi UPDATE )
+ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git" TAG v2.3-jedi UPDATE )
 
 # Core JEDI repositories
-ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  BRANCH 1.0.0 )
-ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" BRANCH 1.0.0 )
-ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  BRANCH 1.0.0 )
-ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   BRANCH 1.0.0 )
+ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  TAG 1.0.0 )
+ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" TAG 1.0.0 )
+ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  TAG 1.0.0 )
+ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   TAG 1.0.0 )
 
 # FMS and FV3 dynamical core
-ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git"                     BRANCH 1.0.0.jcsda )
-ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" BRANCH 1.0.0.jcsda )
+ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git"                     TAG 1.0.0.jcsda )
+ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" TAG 1.0.0.jcsda )
 
 # fv3-jedi and associated repositories
-ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                BRANCH 1.0.0 )
-ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH 1.0.0 )
-ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH 1.0.0 )
+ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"                TAG 1.0.0 )
+ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" TAG 1.0.0 )
+ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             TAG 1.0.0 )
 
 
 # Finalize bundle
