@@ -34,13 +34,11 @@ export OMP_NUM_THREADS=1
 # ------------------------------------------------------
 echo "Computing B matrix parameters"
 
-mpirun -np 6 $jedibin/fv3jedi_parameters.x config/bumpparameters_nicas_gfs.yaml 
+#mpirun -np 6 $jedibin/fv3jedi_parameters.x config/bumpparameters_nicas_gfs.yaml 
 
 # Run the variational application
 # -------------------------------
-mpirun -np 6 $jedibin/fv3jedi_var.x config/$expid.yaml
-
-exit 0
+#mpirun -np 6 $jedibin/fv3jedi_var.x config/$expid.yaml
 
 # Compute the increment for plotting
 # ----------------------------------
