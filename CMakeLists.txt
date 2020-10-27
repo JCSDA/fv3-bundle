@@ -37,7 +37,7 @@ ecbuild_bundle_initialize()
 # --------------------------
 
 # jedi-cmake
-ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" BRANCH develop UPDATE )
+ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" BRANCH 1.0.0 )
 
 # ECMWF libraries
 find_package( eckit 1.11.6 QUIET)
