@@ -24,7 +24,7 @@ binning:
   - name: global
     dimensions: []
 
-  variables: [brightness_temperature_1003]   
+  variables: [brightness_temperature_19]   
 # -------------------------------------------
 # plotting section used by the 'plot' command
 # -------------------------------------------
@@ -33,7 +33,7 @@ plotting:
   # WHAT should be plotted?
   basic:
   - class: PlotType2D*
-    variables: [brightness_temperature_1003]
+    variables: [brightness_temperature_19]
     metric: [obs, hofx, ombg]
     stat: [mean, stddev, count]
 
