@@ -16,7 +16,7 @@
 cmake_minimum_required( VERSION 3.12 FATAL_ERROR )
 
 # Create project
-project( fv3-bundle LANGUAGES C CXX Fortran )
+project( fv3-bundle VERSION 1.0.0 LANGUAGES C CXX Fortran )
 
 # Include ecbuild_bundle macro
 include( ecbuild_bundle )
