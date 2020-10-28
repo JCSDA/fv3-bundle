@@ -14,7 +14,7 @@ function get_dir {
 
 # ---------------------------
 # get desired instrument
-instrlist=(Aircraft Amsua_n19 Atms_n20 Cris_n20 GnssroBnd Radiosonde Satwinds)
+instrlist=(Aircraft Amsua_n19 Atms_n20 GnssroBnd Radiosonde Satwinds)
 
 if [ $# -ne 1 ]; then
    echo "Usage: "
@@ -76,8 +76,6 @@ elif [[ ${instrument} == Amsua_n19 ]]; then
     fileprefix=hofx3d_gfs_c48_ncdiag_amsua-n19_
 elif [[ ${instrument} == Atms_n20 ]]; then
     fileprefix=hofx3d_gfs_c48_ncdiag_atms-n20_
-elif [[ ${instrument} == Cris_n20 ]]; then
-    fileprefix=hofx3d_gfs_c48_ncdiag_cris-n20_
 elif [[ ${instrument} == GnssroBnd ]]; then
     fileprefix=hofx3d_gfs_c48_nomads_gnssro_
 elif [[ ${instrument} == Radiosonde ]]; then
