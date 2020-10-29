@@ -81,7 +81,7 @@ elif [[ ${instrument} == GnssroBnd ]]; then
 elif [[ ${instrument} == Radiosonde ]]; then
     fileprefix=hofx3d_gfs_c48_ncdiag_radiosonde_
 elif [[ ${instrument} == Satwinds ]]; then
-    fileprefix=hofx3d_gfs_c48_ncdiag_radiosonde_
+    fileprefix=hofx3d_gfs_c48_ncdiag_satwind_
 else
     exit 0
 fi
