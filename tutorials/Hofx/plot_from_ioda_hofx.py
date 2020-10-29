@@ -72,9 +72,10 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, 
       vtitle = vsplit[0]+" "+vsplit[1]
 
     savename = os.path.basename(hofxfiles)
-    savename = savename.replace('_NPROC', '')
-    savename = savename.replace('.nc4', '')
-    savename = savename + '-' + vsavename + '.png'
+    #savename = savename.replace('_NPROC', '')
+    #savename = savename.replace('.nc4', '')
+    #savename = savename + '-' + vsavename + '.png'
+    savename = vsavename + '.png'
 
     # Loop over hofxfiles
     # -------------------
@@ -120,8 +121,9 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, 
     obarray[:, 2] = lats
     obarray[:, 3] = time
 
-    # Min max for colorbar
-    # --------------------
+
+    # Compute and print some stats for the data
+    # -----------------------------------------
     stdev = np.nanstd(obarray[:, 0])  # Standard deviation
     omean = np.nanmean(obarray[:, 0]) # Mean of the data
     datmi = np.nanmin(obarray[:, 0])  # Min of the data
@@ -133,6 +135,14 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, 
     print("Minimum ", datmi)
     print("Maximum: ", datma)
 
+
+    # Norm for scatter plot
+    # ---------------------
+    norm = None
+
+
+    # Min max for colorbar
+    # --------------------
     if np.nanmin(obarray[:, 0]) < 0:
       cmax = datma
       cmin = datmi
@@ -142,6 +152,19 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, 
       cmin = np.maximum(omean-stdev, 0.0)
       cmap = 'viridis'
 
+    if vsplit[1] == 'PreQC' or vsplit[1] == 'EffectiveQC':
+      cmin = datmi
+      cmax = datma
+
+      # Specialized colorbar for integers
+      cmap = plt.cm.jet
+      cmaplist = [cmap(i) for i in range(cmap.N)]
+      cmaplist[1] = (.5, .5, .5, 1.0)
+      cmap = matplotlib.colors.LinearSegmentedColormap.from_list('Custom cmap', cmaplist, cmap.N)
+      bounds = np.insert(np.linspace(0.5, int(cmax)+0.5, int(cmax)+1), 0, 0)
+      norm = matplotlib.colors.BoundaryNorm(bounds, cmap.N)
+
+    # If using omb then use standard deviation for the cmin/cmax
     if omb:
       cmax = stdev
       cmin = -stdev
@@ -177,11 +200,10 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, 
     # scatter data
     sc = ax.scatter(obarray[:, 1], obarray[:, 2],
                     c=obarray[:, 0], s=4, linewidth=0,
-                    transform=ccrs.PlateCarree(), cmap=cmap, vmin=cmin, vmax = cmax)
+                    transform=ccrs.PlateCarree(), cmap=cmap, vmin=cmin, vmax = cmax, norm=norm)
 
     # colorbar
-    cbar = plt.colorbar(sc, ax=ax, orientation="horizontal",
-                        pad=.1, fraction=0.06,)
+    cbar = plt.colorbar(sc, ax=ax, orientation="horizontal", pad=.1, fraction=0.06,)
     cbar.ax.set_ylabel(units, fontsize=10)
 
     # plot globally
@@ -200,7 +222,6 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, 
     plt.savefig(savename)
 
     exit()
-
 
 # --------------------------------------------------------------------------------------------------
 
