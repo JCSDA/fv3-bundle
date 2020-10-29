@@ -94,7 +94,7 @@ elif [[ ${instrument} == Radiosonde ]]; then
     varlist=(air_temperature eastward_wind northward_wind)
 elif [[ ${instrument} == Satwinds ]]; then
     prefix=hofx3d_gfs_c48_ncdiag_satwind_PT6H_20201001_0300Z
-    varlist=(air_temperature eastward_wind northward_wind)
+    varlist=(eastward_wind northward_wind)
 else
     echo "Medley option is run only: not generating plots"
     exit 0
