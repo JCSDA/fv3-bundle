@@ -134,13 +134,17 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, 
     print("Maximum: ", datma)
 
     if np.nanmin(obarray[:, 0]) < 0:
-      cmax = stdev
-      cmin = -stdev
+      cmax = datma
+      cmin = datmi
       cmap = 'RdBu'
     else:
       cmax = omean+stdev
       cmin = np.maximum(omean-stdev, 0.0)
       cmap = 'viridis'
+
+    if omb:
+      cmax = stdev
+      cmin = -stdev
 
     # Override with user chosen limits
     if (colmin!=-9999.9):
