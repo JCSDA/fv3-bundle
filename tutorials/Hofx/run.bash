@@ -105,12 +105,6 @@ application=gfs
 mpirun -n 12 $jedibin/fv3jedi_hofx_nomodel.x config/${instrument}_${application}.hofx3d.jedi.yaml
 
 # ------------------------------------------------------
-# Bin the output to get obs counts
-
-iodaplots bin output/hofx/${prefix}* -o output/binned/${instrument}.nc4 -c config/${instrument}_gfs.plot.yaml
-iodaplots plot -e ${instrument} output/binned/${instrument}.nc4 -o output/plots/${instrument}/- -c config/${instrument}_gfs.plot.yaml
-
-# ------------------------------------------------------
 # Make the plots
 
 chmod +x plot_from_ioda_hofx.py
