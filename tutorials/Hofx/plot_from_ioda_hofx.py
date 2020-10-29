@@ -38,7 +38,9 @@ def abort(message):
 @click.option('--nprocs',        required=True,  help='Number of processors used for JEDI run', type=int)
 @click.option('--window_begin',  required=True,  help='Time at beginning of the window (yyyymmddhh)', default=False)
 @click.option('--omb',           required=False, help='Set to true to compute omb', default=False)
-def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
+@click.option('--colmin',        required=False, help='Minimum for colorbar in plotting', default=-9999.9)
+@click.option('--colmax',        required=False, help='Maximum for colorbar in plotting', default=-9999.9)
+def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, colmax):
 
     # Variable name and units
     # -----------------------
@@ -118,24 +120,35 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
     obarray[:, 2] = lats
     obarray[:, 3] = time
 
-    # Min max
-    # -------
+    # Min max for colorbar
+    # --------------------
+    stdev = np.nanstd(obarray[:, 0])  # Standard deviation
+    omean = np.nanmean(obarray[:, 0]) # Mean of the data
+    datmi = np.nanmin(obarray[:, 0])  # Min of the data
+    datma = np.nanmax(obarray[:, 0])  # Max of the data
+
+    print("Plotted data statistics: ")
+    print("Mean: ", omean)
+    print("Standard deviation: ", stdev)
+    print("Minimum ", datmi)
+    print("Maximum: ", datma)
+
     if np.nanmin(obarray[:, 0]) < 0:
-      cmax = np.nanmax(np.abs(obarray[:, 0]))
-      cmin = -cmax
+      cmax = stdev
+      cmin = -stdev
       cmap = 'RdBu'
     else:
-      cmax = np.nanmax(obarray[:, 0])
-      cmin = np.nanmin(obarray[:, 0])
+      cmax = omean+stdev
+      cmin = np.maximum(omean-stdev, 0.0)
       cmap = 'viridis'
 
-
-    # If omb requested then use standard deviation to set limits
-    # ----------------------------------------------------------
-    if omb:
-       print("For omb using standard deviation to set color limits")
-       cmax = np.nanstd(obarray[:, 0])
-       cmin = -cmax
+    # Override with user chosen limits
+    if (colmin!=-9999.9):
+      print("Using user provided minimum for colorbar")
+      cmin = colmin
+    if (colmax!=-9999.9):
+      print("Using user provided maximum for colorbar")
+      cmax = colmax
 
 
     # Create figure
@@ -150,7 +163,6 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
     gl = ax.gridlines(crs=ccrs.PlateCarree(central_longitude=0), draw_labels=True,
                       linewidth=1, color='gray', alpha=0.5, linestyle='-')
     gl.xlabels_top = False
-    gl.ylabels_left = True
     gl.xlabel_style = {'size': 10, 'color': 'black'}
     gl.ylabel_style = {'size': 10, 'color': 'black'}
     gl.xlocator = mticker.FixedLocator(
