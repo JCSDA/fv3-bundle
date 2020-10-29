@@ -113,6 +113,8 @@ iodaplots plot -e ${instrument} output/binned/${instrument}.nc4 -o output/plots/
 # ------------------------------------------------------
 # Make the plots
 
+chmod +x plot_from_ioda_hofx.py
+
 cd output/plots/${instrument}
 
 for var in "${varlist[@]}"; do
