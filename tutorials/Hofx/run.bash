@@ -97,12 +97,13 @@ elif [[ ${instrument} == Satwinds ]]; then
     varlist=(eastward_wind northward_wind)
 else
     echo "Medley option is run only: not generating plots"
-    exit 0
 fi
 
 application=gfs
 
 mpirun -n 12 $jedibin/fv3jedi_hofx_nomodel.x config/${instrument}_${application}.hofx3d.jedi.yaml
+
+[[ ${instrument} == Aircraft ]] && exit 0
 
 # ------------------------------------------------------
 # Make the plots
