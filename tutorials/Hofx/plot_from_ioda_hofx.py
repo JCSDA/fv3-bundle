@@ -189,7 +189,7 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, 
     # plot grid lines
     gl = ax.gridlines(crs=ccrs.PlateCarree(central_longitude=0), draw_labels=True,
                       linewidth=1, color='gray', alpha=0.5, linestyle='-')
-    gl.xlabels_top = False
+    gl.top_labels = False
     gl.xlabel_style = {'size': 10, 'color': 'black'}
     gl.ylabel_style = {'size': 10, 'color': 'black'}
     gl.xlocator = mticker.FixedLocator(
