@@ -129,6 +129,15 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
       cmin = np.nanmin(obarray[:, 0])
       cmap = 'viridis'
 
+
+    # If omb requested then use standard deviation to set limits
+    # ----------------------------------------------------------
+    if omb:
+       print("For omb using standard deviation to set color limits")
+       cmax = np.nanstd(obarray[:, 0])
+       cmin = -cmax
+
+
     # Create figure
     # -------------
 
@@ -152,7 +161,7 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
     # scatter data
     sc = ax.scatter(obarray[:, 1], obarray[:, 2],
                     c=obarray[:, 0], s=4, linewidth=0,
-                    transform=ccrs.PlateCarree(), cmap=cmap)
+                    transform=ccrs.PlateCarree(), cmap=cmap, vmin=cmin, vmax = cmax)
 
     # colorbar
     cbar = plt.colorbar(sc, ax=ax, orientation="horizontal",
