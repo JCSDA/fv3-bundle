@@ -32,40 +32,5 @@ plotting:
   # WHAT should be plotted?
   basic:
   - class: PlotType2D*
-    metric: [obs, hofx, ombg]
-    stat: [mean, stddev, count]
-
-  # composite: #TODO, currently in progress
-  # - class: PlotType1D*
-  #   name: rmsd
-  #   plot:
-  #   - metric: ombg
-  #     stat: rmsd
-  #     args: {ls: '-'}
-  #   - metric: oman
-  #     stat: rmsd
-  #     args: {ls: '--'}
-
-  # TODO currently in progress
-  # args: # fine tune the plotting
-  # ##-------------------------------------------------
-  # ## Format is one or more copies of the following
-  # ##-------------------------------------------------
-  # # - match:
-  # #     variable:
-  # #     binning:
-  # #     class:
-  # #     stat:
-  # #     metric:
-  # #     custom: ?
-  # #   args:
-
-  # - match: {stat: rmsd}
-  #   args: {cmap: inferno}
-
-  # - match: {class: PlotType2DLatLon}
-  #   args:
-  #     projection: Orthographic
-  #     projection_args:
-  #       central_longitude: 0.0
-  #       central_latitude: 90.0
+    metric: [obs]
+    stat: [count]

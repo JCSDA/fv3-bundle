@@ -11,10 +11,6 @@ binning:
     source: "@hofx"
   - name: ombg
     source: "@ObsValue - @hofx"
-#  - name: oman
-#    source: "@oman"  
-#  - name: inc
-#    source: "@oman - @ombg"
 
   # bins: HOW should it be binned?
   bins:
@@ -27,14 +23,6 @@ binning:
   - name: global
     dimensions: []
 
-  # - name: nino34
-  #   dimensions:
-  #   - name: latitude
-  #     bounds: [-5.0, 5.0]
-  #   - name: longitude
-  #     bounds: [-170.0, -120.0]
-
-
 # -------------------------------------------
 # plotting section used by the 'plot' command
 # -------------------------------------------
@@ -43,40 +31,6 @@ plotting:
   # WHAT should be plotted?
   basic:
   - class: PlotType1D*
-    metric: [obs, hofx, ombg]
-    stat: [mean, stddev, count]
+    metric: [obs]
+    stat: [count]
 
-  # composite: #TODO, currently in progress
-  # - class: PlotType1D*
-  #   name: rmsd
-  #   plot:
-  #   - metric: ombg
-  #     stat: rmsd
-  #     args: {ls: '-'}
-  #   - metric: oman
-  #     stat: rmsd
-  #     args: {ls: '--'}
-
-  # TODO currently in progress
-  # args: # fine tune the plotting
-  # ##-------------------------------------------------
-  # ## Format is one or more copies of the following
-  # ##-------------------------------------------------
-  # # - match:
-  # #     variable:
-  # #     binning:
-  # #     class:
-  # #     stat:
-  # #     metric:
-  # #     custom: ?
-  # #   args:
-
-  # - match: {stat: rmsd}
-  #   args: {cmap: inferno}
-
-  # - match: {class: PlotType2DLatLon}
-  #   args:
-  #     projection: Orthographic
-  #     projection_args:
-  #       central_longitude: 0.0
-  #       central_latitude: 90.0
