@@ -38,7 +38,9 @@ def abort(message):
 @click.option('--nprocs',        required=True,  help='Number of processors used for JEDI run', type=int)
 @click.option('--window_begin',  required=True,  help='Time at beginning of the window (yyyymmddhh)', default=False)
 @click.option('--omb',           required=False, help='Set to true to compute omb', default=False)
-def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
+@click.option('--colmin',        required=False, help='Minimum for colorbar in plotting', default=-9999.9)
+@click.option('--colmax',        required=False, help='Maximum for colorbar in plotting', default=-9999.9)
+def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb, colmin, colmax):
 
     # Variable name and units
     # -----------------------
@@ -70,9 +72,10 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
       vtitle = vsplit[0]+" "+vsplit[1]
 
     savename = os.path.basename(hofxfiles)
-    savename = savename.replace('_NPROC', '')
-    savename = savename.replace('.nc4', '')
-    savename = savename + '-' + vsavename + '.png'
+    #savename = savename.replace('_NPROC', '')
+    #savename = savename.replace('.nc4', '')
+    #savename = savename + '-' + vsavename + '.png'
+    savename = vsavename + '.png'
 
     # Loop over hofxfiles
     # -------------------
@@ -118,24 +121,61 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
     obarray[:, 2] = lats
     obarray[:, 3] = time
 
-    # Min max
-    # -------
+
+    # Compute and print some stats for the data
+    # -----------------------------------------
+    stdev = np.nanstd(obarray[:, 0])  # Standard deviation
+    omean = np.nanmean(obarray[:, 0]) # Mean of the data
+    datmi = np.nanmin(obarray[:, 0])  # Min of the data
+    datma = np.nanmax(obarray[:, 0])  # Max of the data
+
+    print("Plotted data statistics: ")
+    print("Mean: ", omean)
+    print("Standard deviation: ", stdev)
+    print("Minimum ", datmi)
+    print("Maximum: ", datma)
+
+
+    # Norm for scatter plot
+    # ---------------------
+    norm = None
+
+
+    # Min max for colorbar
+    # --------------------
     if np.nanmin(obarray[:, 0]) < 0:
-      cmax = np.nanmax(np.abs(obarray[:, 0]))
-      cmin = -cmax
+      cmax = datma
+      cmin = datmi
       cmap = 'RdBu'
     else:
-      cmax = np.nanmax(obarray[:, 0])
-      cmin = np.nanmin(obarray[:, 0])
+      cmax = omean+stdev
+      cmin = np.maximum(omean-stdev, 0.0)
       cmap = 'viridis'
 
+    if vsplit[1] == 'PreQC' or vsplit[1] == 'EffectiveQC':
+      cmin = datmi
+      cmax = datma
 
-    # If omb requested then use standard deviation to set limits
-    # ----------------------------------------------------------
+      # Specialized colorbar for integers
+      cmap = plt.cm.jet
+      cmaplist = [cmap(i) for i in range(cmap.N)]
+      cmaplist[1] = (.5, .5, .5, 1.0)
+      cmap = matplotlib.colors.LinearSegmentedColormap.from_list('Custom cmap', cmaplist, cmap.N)
+      bounds = np.insert(np.linspace(0.5, int(cmax)+0.5, int(cmax)+1), 0, 0)
+      norm = matplotlib.colors.BoundaryNorm(bounds, cmap.N)
+
+    # If using omb then use standard deviation for the cmin/cmax
     if omb:
-       print("For omb using standard deviation to set color limits")
-       cmax = np.nanstd(obarray[:, 0])
-       cmin = -cmax
+      cmax = stdev
+      cmin = -stdev
+
+    # Override with user chosen limits
+    if (colmin!=-9999.9):
+      print("Using user provided minimum for colorbar")
+      cmin = colmin
+    if (colmax!=-9999.9):
+      print("Using user provided maximum for colorbar")
+      cmax = colmax
 
 
     # Create figure
@@ -150,7 +190,6 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
     gl = ax.gridlines(crs=ccrs.PlateCarree(central_longitude=0), draw_labels=True,
                       linewidth=1, color='gray', alpha=0.5, linestyle='-')
     gl.xlabels_top = False
-    gl.ylabels_left = True
     gl.xlabel_style = {'size': 10, 'color': 'black'}
     gl.ylabel_style = {'size': 10, 'color': 'black'}
     gl.xlocator = mticker.FixedLocator(
@@ -161,11 +200,10 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
     # scatter data
     sc = ax.scatter(obarray[:, 1], obarray[:, 2],
                     c=obarray[:, 0], s=4, linewidth=0,
-                    transform=ccrs.PlateCarree(), cmap=cmap, vmin=cmin, vmax = cmax)
+                    transform=ccrs.PlateCarree(), cmap=cmap, vmin=cmin, vmax = cmax, norm=norm)
 
     # colorbar
-    cbar = plt.colorbar(sc, ax=ax, orientation="horizontal",
-                        pad=.1, fraction=0.06,)
+    cbar = plt.colorbar(sc, ax=ax, orientation="horizontal", pad=.1, fraction=0.06,)
     cbar.ax.set_ylabel(units, fontsize=10)
 
     # plot globally
@@ -184,7 +222,6 @@ def plot_from_ioda_hofx(hofxfiles, variable, nprocs, window_begin, omb):
     plt.savefig(savename)
 
     exit()
-
 
 # --------------------------------------------------------------------------------------------------
 
