@@ -72,17 +72,29 @@ if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED ${GIT_TAG_FUNC} )
   ecbuild_bundle( PROJECT ioda-data GIT "https://github.com/JCSDA-internal/ioda-data.git" BRANCH develop UPDATE )
 endif()
 
+# If IODA's current branch is available in ioda-data repo, that branch will be checked out
+branch_checkout (REPO_DIR_NAME ioda-data
+                 BRANCH ${GIT_BRANCH_FUNC} )
+
 # same procedure for ufo-data
 find_branch_name(REPO_DIR_NAME ufo)
 if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED ${GIT_TAG_FUNC} )
   ecbuild_bundle( PROJECT ufo-data GIT "https://github.com/JCSDA-internal/ufo-data.git" BRANCH develop UPDATE )
 endif()
 
+# If UFO's current branch is available in ioda-data repo, that branch will be checked out
+branch_checkout (REPO_DIR_NAME ufo-data
+                 BRANCH ${GIT_BRANCH_FUNC} )
+
 # same procedure for fv3-jedi-data
 find_branch_name(REPO_DIR_NAME fv3-jedi)
 if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED ${GIT_TAG_FUNC} )
   ecbuild_bundle( PROJECT fv3-jedi-data GIT "https://github.com/JCSDA-internal/fv3-jedi-data.git" BRANCH develop UPDATE )
 endif()
+
+# If fv3-jedi's current branch is available in ioda-data repo, that branch will be checked out
+branch_checkout (REPO_DIR_NAME fv3-jedi-data
+                 BRANCH ${GIT_BRANCH_FUNC} )
 
 # FMS and FV3 dynamical core
 ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git"                     TAG 1.1.0 )
