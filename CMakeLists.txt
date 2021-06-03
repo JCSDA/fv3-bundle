@@ -36,7 +36,7 @@ ecbuild_bundle_initialize()
 # --------------------------
 
 # jedi-cmake
-ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda-internal/jedi-cmake.git" TAG 1.1.0 )
+ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" TAG 1.1.0 )
 include( jedicmake/cmake/Functions/git_functions.cmake )
 
 # ECMWF libraries
