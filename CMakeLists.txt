@@ -104,7 +104,7 @@ branch_checkout (REPO_DIR_NAME fv3-jedi-data
 # FMS and FV3 dynamical core
 #ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda/FMS.git"                     TAG 1.1.0 )
 #ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda/GFDL_atmos_cubed_sphere.git" TAG 1.1.0 )
-ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda-internal/FMS.git"                     BRANCH release/1.1.0 )
+ecbuild_bundle( PROJECT fms GIT "https://github.com/jcsda-internal/FMS.git"                     BRANCH release/1.1.0.jcsda )
 ecbuild_bundle( PROJECT fv3 GIT "https://github.com/jcsda-internal/GFDL_atmos_cubed_sphere.git" BRANCH release/1.1.0 )
 
 # fv3-jedi and associated repositories
