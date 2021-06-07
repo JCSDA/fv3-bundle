@@ -55,11 +55,11 @@ ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git"   TAG v2.3-
 # Core JEDI repositories
 #ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  TAG 1.1.0 )
 #ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" TAG 1.1.0 )
-#ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  TAG 1.1.0 )
+#ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  TAG 2.0.0 )
 #ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   TAG 1.1.0 )
 ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda-internal/oops.git"  BRANCH release/1.1.0 )
 ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda-internal/saber.git" BRANCH release/1.1.0 )
-ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda-internal/ioda.git"  BRANCH release/1.1.0 )
+ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda-internal/ioda.git"  BRANCH release/2.0.0 )
 ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda-internal/ufo.git"   BRANCH release/1.1.0 )
 
 # IODA, UFO, and fv3-jedi test data
