@@ -40,17 +40,16 @@ ecbuild_bundle_initialize()
 ecbuild_bundle( PROJECT jedicmake GIT "https://github.com/jcsda/jedi-cmake.git" BRANCH develop UPDATE )
 
 # ECMWF libraries
-find_package( eckit 1.11.6 QUIET)
-if (${eckit_FOUND})
-  message(STATUS "Found ECKIT package, not building as part of the bundle" )
-else()
-  ecbuild_bundle( PROJECT eckit GIT "https://github.com/jcsda-internal/eckit.git" TAG 1.11.jcsda )
-endif()
-ecbuild_bundle( PROJECT fckit GIT "https://github.com/jcsda-internal/fckit.git" TAG 0.7.jcsda )
-ecbuild_bundle( PROJECT atlas GIT "https://github.com/jcsda-internal/atlas.git" TAG 0.20.jcsda )
+option("BUNDLE_SKIP_ECKIT" "Don't build eckit" "ON" ) # Skip eckit build unless user passes -DBUNDLE_SKIP_ECKIT=OFF
+option("BUNDLE_SKIP_FCKIT" "Don't build fckit" "ON") # Skip fckit build unless user passes -DBUNDLE_SKIP_FCKIT=OFF
+option("BUNDLE_SKIP_ATLAS" "Don't build atlas" "ON") # Skip atlas build unless user passes -DBUNDLE_SKIP_ATLAS=OFF
+
+ecbuild_bundle( PROJECT eckit GIT "https://github.com/ecmwf/eckit.git" TAG 1.16.0 )
+ecbuild_bundle( PROJECT fckit GIT "https://github.com/ecmwf/fckit.git" TAG 0.9.2 )
+ecbuild_bundle( PROJECT atlas GIT "https://github.com/ecmwf/atlas.git" TAG 0.24.1 )
 
 # External (required) observation operators
-ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git"   TAG v2.3-jedi )
+ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git"   TAG v2.3-jedi.0 )
 
 # Core JEDI repositories
 ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  BRANCH develop UPDATE )
