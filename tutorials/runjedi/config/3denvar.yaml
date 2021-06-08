@@ -164,36 +164,6 @@ cost function:
       - name: air_temperature
       threshold: 6.0
   - obs space:
-      name: GnssroBndNBAM
-      obsdatain:
-        obsfile: /opt/jedi/build/fv3-jedi/test/Data/obs/testinput_tier_1/gnssro_obs_2018041500_m.nc4
-      simulated variables: [bending_angle]
-    obs operator:
-      name: GnssroBndNBAM
-      obs options:
-        sr_steps: 2
-        vertlayer: full
-        compress: 1
-        super_ref_qc: NBAM
-    obs error:
-      covariance model: diagonal
-    obs filters:
-    - filter: Domain Check
-      filter variables:
-      - name: [bending_angle]
-      where:
-      - variable:
-          name: impact_height@MetaData
-        minvalue: 0
-        maxvalue: 50000
-    - filter: ROobserror
-      filter variables:
-      - name: bending_angle
-      errmodel: NBAM
-    - filter: Background Check RONBAM
-      filter variables:
-      - name: [bending_angle]
-  - obs space:
       name: AMSUA-NOAA19
       obsdatain:
         obsfile: /opt/jedi/build/fv3-jedi/test/Data/obs/testinput_tier_1/amsua_n19_obs_2018041500_m.nc4
