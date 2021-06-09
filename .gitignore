@@ -31,6 +31,11 @@ ioda/
 oops/
 ufo/
 
+# data repos
+ioda-data/
+ufo-data/
+fv3-jedi-data/
+
 # fv3-jedi and related repos
 fms/
 fv3/
