@@ -47,7 +47,7 @@ debug=0
 clean_work=1
 verbose=1
 
-#BASE_URL=https://jedi-test-files.s3.amazonaws.com/tutorials
+#BASE_URL=https://jedi-test-files.s3.amazonaws.com/tutorials/1.1.0
 BASE_URL=https://dashrepo.ucar.edu/dataset/147_miesch/file
 
 BGFILE=tutorials_Hofx-NRT_input_bg.tar.gz
