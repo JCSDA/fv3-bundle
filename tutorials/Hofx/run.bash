@@ -48,10 +48,14 @@ fi
 echo "JEDI build directory = "${JEDI_BUILD_DIR}
 
 # link to crtm coefficents
-mkdir -p Data
-cp -r ${JEDI_BUILD_DIR}/fv3-jedi/test/Data/crtm Data/crtm
-cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/SpcCoeff/Little_Endian/* Data/crtm
-cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/TauCoeff/ODPS/Little_Endian/* Data/crtm
+if [[ ! -d Data/crtm ]]; then
+   mkdir -p Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/SpcCoeff/Little_Endian/* Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/TauCoeff/ODPS/Little_Endian/* Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/CloudCoeff/Little_Endian/* Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/AerosolCoeff/Little_Endian/* Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/EmisCoeff/MW_Water/Little_Endian/* Data/crtm
+fi
 
 # Create directories to store output
 # --------------------------------
@@ -108,14 +112,14 @@ mpirun -n 12 $jedibin/fv3jedi_hofx_nomodel.x config/${instrument}_${application}
 # ------------------------------------------------------
 # Make the plots
 
-chmod +x plot_from_ioda_hofx.py
+#chmod +x plot_from_ioda_hofx.py
 
-cd output/plots/${instrument}
+#cd output/plots/${instrument}
 
-for var in "${varlist[@]}"; do
-   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@ObsValue --nprocs 12 --window_begin 2020100103
-   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@hofx --nprocs 12 --window_begin 2020100103
-   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@hofx --omb=True --nprocs 12 --window_begin 2020100103
-done
+#for var in "${varlist[@]}"; do
+#   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@ObsValue --nprocs 12 --window_begin 2020100103
+#   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@hofx --nprocs 12 --window_begin 2020100103
+#   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@hofx --omb=True --nprocs 12 --window_begin 2020100103
+#done
 
 exit 0
