@@ -48,15 +48,18 @@ fi
 echo "JEDI build directory = "${JEDI_BUILD_DIR}
 
 # link to crtm coefficents
-mkdir -p Data
-cp -rn ${JEDI_BUILD_DIR}/fv3-jedi/test/Data/crtm Data/crtm
-cp -n ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/SpcCoeff/Little_Endian/* Data/crtm
-cp -n ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/TauCoeff/ODPS/Little_Endian/* Data/crtm
+if [[ ! -d Data/crtm ]]; then
+   mkdir -p Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/SpcCoeff/Little_Endian/* Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/TauCoeff/ODPS/Little_Endian/* Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/CloudCoeff/Little_Endian/* Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/AerosolCoeff/Little_Endian/* Data/crtm
+   cp ${JEDI_BUILD_DIR}/test_data/crtm/2.3.0/EmisCoeff/MW_Water/Little_Endian/* Data/crtm
+fi
 
 # Create directories to store output
 # --------------------------------
 mkdir -p output/hofx/
-mkdir -p output/binned/
 mkdir -p output/plots/$instrument/
 
 # ---------------------------------------------------------
@@ -70,52 +73,13 @@ export OMP_NUM_THREADS=1
 # ------------------------------------------------------
 # Run the Hofx application
 
-if [[ ${instrument} == Aircraft ]]; then
-    prefix=hofx3d_gfs_c48_ncdiag_aircraft_PT6H_20201001_0300Z
-    varlist=(air_temperature eastward_wind northward_wind specific_humidity)
-elif [[ ${instrument} == Amsua_n19 ]]; then
-    prefix=hofx3d_gfs_c48_ncdiag_amsua-n19_PT6H_20201001_0300Z
-    varlist=(brightness_temperature_12)
-elif [[ ${instrument} == Atms_n20 ]]; then
-    prefix=hofx3d_gfs_c48_ncdiag_atms-n20_PT6H_20201001_0300Z
-    varlist=(brightness_temperature_1 brightness_temperature_2 brightness_temperature_3 \
-             brightness_temperature_4 brightness_temperature_5 brightness_temperature_6 \
-             brightness_temperature_7 brightness_temperature_5 brightness_temperature_6 \
-             brightness_temperature_10 brightness_temperature_11 brightness_temperature_12 \
-             brightness_temperature_13 brightness_temperature_14 brightness_temperature_15 \
-             brightness_temperature_16 brightness_temperature_17 brightness_temperature_18 \
-             brightness_temperature_19 brightness_temperature_20 brightness_temperature_21 \
-             brightness_temperature_22)
-elif [[ ${instrument} == GnssroBnd ]]; then
-    prefix=hofx3d_gfs_c48_nomads_gnssro_PT6H_20201001_0300Z
-    varlist=(bending_angle)
-elif [[ ${instrument} == Radiosonde ]]; then
-    prefix=hofx3d_gfs_c48_ncdiag_radiosonde_PT6H_20201001_0300Z
-    varlist=(air_temperature eastward_wind northward_wind)
-elif [[ ${instrument} == Satwinds ]]; then
-    prefix=hofx3d_gfs_c48_ncdiag_satwind_PT6H_20201001_0300Z
-    varlist=(eastward_wind northward_wind)
-else
-    echo "Medley option is run only: not generating plots"
-fi
-
 application=gfs
 
 mpirun -n 12 $jedibin/fv3jedi_hofx_nomodel.x config/${instrument}_${application}.hofx3d.jedi.yaml
 
-[[ ${instrument} == Medley ]] && exit 0
-
 # ------------------------------------------------------
-# Make the plots
+# Plot hofx
 
-chmod +x plot_from_ioda_hofx.py
-
-cd output/plots/${instrument}
-
-for var in "${varlist[@]}"; do
-   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@ObsValue --nprocs 12 --window_begin 2020100103
-   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@hofx --nprocs 12 --window_begin 2020100103
-   ../../../plot_from_ioda_hofx.py --hofxfiles ../../hofx/${prefix}_NPROC.nc4 --variable ${var}@hofx --omb=True --nprocs 12 --window_begin 2020100103
-done
+fv3jeditools.x 2020-10-01T03:00:00 config/${instrument}_${application}.hofx3d.plot.yaml
 
 exit 0

@@ -8,12 +8,8 @@ geometry:
   trc_file: config/field_table
   akbk: config/akbk_gfs.nc4
   nml_file: config/geometry_gfs_c48.nml
-  #layout:
-  #- 
-  #- 
-  #io_layout:
-  #- 
-  #- 
+  layout: [1,1]
+  io_layout: [1,1]
   npx: 49
   npy: 49
   npz: 64
@@ -21,9 +17,7 @@ geometry:
   fieldsets:
   - fieldset: config/fieldsets/dynamics.yaml
   - fieldset: config/fieldsets/ufo.yaml
-  interp_method: barycent
-forecasts:
-  #state
+state:
   filetype: gfs
   datapath: input/bg/window_center
   filename_core: 20201001.060000.fv_core.res.nc
@@ -31,30 +25,9 @@ forecasts:
   filename_sfcd: 20201001.060000.sfc_data.nc
   filename_sfcw: 20201001.060000.fv_srf_wnd.res.nc
   filename_cplr: 20201001.060000.coupler.res
-  state variables:
-  - u
-  - v
-  - ua
-  - va
-  - T
-  - DELP
-  - sphum
-  - ice_wat
-  - liq_wat
-  - o3mr
-  - phis
-  - slmsk
-  - sheleg
-  - tsea
-  - vtype
-  - stype
-  - vfrac
-  - stc
-  - smc
-  - snwdph
-  - u_srf
-  - v_srf
-  - f10m
+  state variables: [u,v,ua,va,T,DELP,sphum,ice_wat,liq_wat,o3mr,phis,
+                    slmsk,sheleg,tsea,vtype,stype,vfrac,stc,smc,snwdph,
+                    u_srf,v_srf,f10m]
 observations:
 - obs space:
     name: Radiosonde
@@ -68,3 +41,4 @@ observations:
     - air_temperature
   obs operator:
     name: VertInterp
+

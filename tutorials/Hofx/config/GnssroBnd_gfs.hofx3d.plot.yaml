@@ -1,0 +1,29 @@
+application:
+
+  # Application to use
+  application name: hofx_map
+
+  # IODA output files containing h(x)
+  hofx files: output/hofx/hofx3d_gfs_c48_nomads_gnssro_PT6H_*.nc4
+
+  # Place to output the plot file
+  output path: output/plots/GnssroBnd
+
+  # Group to plot (or omb)
+  metric: hofx
+
+  # Variable to plot
+  field: bending_angle
+
+  # Units of the field being plotted
+  units: Radians
+
+  # Window length (hours)
+  window length: 6
+
+  # Offset of time in filename from window center (hours), e.g. -3, +3 or 0
+  time offset: 0
+
+  # Output format for plots ([png] or pdf)
+  plot format: png
+

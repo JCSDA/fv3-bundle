@@ -1,23 +1,25 @@
-window begin: '2020-10-01T03:00:00Z'
+# hofx3d jedi config.yaml
+window begin: 2020-10-01T03:00:00Z
 window length: PT6H
 forecast length: PT6H
+# model/gfs/hofx3d.jedi.yaml
 geometry:
   nml_file_mpp: config/fmsmpp.nml
   trc_file: config/field_table
   akbk: config/akbk_gfs.nc4
   nml_file: config/geometry_gfs_c48.nml
-  #layout: [1, 2]
-  #io_layout: [1,1]
+  layout: [1,1]
+  io_layout: [1,1]
   npx: 49
   npy: 49
   npz: 64
   ntiles: 6
   fieldsets:
-    - fieldset: config/fieldsets/dynamics.yaml
-    - fieldset: config/fieldsets/ufo.yaml
-forecasts:
+  - fieldset: config/fieldsets/dynamics.yaml
+  - fieldset: config/fieldsets/ufo.yaml
+state:
   filetype: gfs
-  datapath: input/bg/window_center/
+  datapath: input/bg/window_center
   filename_core: 20201001.060000.fv_core.res.nc
   filename_trcr: 20201001.060000.fv_tracer.res.nc
   filename_sfcd: 20201001.060000.sfc_data.nc
@@ -32,12 +34,12 @@ observations:
     obsdatain:
       obsfile: input/obs/ioda_nomads_gnssro_PT6H_20201001_0300Z.nc4
       obsgrouping:
-        group variable: record_number
-        sort variable: impact_height
-        sort order: ascending
+        group variables: ["record_number"]
+        sort variable: "impact_height"
+        sort order: "ascending"
     obsdataout:
       obsfile: output/hofx/hofx3d_gfs_c48_nomads_gnssro_PT6H_20201001_0300Z.nc4
-    simulated variables: [bending_angle]
+    simulated variables: ["bending_angle"]
   obs operator:
     name: GnssroBndNBAM
     obs options:
@@ -46,31 +48,29 @@ observations:
       use_compress: 1
       super_ref_qc: NBAM
   obs filters:
-  - filter: Domain Check 
-    filter variables:
-    - name: [bending_angle]
-    where:
-    - variable:
-        name: impact_height@MetaData
-      minvalue: 0
-      maxvalue: 50000
-  - filter: Bounds Check
-    filter variables:
-    - name: [bending_angle]
-    where:
-    - variable:
-        name: occulting_sat_id@MetaData
-      is_in: 3-5
-    test variables:
-    - name: impact_height@MetaData
-    minvalue: 8000
-  - filter: ROobserror
-    filter variables:
-    - name: bending_angle
-    errmodel: NBAM
-  - filter: Background Check RONBAM
-    filter variables:
-    - name: [bending_angle]
-    threshold: 3
-Prints:
-  frequency: PT3H
+   - filter: Domain Check 
+     filter variables:
+     - name: ["bending_angle"]
+     where:
+     - variable:
+         name: impact_height@MetaData
+       minvalue: 0
+       maxvalue: 50000
+   - filter: Bounds Check
+     filter variables:
+     - name: ["bending_angle"]
+     where:
+     - variable:
+         name: occulting_sat_id@MetaData
+       is_in: 3-5
+     test variables:
+     - name: impact_height@MetaData
+     minvalue: 8000
+   - filter: ROobserror
+     filter variables:
+     - name: bending_angle
+     errmodel: NBAM
+   - filter: Background Check RONBAM
+     filter variables:
+     - name: bending_angle
+

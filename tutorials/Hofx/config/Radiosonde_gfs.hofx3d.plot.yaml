@@ -1,0 +1,34 @@
+application:
+
+  # Application to use
+  application name: hofx_map
+
+  # IODA output files containing h(x)
+  hofx files: output/hofx/hofx3d_gfs_c48_ncdiag_radiosonde_PT6H_*.nc4
+
+  # Place to output the plot file
+  output path: output/plots/Radiosonde
+
+  # Group to plot (or omb)
+  metric: hofx
+
+  # Variable to plot
+  field: air_temperature
+
+  # Units of the field being plotted
+  units: K
+
+  # Window length (hours)
+  window length: 6
+
+  # Offset of time in filename from window center (hours), e.g. -3, +3 or 0
+  time offset: 0
+
+  # Output format for plots ([png] or pdf)
+  plot format: png
+
+  # User defined colorbar minimum
+  #colorbar minimum: 210
+
+  # User defined colorbar maximum
+  #colorbar maximum: 260
