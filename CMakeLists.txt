@@ -66,7 +66,7 @@ ecbuild_bundle( PROJECT femps       GIT "https://github.com/jcsda/femps.git"    
 ecbuild_bundle( PROJECT fv3-jedi-lm GIT "https://github.com/jcsda/fv3-jedi-linearmodel.git" BRANCH develop UPDATE )
 ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git"             BRANCH develop UPDATE )
 
-# ioda, ufo, and fv3-jedi test data
+# ioda, ufo, fv3-jedi, and saber test data
 #---------------------------------
 
 # If IODA branch is being built set GIT_BRANCH_FUNC to IODA's current branch.
@@ -104,6 +104,16 @@ endif()
 
 # If fv3-jedi's current branch is available in ioda-data repo, that branch will be checked out
 branch_checkout (REPO_DIR_NAME fv3-jedi-data
+                 BRANCH ${GIT_BRANCH_FUNC} )
+
+# same procedure for saber-data
+find_branch_name(REPO_DIR_NAME saber)
+if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED ${GIT_TAG_FUNC} )
+  ecbuild_bundle( PROJECT saber-data GIT "https://github.com/JCSDA-internal/saber-data.git" BRANCH develop UPDATE )
+endif()
+
+# If saber's current branch is available in saber-data repo, that branch will be checked out
+branch_checkout (REPO_DIR_NAME saber-data
                  BRANCH ${GIT_BRANCH_FUNC} )
 
 # Finalize bundle
