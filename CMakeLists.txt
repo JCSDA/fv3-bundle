@@ -78,43 +78,43 @@ ecbuild_bundle( PROJECT fv3-jedi    GIT "https://github.com/jcsda/fv3-jedi.git" 
 find_branch_name(REPO_DIR_NAME ioda)
 # When LOCAL_PATH_JEDI_TESTFILES is set to the directory of IODA test files stored
 # in a local directory, ioda-data repo will not be cloned
-if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED ${GIT_TAG_FUNC} )
+if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED GIT_TAG_FUNC )
   ecbuild_bundle( PROJECT ioda-data GIT "https://github.com/JCSDA-internal/ioda-data.git" BRANCH develop UPDATE )
-endif()
 
-# If IODA's current branch is available in ioda-data repo, that branch will be checked out
-branch_checkout (REPO_DIR_NAME ioda-data
-                 BRANCH ${GIT_BRANCH_FUNC} )
+  # If IODA's current branch is available in ioda-data repo, that branch will be checked out
+  branch_checkout (REPO_DIR_NAME ioda-data
+                   BRANCH ${GIT_BRANCH_FUNC} )
+endif()
 
 # same procedure for ufo-data
 find_branch_name(REPO_DIR_NAME ufo)
-if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED ${GIT_TAG_FUNC} )
+if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED GIT_TAG_FUNC )
   ecbuild_bundle( PROJECT ufo-data GIT "https://github.com/JCSDA-internal/ufo-data.git" BRANCH develop UPDATE )
-endif()
 
-# If UFO's current branch is available in ioda-data repo, that branch will be checked out
-branch_checkout (REPO_DIR_NAME ufo-data
-                 BRANCH ${GIT_BRANCH_FUNC} )
+  # If UFO's current branch is available in ioda-data repo, that branch will be checked out
+  branch_checkout (REPO_DIR_NAME ufo-data
+                   BRANCH ${GIT_BRANCH_FUNC} )
+endif()
 
 # same procedure for fv3-jedi-data
 find_branch_name(REPO_DIR_NAME fv3-jedi)
-if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED ${GIT_TAG_FUNC} )
+if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED GIT_TAG_FUNC )
   ecbuild_bundle( PROJECT fv3-jedi-data GIT "https://github.com/JCSDA-internal/fv3-jedi-data.git" BRANCH develop UPDATE )
-endif()
 
-# If fv3-jedi's current branch is available in ioda-data repo, that branch will be checked out
-branch_checkout (REPO_DIR_NAME fv3-jedi-data
-                 BRANCH ${GIT_BRANCH_FUNC} )
+  # If fv3-jedi's current branch is available in ioda-data repo, that branch will be checked out
+  branch_checkout (REPO_DIR_NAME fv3-jedi-data
+                   BRANCH ${GIT_BRANCH_FUNC} )
+endif()
 
 # same procedure for saber-data
 find_branch_name(REPO_DIR_NAME saber)
-if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED ${GIT_TAG_FUNC} )
+if( NOT DEFINED ENV{LOCAL_PATH_JEDI_TESTFILES} AND NOT DEFINED GIT_TAG_FUNC )
   ecbuild_bundle( PROJECT saber-data GIT "https://github.com/JCSDA-internal/saber-data.git" BRANCH develop UPDATE )
-endif()
 
-# If saber's current branch is available in saber-data repo, that branch will be checked out
-branch_checkout (REPO_DIR_NAME saber-data
-                 BRANCH ${GIT_BRANCH_FUNC} )
+  # If saber's current branch is available in saber-data repo, that branch will be checked out
+  branch_checkout (REPO_DIR_NAME saber-data
+                   BRANCH ${GIT_BRANCH_FUNC} )
+endif()
 
 # Finalize bundle
 # ---------------
