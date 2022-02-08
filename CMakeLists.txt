@@ -16,7 +16,7 @@
 cmake_minimum_required( VERSION 3.12 FATAL_ERROR )
 
 # Create project
-project( fv3-bundle VERSION 1.1.0 LANGUAGES C CXX Fortran )
+project( fv3-bundle VERSION 1.1.3 LANGUAGES C CXX Fortran )
 
 # Include ecbuild_bundle macro
 include( ecbuild_bundle )
@@ -53,7 +53,7 @@ ecbuild_bundle( PROJECT crtm GIT "https://github.com/jcsda/crtm.git"   TAG v2.3-
 
 # Core JEDI repositories
 ecbuild_bundle( PROJECT oops  GIT "https://github.com/jcsda/oops.git"  TAG 1.1.0 )
-ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" TAG 1.1.1 )
+ecbuild_bundle( PROJECT saber GIT "https://github.com/jcsda/saber.git" TAG 1.1.2 )
 ecbuild_bundle( PROJECT ioda  GIT "https://github.com/jcsda/ioda.git"  TAG 2.0.2 )
 ecbuild_bundle( PROJECT ufo   GIT "https://github.com/jcsda/ufo.git"   TAG 1.1.0 )
 
