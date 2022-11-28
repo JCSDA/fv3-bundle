@@ -1,3 +1,5 @@
+# Note - as of Nov 7, 2022, the master branch of this repository is frozen. The develop branch is used for all releases and all developments.
+
 ### License:
 
 (C) Copyright 2017-2021 UCAR
